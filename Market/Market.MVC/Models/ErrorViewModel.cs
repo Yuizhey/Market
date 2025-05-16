@@ -1,4 +1,4 @@
-namespace Market.Models;
+namespace Market.MVC.Models;
 
 public class ErrorViewModel
 {

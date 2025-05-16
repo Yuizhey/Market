@@ -1,4 +1,4 @@
-namespace Market;
+namespace Market.MVC;
 
 public class Program
 {
