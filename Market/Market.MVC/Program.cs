@@ -1,3 +1,10 @@
+using Market.Application.Extensions;
+using Market.Infrastructure.Extensions;
+using Market.Persistence.Contexts;
+using Market.Persistence.Extensions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 namespace Market.MVC;
 
 public class Program
@@ -6,6 +13,15 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+        builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
+        builder.Services.AddApplicationLayer();
+        builder.Services.AddInfrastructureLayer();
+        builder.Services.AddPersistenceLayer(builder.Configuration);
+        
         // Add services to the container.
         builder.Services.AddControllersWithViews();
 
