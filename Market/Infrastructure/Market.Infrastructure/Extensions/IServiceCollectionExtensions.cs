@@ -1,3 +1,5 @@
+using Market.Application.Interfaces.Services;
+using Market.Infrastructure.Services;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +14,8 @@ public static class IServiceCollectionExtensions
 
     private static void AddServices(this IServiceCollection sericeCollection)
     {
-        sericeCollection.AddTransient<IMediator, Mediator>();
+        sericeCollection
+            .AddTransient<IMediator, Mediator>()
+            .AddTransient<IAuthService, AuthService>();
     }
 }
