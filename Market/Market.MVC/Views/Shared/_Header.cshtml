@@ -11,11 +11,10 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">Pages</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="search-page.html">Result grid</a>
-                            <a class="dropdown-item" href="search-page-list.html">Resulst list</a>
-                            <a class="dropdown-item" href="single-product.html">Single item</a>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="Items" asp-route-type="grid">Result grid</a>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="Items" asp-route-type="list">Resulst list</a>
                             <a class="dropdown-item" href="dashboard.html">Dashboard</a>
-                            <a class="dropdown-item" href="cart.html">Cart</a>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="Cart">Cart</a>
                             <a class="dropdown-item" href="pricing.html">Pricing</a>
                             <a class="dropdown-item" href="faq.html">Faq</a>
                             <a class="dropdown-item" href="contact.html">Contact</a>
@@ -25,15 +24,6 @@
                             <a class="dropdown-item" href="documentation.html"><i class="las la-file-code bg-danger-alt text-danger p-1 rounded"></i> Documentation</a>
                         </div>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">Blog</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item swap-link" href="blog-2.html">Blog V.1</a>
-                            <a class="dropdown-item swap-link" href="blog.html">Blog V.2</a>
-                            <a class="dropdown-item swap-link" href="blog-post.html">Blog post</a>
-                        </div>
-                    </li>
-                    <li class="nav-item swap-link"> <a href="pricing.html" class="nav-link">Unlimited Access</a> </li>
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown megamenu">
@@ -54,10 +44,10 @@
                     </li>
                     <li class="nav-item d-flex align-items-center">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle no-arrow btn btn-primary swap-link text-white" href="#" role="button" data-toggle="dropdown" aria-expanded="false">Sign up</a>
+                        <a class="nav-link dropdown-toggle no-arrow btn btn-primary swap-link text-white" asp-controller="Auth" asp-action="Login" role="button" data-toggle="dropdown" aria-expanded="false">Sign up</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item swap-link" href="signup.html">Signup</a>
-                            <a class="dropdown-item swap-link" href="author-signup.html">Author signup</a>
+                            <a class="dropdown-item swap-link" asp-controller="Auth" asp-action="Register">Signup</a>
+                            <a class="dropdown-item swap-link" asp-controller="Auth" asp-action="AuthorRegister">Author signup</a>
                         </div>
                     </li>
                 </ul>
