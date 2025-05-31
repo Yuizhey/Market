@@ -1,6 +1,8 @@
+using Market.Application.Features.Auth.Queries.Login;
 using Market.Application.Features.Auth.Register;
 using Market.MVC.Models.Auth;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Market.MVC.Controllers;
@@ -40,6 +42,24 @@ public class AuthController : Controller
             Password = model.Password,
             ConfirmPassword = model.ConfirmPassword,
             FullName = model.FullName,
+        });
+
+        if (result)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+        
+        ModelState.AddModelError(string.Empty, "Email or password is incorrect.");
+        return View(model);
+    }
+    
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginViewModel model)
+    {
+        var result = await _mediator.Send(new LoginQuery
+        {
+            Email = model.Email,
+            Password = model.Password
         });
 
         if (result)
