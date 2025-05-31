@@ -1,3 +1,5 @@
+@model Market.MVC.Models.Items.SingleItemVM
+
 <main role="main">
         <div class="wrapper">
             <div class="breadcrumb-wrap">
@@ -80,26 +82,10 @@
                             </div>
                             <div class="product-description-text pr-lg-2">
                                 <h1 class="mt-4 mb-4">
-                                    Front-end UI kit to create a e-commerce websites with html templates
-                                    and code snippets.
+                                    @Model.Title
                                 </h1>
                                 <p class="lead">
-                                    Ecommerce code UI Kit for e-commerece projects on Bootstrap 4. The
-                                    developer version of Bootstrap-ecommerce comes with clearly-coded
-                                    and with files in HTML, CSS and SASS. Fully customizable and
-                                    easy-to-use and easy-to-implement in any e-commerce projects.
-                                </p>
-                                <p>
-                                    Cicero famously orated against his political opponent Lucius Sergius
-                                    Catilina. Occasionally the first Oration against Catiline is taken
-                                    for type specimens: Quo usque tandem abutere.
-                                </p>
-                                <p>
-                                    Catilina, patientia nostra? Quam diu etiam furor iste tuus nos
-                                    eludet? (How long, O Catiline, will you abuse our patience? And for
-                                    how long will that madness of yours mock us?) Cicero's version of
-                                    Liber Primus (first Book), sections 1.10.32–3 (fragments included in
-                                    most Lorem Ipsum variants in red):
+                                    @Model.Text
                                 </p>
                                 <div class="row">
                                     <div class="col-sm-4">
@@ -385,18 +371,18 @@
                                             <div class="custom-control custom-radio mt-3 mb-2 d-flex justify-content-between align-items-center">
                                                 <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" />
                                                 <label class="custom-control-label" for="customRadio1">Install Theme</label>
-                                                <div class="label-price">$15</div>
+                                                <div class="label-price">$@Model.Price</div>
 
                                             </div>
                                             <div class="custom-control custom-radio mb-4 d-flex justify-content-between align-items-center">
                                                 <input type="radio" checked="" id="customRadio2" name="customRadio" class="custom-control-input" />
                                                 <label class="custom-control-label" for="customRadio2">+1 year Support</label>
-                                                <div class="label-price">$49</div>
+                                                <div class="label-price">$@Model.Price</div>
                                             </div>
                                         </div>
                                     </div>
                                     <button class="btn btn-primary btn-block" type="button">
-                                        Purchase → <span class="price"> $77</span>
+                                        Purchase → <span class="price"> $@Model.Price</span>
                                     </button>
                                 </div>
 

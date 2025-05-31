@@ -19,7 +19,6 @@ public class GetByPageNumberQueryHandler : IRequestHandler<GetByPageNumberQuery,
         {
             Id = p.Id,
             Title = p.Title,
-            Text = p.Text,
             Price = p.Price
         });
     }

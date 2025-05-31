@@ -24,4 +24,9 @@ public class ProductRepository : IProductRepository
             .AsTracking()
             .ToListAsync();
     }
+
+    public async Task<Product> GetProductByIdAsync(Guid id)
+    {
+        return await _repository.Entities.FirstOrDefaultAsync(p => p.Id == id);
+    }
 }

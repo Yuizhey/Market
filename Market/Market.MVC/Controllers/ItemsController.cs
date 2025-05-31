@@ -1,4 +1,5 @@
 using Market.Application.Features.Products.Queries.GetByPageNumber;
+using Market.Application.Features.Products.Queries.GetByProductId;
 using Market.MVC.Models.Items;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -39,9 +40,17 @@ public class ItemsController : Controller
         }
     }
 
-    [HttpGet("items/{id}")]
-    public IActionResult Details([FromRoute] int id)
+    [HttpGet("items")]
+    public async Task<IActionResult> Details([FromQuery] Guid id)
     {
-        return View("SingleItem");
+        var query = new GetByProductIdQuery(id);
+        var product = await _mediator.Send(query);
+        var viewModel = new SingleItemVM
+        {
+            Title = product.Title,
+            Price = product.Price,
+            Text = product.Text,
+        };
+        return View("SingleItem", viewModel);
     }
 }
