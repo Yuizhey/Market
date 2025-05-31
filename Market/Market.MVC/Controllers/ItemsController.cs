@@ -1,24 +1,41 @@
+using Market.Application.Features.Products.Queries.GetByPageNumber;
+using Market.MVC.Models.Items;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Market.MVC.Controllers;
 
 public class ItemsController : Controller
 {
-    public ItemsController()
+    private readonly IMediator _mediator;
+    public ItemsController(IMediator mediator)
     {
-        
+        _mediator = mediator;
     }
 
     [HttpGet]
-    public IActionResult Index([FromQuery]string type)
+    public async Task<IActionResult> Index([FromQuery]string type)
     {
+        
         if (type == "grid")
         {
-            return View("ItemsGrid");
+            var query = new GetByPageNumberQuery(1, 15);
+            var products = await _mediator.Send(query);
+            var viewModel = new ItemsVM
+            {
+                Products = products
+            };
+            return View("ItemsGrid", viewModel);
         }
         else
         {
-            return View("ItemsList");
+            var query = new GetByPageNumberQuery(1, 9);
+            var products = await _mediator.Send(query);
+            var viewModel = new ItemsVM
+            {
+                Products = products
+            };
+            return View("ItemsList", viewModel);
         }
     }
 
