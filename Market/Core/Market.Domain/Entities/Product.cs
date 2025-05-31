@@ -1,6 +1,8 @@
+using Market.Domain.Common;
+
 namespace Market.Domain.Entities;
 
-public sealed class Product
+public sealed class Product : BaseAuditableEntity
 {
     public Guid Id { get; set; }
     public required string Title { get; set; }

@@ -1,0 +1,8 @@
+using Market.Domain.Entities;
+
+namespace Market.Application.Interfaces.Repositories;
+
+public interface IProductRepository
+{
+    Task<IEnumerable<Product>> GetProductsByPage(int page, int pageSize);
+}
