@@ -1,3 +1,5 @@
+@model Market.MVC.Models.Auth.AuthorRegisterViewModel
+
 <main role="main">
 
         <div class="account-pages mt-5 mb-5">
@@ -18,10 +20,10 @@
 
                                 <hr class="divider divider-fade" />
 
-                                <form action="#" class="pb-3">
+                                <form method="post" asp-controller="Auth" asp-action="AuthorRegister" class="pb-3">
                                     <div class="form-group">
                                         <label for="fullname">Create Username / Store Name</label>
-                                        <input class="form-control" type="text" id="shopname" placeholder="shop name" required="" />
+                                        <input class="form-control" type="text" name="@nameof(Model.AuthorUserName)" placeholder="shop name" required="" />
                                         <p class="text-small text-muted mt-1">
                                             Your username will be your store name and cannot be changed
                                             later.
@@ -29,28 +31,28 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="emailaddress">Email address</label>
-                                        <input class="form-control" type="email" id="emailaddress" required="" placeholder="Enter your email" />
+                                        <input class="form-control" type="email" name="@nameof(Model.Email)" required="" placeholder="Enter your email" />
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Password</label>
-                                        <input class="form-control" type="password" required="" id="password" placeholder="Enter your password" />
+                                        <input class="form-control" type="password" required="" name="@nameof(Model.Password)" placeholder="Enter your password" />
                                     </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="exampleFormControlSelectWhat">What describes you best?</label>
-                                            <select class="form-control" id="exampleFormControlSelectWhat">
-                                                <option>Illustrations</option>
-                                                <option>Front-end</option>
-                                                <option>Photography</option>
-                                                <option>Wordpress</option>
-                                                <option>Back-end</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="emailaddress">Portfolio</label>
-                                            <input class="form-control" type="text" id="links" required="" placeholder="Portfolio link" />
-                                        </div>
-                                    </div>
+                                    @* <div class="form-row"> *@
+                                    @*     <div class="form-group col-md-6"> *@
+                                    @*         <label for="exampleFormControlSelectWhat">What describes you best?</label> *@
+                                    @*         <select class="form-control" id="exampleFormControlSelectWhat"> *@
+                                    @*             <option>Illustrations</option> *@
+                                    @*             <option>Front-end</option> *@
+                                    @*             <option>Photography</option> *@
+                                    @*             <option>Wordpress</option> *@
+                                    @*             <option>Back-end</option> *@
+                                    @*         </select> *@
+                                    @*     </div> *@
+                                    @*     <div class="form-group col-md-6"> *@
+                                    @*         <label for="emailaddress">Portfolio</label> *@
+                                    @*         <input class="form-control" type="text" id="links" required="" placeholder="Portfolio link" /> *@
+                                    @*     </div> *@
+                                    @* </div> *@
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" id="checkbox-signup" />

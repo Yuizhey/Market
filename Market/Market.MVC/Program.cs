@@ -1,4 +1,5 @@
 using Market.Application.Extensions;
+using Market.Domain.Extensions;
 using Market.Infrastructure.Extensions;
 using Market.Persistence.Contexts;
 using Market.Persistence.Extensions;
@@ -9,7 +10,7 @@ namespace Market.MVC;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -18,20 +19,24 @@ public class Program
 
         builder.Services.AddIdentity<IdentityUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
+        
         builder.Services.AddApplicationLayer();
         builder.Services.AddInfrastructureLayer();
         builder.Services.AddPersistenceLayer(builder.Configuration);
-        
-        // Add services to the container.
+
         builder.Services.AddControllersWithViews();
 
         var app = builder.Build();
+        
+        using (var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+            await RoleInitializer.SeedRolesAsync(services);
+        }
 
-        // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {
             app.UseExceptionHandler("/Home/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
 
@@ -39,7 +44,6 @@ public class Program
         app.UseStaticFiles();
 
         app.UseRouting();
-
         app.UseAuthorization();
 
         app.MapControllerRoute(
