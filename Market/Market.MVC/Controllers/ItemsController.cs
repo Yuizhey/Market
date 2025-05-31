@@ -40,11 +40,14 @@ public class ItemsController : Controller
         }
     }
 
-    [HttpGet("items")]
-    public async Task<IActionResult> Details([FromQuery] Guid id)
+    [HttpGet("Items/Details/{id}")]
+    public async Task<IActionResult> Details(Guid id)
     {
         var query = new GetByProductIdQuery(id);
         var product = await _mediator.Send(query);
+        if (product == null)
+            return NotFound();
+
         var viewModel = new SingleItemVM
         {
             Title = product.Title,
