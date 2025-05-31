@@ -1,6 +1,7 @@
 using Market.Application.Extensions;
 using Market.Domain.Extensions;
 using Market.Infrastructure.Extensions;
+using Market.Infrastructure.Services;
 using Market.Persistence.Contexts;
 using Market.Persistence.Extensions;
 using Microsoft.AspNetCore.Identity;
@@ -39,7 +40,7 @@ public class Program
             app.UseExceptionHandler("/Home/Error");
             app.UseHsts();
         }
-
+        app.MapHub<NotificationHub>("/notificationhub");
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 

@@ -10,12 +10,19 @@ public static class IServiceCollectionExtensions
     public static void AddInfrastructureLayer(this IServiceCollection collection)
     {
         collection.AddServices();
+        collection.AddSignalRService();
     }
 
     private static void AddServices(this IServiceCollection sericeCollection)
     {
         sericeCollection
             .AddTransient<IMediator, Mediator>()
-            .AddTransient<IAuthService, AuthService>();
+            .AddTransient<IAuthService, AuthService>()
+            .AddTransient<INotificationService, NotificationService>();
+    }
+    
+    private static void AddSignalRService(this IServiceCollection services)
+    {
+        services.AddSignalR();
     }
 }
