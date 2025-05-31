@@ -1,11 +1,14 @@
+using Market.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Market.Persistence.Contexts;
 
 public class ApplicationDbContext : IdentityDbContext
 {
+    public DbSet<Product> Prosucts { get; set; }
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
     }
