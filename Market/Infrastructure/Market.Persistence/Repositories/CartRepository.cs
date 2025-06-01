@@ -25,7 +25,6 @@ public class CartRepository : ICartRepository
     public async Task AddProductToCartAsync(Guid userId, Guid productId)
     {
         var cart = await _dbContext.Carts
-            .Include(c => c.Items)
             .FirstOrDefaultAsync(c => c.UserId == userId);
 
         if (cart == null)
@@ -33,22 +32,25 @@ public class CartRepository : ICartRepository
             cart = new Cart
             {
                 Id = Guid.NewGuid(),
-                UserId = userId,
-                Items = new List<CartItem>()
+                UserId = userId
             };
             _dbContext.Carts.Add(cart);
+            await _dbContext.SaveChangesAsync(); 
         }
+        
+        var itemExists = await _dbContext.CartItems
+            .AnyAsync(ci => ci.CartId == cart.Id && ci.ProductId == productId);
 
-        if (!cart.Items.Any(i => i.ProductId == productId))
+        if (!itemExists)
         {
-            cart.Items.Add(new CartItem
+            _dbContext.CartItems.Add(new CartItem
             {
                 Id = Guid.NewGuid(),
-                ProductId = productId,
-                CartId = cart.Id
+                CartId = cart.Id,
+                ProductId = productId
             });
-        }
 
-        await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

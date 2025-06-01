@@ -46,6 +46,8 @@ public class Program
 
         app.UseRouting();
         app.UseAuthorization();
+        
+        app.MapControllers(); 
 
         app.MapControllerRoute(
             name: "default",
