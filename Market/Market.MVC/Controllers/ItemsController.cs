@@ -1,3 +1,4 @@
+using Market.Application.Features.Products.Commands;
 using Market.Application.Features.Products.Queries.GetByPageNumber;
 using Market.Application.Features.Products.Queries.GetByProductId;
 using Market.MVC.Models.Items;
@@ -55,5 +56,18 @@ public class ItemsController : Controller
             Text = product.Text,
         };
         return View("SingleItem", viewModel);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(AddItemVM viewModel)
+    {
+        var command = new AddNewProductCommand()
+        {
+            Title = viewModel.Title,
+            Price = viewModel.Price,
+            Text = viewModel.Text,
+        };
+        await _mediator.Send(command);
+        return RedirectToAction("Index");
     }
 }

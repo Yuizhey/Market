@@ -13,4 +13,9 @@ public class ProfileController : Controller
     {
         return View();
     }
+    
+    public IActionResult AddNewItem()
+    {
+        return View();
+    }
 }
