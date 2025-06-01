@@ -39,7 +39,11 @@
                                 <span class="badge badge-soft-success ml-2">25 New</span></a>
                             <a class="dropdown-item swap-link" href="dash-invoice.html"><i class="dropdown-icon"></i> Invoice</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item swap-link" href="javascript:void(0)"><i class="las la-sign-out-alt bg-danger-alt text-danger p-1 rounded"></i> Logout</a>
+                            <form id="logoutForm" method="post" asp-controller="Auth" asp-action="Logout" style="display: none;">
+                            </form>
+                            <a class="dropdown-item swap-link" href="javascript:void(0)" onclick="document.getElementById('logoutForm').submit();">
+                                <i class="las la-sign-out-alt bg-danger-alt text-danger p-1 rounded"></i> Logout
+                            </a>
                         </div>
                     </li>
                     <li class="nav-item d-flex align-items-center">

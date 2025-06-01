@@ -1,4 +1,5 @@
 using Market.Application.Features.Auth.Comands.AuthorRegister;
+using Market.Application.Features.Auth.Comands.Logout;
 using Market.Application.Features.Auth.Queries.Login;
 using Market.Application.Features.Auth.Register;
 using Market.MVC.Models.Auth;
@@ -89,5 +90,13 @@ public class AuthController : Controller
         
         ModelState.AddModelError(string.Empty, "Email or password is incorrect.");
         return View(model);
+    }
+    
+    [Authorize]
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        await _mediator.Send(new LogoutCommand());
+        return RedirectToAction("Index", "Home");
     }
 }

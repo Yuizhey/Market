@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Market.MVC.Controllers;
 
-[Authorize]
+
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

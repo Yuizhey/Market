@@ -53,4 +53,9 @@ public class AuthService : IAuthService
         
         return true;
     }
+    
+    public async Task LogoutAsync()
+    {
+        await _signInManager.SignOutAsync();
+    }
 }
