@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <Folder Include="Common\" />
+      <Folder Include="Features\Products\Commands\IncrementProductViewsCount\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -19,6 +20,10 @@
       <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
       <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="2.3.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Features\Products\Commands\IncrementProductViewsCount\IncrementProductViewCountCommand.cs" />
     </ItemGroup>
 
 </Project>
