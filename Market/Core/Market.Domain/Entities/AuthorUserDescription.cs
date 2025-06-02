@@ -1,8 +1,9 @@
+using Market.Domain.Common;
 using Market.Domain.Enums;
 
 namespace Market.Domain.Entities;
 
-public class AuthorUserDescription
+public class AuthorUserDescription : BaseAuditableEntity
 {
     public Guid Id { get; set; }
     public Guid IdentityUserId { get; set; }

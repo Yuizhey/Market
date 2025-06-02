@@ -1,255 +1,139 @@
+@model dynamic
+@{
+    var isAuthor = User.IsInRole("AuthorUser");
+}
 <main role="main">
-        <div class="wrapper">
-
-            <div class="breadcrumb-wrap">
-                <div class="container py-3">
-                    <div class="row d-flex justify-content-md-between justify-content-sm-center">
-                        <div class="col-md-4">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb mb-0">
-                                    <li class="breadcrumb-item mr-1 font-weight-bold"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item ml-1 font-weight-bold active" aria-current="page">
-                                        Library
-                                    </li>
-                                </ol>
-                            </nav>
-                        </div>
-                        <div class="header-actions">
-                            <button class="btn btn-ghost grey-dark font-weight-bold">
-                                <i class="las la-share-alt"></i>
-                                <span>Share</span>
-                            </button>
-                            <button class="btn btn-ghost grey-dark like-button font-weight-bold">
-                                <i class="las la-hand-holding-heart"></i>
-                                <span>150 Likes</span>
-                            </button>
-                            <button class="btn btn-ghost grey-dark font-weight-bold">
-                                <i class="las la-bookmark"></i>
-                                <span><span>Save for Later</span></span>
-                            </button>
-
-                            <!---->
+    <div class="wrapper">
+        <div class="container">
+            <div class="row">
+                <aside class="col-lg-3 pt-4 pt-lg-0">
+                    <div class="row">
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card mb-4">
+                                <div class="card-body px-3 py-2">
+                                    <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
+                                        <img src="assets/img/100x100.png" class="img-lg rounded-circle" alt="profile image">
+                                        <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
+                                            <h6 class="mb-0">Seller Profile</h6>
+                                            <p class="text-muted mb-1">shoot@gmail.com</p>
+                                            <p class="mb-0 text-primary font-weight-bold small">Seller Profile</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-
-            <div class="container">
-                <div class="row">
-                    <aside class="col-lg-3 pt-4 pt-lg-0">
-                        <div class="row">
-                            <div class="col-md-12 grid-margin stretch-card">
-                                <div class="card mb-4">
-                                    <div class="card-body px-3 py-2">
-                                        <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
-                                            <img src="assets/img/100x100.png" class="img-lg rounded-circle" alt="profile image">
-                                            <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
-                                                <h6 class="mb-0">Seller Profile</h6>
-                                                <p class="text-muted mb-1">shoot@gmail.com</p>
-                                                <p class="mb-0 text-primary font-weight-bold small">Seller Profile</p>
-                                            </div>
-                                        </div>
+                    <div class="mb-4">
+                        <ul class="nav flex-column dash-nav">
+                            <li class="nav-item">
+                                <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dashboard.html">
+                                    <div><i class="las la-arrow-right"></i>Dashboard</div>
+                                    <div class="d-flex align-items-center">
+                                        <p class="mb-0 text-small text-success">Profile Verified</p>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-4">
-                            <ul class="nav flex-column dash-nav">
-                                <li class="nav-item">
-                                    <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dashboard.html">
-                                        <div><i class="las la-arrow-right"></i>Dashboard</div>
-                                        <div class="d-flex  align-items-center">
-                                            <p class="mb-0 text-small text-success">
-                                                Profile Verified
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dash-downloads.html">
-                                        <div><i class="las la-cloud-download-alt"></i>Downloads</div>
-                                        <div class="d-flex  align-items-center">
-                                            <p class="mb-0 text-small">6 downloads</p>
-                                        </div>
-                                    </a>
-                                <li class="nav-item">
-                                    <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dash-my-items.html">
-                                        <div><i class="las la-file"></i>My items</div>
-                                        <div class="d-flex  align-items-center">
-                                            <p class="mb-0 text-small text-danger">2 Pending</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dash-add-item.html">
-                                        <div><i class="las la-plus"></i>Add item</div>
-
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dash-settings.html">
-                                        <div><i class="las la-cog"></i>Settings</div>
-
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dash-invoice.html">
-                                        <div><i class="las la-receipt"></i>Invoice</div>
-                                        <div class="d-flex  align-items-center">
-                                            <p class="mb-0 text-small text-success">
-
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active d-flex justify-content-between align-items-center text-danger" aria-current="page" href="#">
-                                        <div><i class="las la-sign-out-alt"></i>Logout</div>
-
-                                    </a>
-                                </li>
-                            </ul>
-
-                            <h6 class="sidebar-heading d-flex justify-content-between align-items-center mt-lg-6 mt-sm-3 mb-1 text-muted">
-                                <span>Help center</span>
-                                <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <line x1="12" y1="8" x2="12" y2="16"></line>
-                                        <line x1="8" y1="12" x2="16" y2="12"></line>
-                                    </svg>
                                 </a>
-                            </h6>
-                            <ul class="nav flex-column dash-nav">
-
-                                <li class="nav-item">
-                                    <a class="nav-link active d-flex justify-content-between align-items-center text-small" aria-current="page" href="#">
-
-                                        Faq
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active d-flex justify-content-between align-items-center text-small" aria-current="page" href="#">
-                                        Support
-
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active d-flex justify-content-between align-items-center text-small" aria-current="page" href="#">
-                                        Contact
-
-                                    </a>
-                                </li>
-                            </ul>
-
-                        </div>
-                    </aside>
-                    <div class="col-lg-9">
-                        <div class="row">
-                            <div class="col">
-                                <div class="notify-seetings mb-4">
-                                    <ul class="list-group">
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <h6 class="mb-0">Sales Notification</h6>
-                                            </div>
-                                            <div class="toggle-btn">
-                                                <div class="custom-control custom-switch">
-                                                    <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                                    <label class="custom-control-label" for="customSwitch1"></label>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <h6 class="mb-0">Support ticket</h6>
-                                            </div>
-                                            <div class="toggle-btn">
-                                                <div class="custom-control custom-switch">
-                                                    <input type="checkbox" class="custom-control-input" id="customSwitch2">
-                                                    <label class="custom-control-label" for="customSwitch2"></label>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <h6 class="mb-0">Latest Updates</h6>
-                                            </div>
-                                            <div class="toggle-btn">
-                                                <div class="custom-control custom-switch">
-                                                    <input type="checkbox" class="custom-control-input" id="customSwitch3">
-                                                    <label class="custom-control-label" for="customSwitch3"></label>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <h6 class="mb-0">Marketing mails</h6>
-                                            </div>
-                                            <div class="toggle-btn">
-                                                <div class="custom-control custom-switch">
-                                                    <input type="checkbox" class="custom-control-input" id="customSwitch4">
-                                                    <label class="custom-control-label" for="customSwitch4"></label>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-start align-items-center">
-                                            <button type="button" class="btn btn-primary">Save</button>
-                                            <button type="button" class="btn btn-secondary ml-2">Reset</button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="card mb-4">
-                                    <div class="card-header border-bottom">
-                                        <div class="d-flex align-items-center">
-                                            <div>
-                                                <h6 class="card-title mb-0">Profile Settings</h6>
-                                            </div>
-
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dash-downloads.html">
+                                    <div><i class="las la-cloud-download-alt"></i>Downloads</div>
+                                    <div class="d-flex align-items-center">
+                                        <p class="mb-0 text-small">6 downloads</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dash-my-items.html">
+                                    <div><i class="las la-file"></i>My items</div>
+                                    <div class="d-flex align-items-center">
+                                        <p class="mb-0 text-small text-danger">2 Pending</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dash-add-item.html">
+                                    <div><i class="las la-plus"></i>Add item</div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dash-settings.html">
+                                    <div><i class="las la-cog"></i>Settings</div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dash-invoice.html">
+                                    <div><i class="las la-receipt"></i>Invoice</div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active d-flex justify-content-between align-items-center text-danger" aria-current="page" href="#">
+                                    <div><i class="las la-sign-out-alt"></i>Logout</div>
+                                </a>
+                            </li>
+                        </ul>
+                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center mt-lg-6 mt-sm-3 mb-1 text-muted">
+                            <span>Help center</span>
+                            <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                                </svg>
+                            </a>
+                        </h6>
+                        <ul class="nav flex-column dash-nav">
+                            <li class="nav-item">
+                                <a class="nav-link active d-flex justify-content-between align-items-center text-small" aria-current="page" href="#">Faq</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active d-flex justify-content-between align-items-center text-small" aria-current="page" href="#">Support</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active d-flex justify-content-between align-items-center text-small" aria-current="page" href="#">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card mb-4">
+                                <div class="card-header border-bottom">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <h6 class="card-title mb-0">Profile Settings</h6>
                                         </div>
                                     </div>
-                                    <div class="card-body pt-3">
-                                        <form role="form" class="form-width">
-
-                                            <div class="row">
-                                                <div class="form-group col-md-6">
-                                                    <input type="text" class="form-control" placeholder="First Name">
-                                                    <i class="fa fa-user iconalign"></i> </div>
-                                                <div class="form-group col-md-6">
-                                                    <input type="text" class="form-control" placeholder="Last Name">
-                                                    <i class="fa fa-user iconalign"></i> </div>
+                                </div>
+                                <div class="card-body pt-3">
+                                    <form role="form" class="form-width" asp-action="@(isAuthor ? "AddAuthorUserDescription" : "AddUserDescription")" method="post" asp-controller="Profile">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <input type="text" class="form-control" placeholder="First Name" name="FirstName">
+                                                <i class="fa fa-user iconalign"></i>
                                             </div>
-                                            <div class="row">
-                                                <div class="form-group col-md-6">
-                                                    <input type="text" class="form-control" placeholder="Username">
-                                                    <i class="fa fa-user iconalign"></i> </div>
-                                                <div class="form-group col-md-6">
-                                                    <input type="number" class="form-control" placeholder="Phone Number">
-                                                    <i class="fa fa-phone iconalign"></i> </div>
+                                            <div class="form-group col-md-6">
+                                                <input type="text" class="form-control" placeholder="Last Name" name="LastName">
+                                                <i class="fa fa-user iconalign"></i>
                                             </div>
-                                            <div class="form-group">
-                                                <input type="email" class="form-control" placeholder="Your E-Mail Address">
-                                                <i class="fa fa-envelope iconalign"></i> </div>
-                                            <div class="row">
-                                                <div class="col-md-6 form-group">
-                                                    <select name="gender" class="form-control" style="padding-left:10px !important">
-                                                        <option value="">Gender</option>
-                                                        <option>Male</option>
-                                                        <option>Female</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-6 form-group">
-                                                    <input type="text" class="form-control" placeholder="Date Of Birth : DD/MM/YY">
-                                                    <i class="fa fa-birthday-cake iconalign"></i> </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <select name="Gender" class="form-control" style="padding-left:10px !important">
+                                                    <option value="">Gender</option>
+                                                    <option value="0">Male</option>
+                                                    <option value="1">Female</option>
+                                                </select>
                                             </div>
+                                            <div class="form-group col-md-6">
+                                                <input type="number" class="form-control" placeholder="Phone Number" name="Phone">
+                                                <i class="fa fa-phone iconalign"></i>
+                                            </div>
+                                        </div>
+                                        @if (isAuthor)
+                                        {
                                             <div class="row">
                                                 <div class="col-sm-6 form-group">
-                                                    <select name="country" class="form-control" style="padding-left:10px !important">
+                                                    <select name="Country" class="form-control" style="padding-left:10px !important">
                                                         <option value="">Country</option>
                                                         <option>United States</option>
                                                         <option>France</option>
@@ -257,48 +141,28 @@
                                                         <option>India</option>
                                                     </select>
                                                 </div>
-                                                <div class="form-group col-md-6">
-                                                    <input type="text" class="form-control" style="padding-left:10px !important" placeholder="Your Company's Name">
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6" style="min-height:100px">
+                                                    <textarea class="form-control" style="min-height:100px; max-height:100px" placeholder="Home Address" name="HomeAddress"></textarea>
+                                                    <i class="fa fa-street-view iconalign" style="position: relative; top:-100px;"></i>
+                                                </div>
+                                                <div class="form-group col-md-6" style="min-height:100px">
+                                                    <textarea class="form-control" style="min-height:100px; max-height:100px" placeholder="Office Address" name="Address"></textarea>
+                                                    <i class="fa fa-street-view iconalign" style="position: relative; top:-100px;"></i>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="form-group col-md-6" style="min-height:100px">
-                                                    <textarea class="form-control" style="min-height:100px; max-height:100px" placeholder="Home Address"></textarea>
-
-                                                    <i class="fa fa-street-view iconalign" style="position: relative; top:-100px;"></i> </div>
-                                                <div class="form-group col-md-6" style="min-height:100px">
-                                                    <textarea class="form-control" style="min-height:100px; max-height:100px" placeholder="Office Address"></textarea>
-
-                                                    <i class="fa fa-street-view iconalign" style="position: relative; top:-100px;"></i> </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group col-md-6">
-                                                    <input type="text" class="form-control" placeholder="Password">
-                                                    <i class="fa fa-lock iconalign"></i> </div>
-                                                <div class="form-group col-md-6">
-                                                    <input type="number" class="form-control" placeholder="Confirm Password">
-                                                    <i class="fa fa-lock iconalign"></i> </div>
-                                            </div>
-                                            <div class="custom-control custom-checkbox mb-3">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                <label class="custom-control-label" for="customCheck1">I agree with the terms &amp; conditions.</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox mb-3">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                <label class="custom-control-label" for="customCheck2">Recieve best offers and updates.</label>
-                                            </div>
-                                            <div class="form-group">
-                                                <button class="btn btn-primary" type="submit">Register</button>
-                                            </div>
-
-                                        </form>
-                                    </div>
+                                        }
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" type="submit">Save</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+</main>
