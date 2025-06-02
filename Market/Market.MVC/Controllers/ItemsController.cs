@@ -16,29 +16,20 @@ public class ItemsController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index([FromQuery]string type)
+    public async Task<IActionResult> Index([FromQuery] string type, [FromQuery] int page = 1)
     {
-        
-        if (type == "grid")
+        var pageSize = type == "grid" ? 15 : 9;
+        var query = new GetByPageNumberQuery(page, pageSize);
+        var result = await _mediator.Send(query);
+
+        var viewModel = new ItemsVM
         {
-            var query = new GetByPageNumberQuery(1, 15);
-            var products = await _mediator.Send(query);
-            var viewModel = new ItemsVM
-            {
-                Products = products
-            };
-            return View("ItemsGrid", viewModel);
-        }
-        else
-        {
-            var query = new GetByPageNumberQuery(1, 9);
-            var products = await _mediator.Send(query);
-            var viewModel = new ItemsVM
-            {
-                Products = products
-            };
-            return View("ItemsList", viewModel);
-        }
+            Products = result.Products,
+            TotalPages = result.TotalPages,
+            CurrentPage = result.CurrentPage
+        };
+
+        return View(type == "grid" ? "ItemsGrid" : "ItemsList", viewModel);
     }
 
     [HttpGet("Items/Details/{id}")]

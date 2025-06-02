@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Market.Application.Features.Products.Queries.GetByPageNumber;
 
-public class GetByPageNumberQueryHandler : IRequestHandler<GetByPageNumberQuery, IEnumerable<GetByPageNumberDto>>
+public class GetByPageNumberQueryHandler : IRequestHandler<GetByPageNumberQuery, GetByPageNumberREsult>
 {
     private readonly IProductRepository _productRepository;
 
@@ -12,14 +12,23 @@ public class GetByPageNumberQueryHandler : IRequestHandler<GetByPageNumberQuery,
         _productRepository = productRepository;
     }
 
-    public async Task<IEnumerable<GetByPageNumberDto>> Handle(GetByPageNumberQuery request, CancellationToken cancellationToken)
+    public async Task<GetByPageNumberREsult> Handle(GetByPageNumberQuery request, CancellationToken cancellationToken)
     {
-        var products =  await _productRepository.GetProductsByPage(request.page, request.pageSize);
-        return products.Select(p => new GetByPageNumberDto
+        var totalCount = await _productRepository.GetTotalProductCountAsync();
+        var products = await _productRepository.GetProductsByPage(request.Page, request.PageSize);
+
+        var totalPages = (int)Math.Ceiling(totalCount / (double)request.PageSize);
+
+        return new GetByPageNumberREsult
         {
-            Id = p.Id,
-            Title = p.Title,
-            Price = p.Price
-        });
+            Products = products.Select(p => new GetByPageNumberDto
+            {
+                Id = p.Id,
+                Title = p.Title,
+                Price = p.Price
+            }),
+            TotalPages = totalPages,
+            CurrentPage = request.Page
+        };
     }
 }

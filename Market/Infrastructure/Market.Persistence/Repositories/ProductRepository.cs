@@ -34,4 +34,10 @@ public class ProductRepository : IProductRepository
     {
         await _repository.AddAsync(product);
     }
+    
+    public async Task<int> GetTotalProductCountAsync()
+    {
+        return await _repository.Entities.CountAsync();
+    }
+
 }
