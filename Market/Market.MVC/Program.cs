@@ -6,6 +6,7 @@ using Market.Persistence.Contexts;
 using Market.Persistence.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Minio;
 
 namespace Market.MVC;
 
@@ -20,7 +21,21 @@ public class Program
 
         builder.Services.AddIdentity<IdentityUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
-        
+        builder.Services.AddSingleton<IMinioClient>(sp =>
+        {
+            var configuration = sp.GetRequiredService<IConfiguration>();
+            var minioConfig = configuration.GetSection("Minio");
+            var client = new MinioClient()
+                .WithEndpoint(minioConfig["Endpoint"])
+                .WithCredentials(minioConfig["AccessKey"], minioConfig["SecretKey"]);
+    
+            if (bool.Parse(minioConfig["UseSSL"]))
+            {
+                client.WithSSL();
+            }
+    
+            return client.Build();
+        });
         builder.Services.AddApplicationLayer();
         builder.Services.AddInfrastructureLayer();
         builder.Services.AddPersistenceLayer(builder.Configuration);
