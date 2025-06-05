@@ -30,10 +30,10 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseAuditabl
         return Task.CompletedTask;
     }
  
-    public Task DeleteAsync(T entity)
-    {
+    public async Task DeleteAsync(T entity)
+    { 
         _dbContext.Set<T>().Remove(entity);
-        return Task.CompletedTask;
+        await _dbContext.SaveChangesAsync();
     }
  
     public async Task<List<T>> GetAllAsync()

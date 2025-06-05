@@ -8,7 +8,6 @@
 
     <ItemGroup>
       <Folder Include="Common\" />
-      <Folder Include="Features\Products\Commands\IncrementProductViewsCount\" />
     </ItemGroup>
 
     <ItemGroup>
