@@ -10,11 +10,13 @@ public class AddNewProductCommandHandler : IRequestHandler<AddNewProductCommand>
 {
     private readonly IProductRepository _productRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IAuthorUserDescriptionRepository _authorUserDescriptionRepository;
 
-    public AddNewProductCommandHandler(IProductRepository productRepository, IHttpContextAccessor httpContextAccessor)
+    public AddNewProductCommandHandler(IProductRepository productRepository, IHttpContextAccessor httpContextAccessor, IAuthorUserDescriptionRepository authorUserDescriptionRepository)
     {
         _productRepository = productRepository;
         _httpContextAccessor = httpContextAccessor;
+        _authorUserDescriptionRepository = authorUserDescriptionRepository;
     }
 
     public async Task Handle(AddNewProductCommand request, CancellationToken cancellationToken)
@@ -24,14 +26,14 @@ public class AddNewProductCommandHandler : IRequestHandler<AddNewProductCommand>
         {
             throw new UnauthorizedAccessException("Пользователь не аутентифицирован.");
         }
-
+        var authorId = await _authorUserDescriptionRepository.GetBusinessIdByIdentityUserIdAsync(authorUserId);
         var product = new Product
         {
             Title = request.Title,
             Text = request.Text,
             Price = request.Price,
             Id = Guid.NewGuid(),
-            AuthorUserId = authorUserId 
+            AuthorUserId = authorId
         };
 
         await _productRepository.AddProductAsync(product);

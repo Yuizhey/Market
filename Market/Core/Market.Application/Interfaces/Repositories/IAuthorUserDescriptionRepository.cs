@@ -4,6 +4,6 @@ namespace Market.Application.Interfaces.Repositories;
 
 public interface IAuthorUserDescriptionRepository
 {
-    Task<AuthorUserDescription?> GetByIdentityUserIdAsync(Guid identityUserId);
+    Task<Guid> GetBusinessIdByIdentityUserIdAsync(Guid identityUserId);
     Task<AuthorUserDescription> AddAsync(AuthorUserDescription entity);
 } 

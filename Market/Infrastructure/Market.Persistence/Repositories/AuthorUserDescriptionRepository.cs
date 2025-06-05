@@ -14,9 +14,10 @@ public class AuthorUserDescriptionRepository : IAuthorUserDescriptionRepository
         _repository = repository;
     }
 
-    public async Task<AuthorUserDescription?> GetByIdentityUserIdAsync(Guid identityUserId)
+    public async Task<Guid> GetBusinessIdByIdentityUserIdAsync(Guid identityUserId)
     {
-        return await _repository.Entities.FirstOrDefaultAsync(x => x.IdentityUserId == identityUserId);
+        var user =  await _repository.Entities.FirstOrDefaultAsync(x => x.IdentityUserId == identityUserId);
+        return user.Id;
     }
 
     public async Task<AuthorUserDescription> AddAsync(AuthorUserDescription entity)
