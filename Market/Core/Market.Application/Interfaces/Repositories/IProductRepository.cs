@@ -1,4 +1,5 @@
 using Market.Domain.Entities;
+using Market.Domain.Enums;
 
 namespace Market.Application.Interfaces.Repositories;
 
@@ -9,4 +10,6 @@ public interface IProductRepository
     Task AddProductAsync(Product product);
     Task<int> GetTotalProductCountAsync();
     Task<IEnumerable<Product>> GetProductsByUserId(Guid userId);
+    Task<IEnumerable<Product>> GetProductsByTypes(IEnumerable<ProductType> types, int page, int pageSize);
+    Task<int> GetTotalProductCountByTypesAsync(IEnumerable<ProductType> types);
 }

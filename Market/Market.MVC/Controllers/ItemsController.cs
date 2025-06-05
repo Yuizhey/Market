@@ -1,6 +1,7 @@
 using Market.Application.Features.Products.Commands;
 using Market.Application.Features.Products.Queries.GetByPageNumber;
 using Market.Application.Features.Products.Queries.GetByProductId;
+using Market.Domain.Enums;
 using Market.MVC.Models.Items;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +17,19 @@ public class ItemsController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index([FromQuery] string type, [FromQuery] int page = 1)
+    public async Task<IActionResult> Index([FromQuery] string type, [FromQuery] int page = 1, [FromQuery] string? productTypes = null)
     {
         var pageSize = type == "grid" ? 15 : 9;
-        var query = new GetByPageNumberQuery(page, pageSize);
+        
+        IEnumerable<ProductType>? selectedTypes = null;
+        if (!string.IsNullOrEmpty(productTypes))
+        {
+            selectedTypes = productTypes.Split(',')
+                .Select(t => Enum.Parse<ProductType>(t))
+                .ToList();
+        }
+
+        var query = new GetByPageNumberQuery(page, pageSize, selectedTypes);
         var result = await _mediator.Send(query);
 
         var viewModel = new ItemsVM

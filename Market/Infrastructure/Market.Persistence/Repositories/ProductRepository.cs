@@ -1,5 +1,6 @@
 using Market.Application.Interfaces.Repositories;
 using Market.Domain.Entities;
+using Market.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Market.Persistence.Repositories;
@@ -43,5 +44,25 @@ public class ProductRepository : IProductRepository
     public async Task<IEnumerable<Product>> GetProductsByUserId(Guid userId)
     {
         return await _repository.Entities.Where(e => e.AuthorUserId == userId).ToListAsync();
+    }
+
+    public async Task<IEnumerable<Product>> GetProductsByTypes(IEnumerable<ProductType> types, int page, int pageSize)
+    {
+        if (page < 1) page = 1;
+        if (pageSize < 1) pageSize = 10;
+
+        return await _repository.Entities
+            .Where(p => types.Contains(p.ProductType))
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .AsTracking()
+            .ToListAsync();
+    }
+
+    public async Task<int> GetTotalProductCountByTypesAsync(IEnumerable<ProductType> types)
+    {
+        return await _repository.Entities
+            .Where(p => types.Contains(p.ProductType))
+            .CountAsync();
     }
 }

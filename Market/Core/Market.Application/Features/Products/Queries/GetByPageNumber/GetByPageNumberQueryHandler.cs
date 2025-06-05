@@ -1,5 +1,6 @@
 using Market.Application.Interfaces.Repositories;
 using Market.Application.Interfaces.Services;
+using Market.Domain.Entities;
 using MediatR;
 
 namespace Market.Application.Features.Products.Queries.GetByPageNumber;
@@ -19,8 +20,20 @@ public class GetByPageNumberQueryHandler : IRequestHandler<GetByPageNumberQuery,
 
     public async Task<GetByPageNumberREsult> Handle(GetByPageNumberQuery request, CancellationToken cancellationToken)
     {
-        var products = await _productRepository.GetProductsByPage(request.Page, request.PageSize);
-        var totalCount = await _productRepository.GetTotalProductCountAsync();
+        IEnumerable<Product> products;
+        int totalCount;
+
+        if (request.Types != null && request.Types.Any())
+        {
+            products = await _productRepository.GetProductsByTypes(request.Types, request.Page, request.PageSize);
+            totalCount = await _productRepository.GetTotalProductCountByTypesAsync(request.Types);
+        }
+        else
+        {
+            products = await _productRepository.GetProductsByPage(request.Page, request.PageSize);
+            totalCount = await _productRepository.GetTotalProductCountAsync();
+        }
+
         var totalPages = (int)Math.Ceiling((double)totalCount / request.PageSize);
 
         var productDtos = new List<GetByPageNumberDto>();
