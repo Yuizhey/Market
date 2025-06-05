@@ -4,10 +4,12 @@ using Market.Application.Features.Profile.Commands.AddAuthorUserDescription;
 using Market.Application.Features.Profile.Commands.AddUserDescription;
 using Market.MVC.Models.Profile;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Market.MVC.Controllers;
 
+[Authorize]
 public class ProfileController : Controller
 {
     private readonly IMediator _mediator;

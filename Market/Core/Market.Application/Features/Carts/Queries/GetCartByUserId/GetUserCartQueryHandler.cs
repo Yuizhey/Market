@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Market.Application.Interfaces.Repositories;
+using Market.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
@@ -9,23 +10,46 @@ public class GetUserCartHandler : IRequestHandler<GetUserCartQuery, GetUserCartD
 {
     private readonly ICartRepository _cartRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IUserDescriptionRepository _userDescriptionRepository;
+    private readonly IAuthorUserDescriptionRepository _authorUserDescriptionRepository;
 
-    public GetUserCartHandler(ICartRepository cartRepository, IHttpContextAccessor httpContextAccessor)
+    public GetUserCartHandler(
+        ICartRepository cartRepository, 
+        IHttpContextAccessor httpContextAccessor,
+        IUserDescriptionRepository userDescriptionRepository,
+        IAuthorUserDescriptionRepository authorUserDescriptionRepository)
     {
         _cartRepository = cartRepository;
         _httpContextAccessor = httpContextAccessor;
+        _userDescriptionRepository = userDescriptionRepository;
+        _authorUserDescriptionRepository = authorUserDescriptionRepository;
     }
 
     public async Task<GetUserCartDto> Handle(GetUserCartQuery request, CancellationToken cancellationToken)
     {
-        var userId = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (string.IsNullOrEmpty(userId) || !Guid.TryParse(userId, out var parsedUserId))
+        var identityUserId = _httpContextAccessor.HttpContext!.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userRole = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
+        
+        Guid userId;
+        if (userRole == UserRoles.CLientUser.ToString())
         {
-            throw new UnauthorizedAccessException("Пользователь не аутентифицирован.");
+            var userDescriptionId = await _userDescriptionRepository.GetBusinessIdByIdentityUserIdAsync(Guid.Parse(identityUserId!));
+            if (userDescriptionId == null)
+                throw new InvalidOperationException("User description not found");
+            userId = userDescriptionId;
         }
-
-        var cart = await _cartRepository.GetByUserIdAsync(parsedUserId);
-
+        else if (userRole == UserRoles.AuthorUser.ToString())
+        {
+            var authorUserDescriptionId = await _authorUserDescriptionRepository.GetBusinessIdByIdentityUserIdAsync(Guid.Parse(identityUserId!));
+            if (authorUserDescriptionId == null)
+                throw new InvalidOperationException("Author user description not found");
+            userId = authorUserDescriptionId;
+        }
+        else
+        {
+            throw new InvalidOperationException("Invalid user role");
+        }
+        var cart = await _cartRepository.GetByUserIdAsync(userId);
         if (cart == null)
             return new GetUserCartDto();
 
