@@ -10,4 +10,5 @@ public sealed class Product : BaseAuditableEntity
     public decimal Price { get; set; }
     public Guid AuthorUserId { get; set; } 
     public AuthorUserDescription? Author { get; set; }
+    public string? CoverImagePath { get; set; }
 }

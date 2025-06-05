@@ -9,4 +9,5 @@ public class AddNewProductCommand : IRequest
     public required string Text { get; set; }
     public decimal Price { get; set; }
     public Guid AuthorUserId { get; set; } 
+    public IFormFile? CoverImage { get; set; }
 }

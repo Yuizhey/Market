@@ -18,7 +18,8 @@ public static class IServiceCollectionExtensions
         sericeCollection
             .AddTransient<IMediator, Mediator>()
             .AddTransient<IAuthService, AuthService>()
-            .AddTransient<INotificationService, NotificationService>();
+            .AddTransient<INotificationService, NotificationService>()
+            .AddTransient<IMinioService, MinioService>();
     }
     
     private static void AddSignalRService(this IServiceCollection services)

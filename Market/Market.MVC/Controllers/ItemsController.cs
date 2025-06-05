@@ -50,13 +50,14 @@ public class ItemsController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(AddItemVM viewModel)
+    public async Task<IActionResult> Create([FromForm] AddItemVM viewModel)
     {
-        var command = new AddNewProductCommand()
+        var command = new AddNewProductCommand
         {
             Title = viewModel.Title,
             Price = viewModel.Price,
             Text = viewModel.Text,
+            CoverImage = viewModel.CoverImage
         };
         await _mediator.Send(command);
         return RedirectToAction("Index");
