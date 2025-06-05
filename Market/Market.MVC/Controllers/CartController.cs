@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using Market.Application.Features.Carts.Commands.AddItemToCart;
 using Market.Application.Features.Carts.Queries.GetCartByUserId;
 using Market.MVC.Models.Cart;
@@ -36,9 +35,7 @@ public class CartController : Controller
     [HttpPost("Cart/AddItemToCart/{productId}")]
     public async Task<IActionResult> AddItemToCart([FromRoute]Guid productId)
     {
-        var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-
-        var command = new AddItemToCartCommand(userId, productId);
+        var command = new AddItemToCartCommand(productId);
         await _mediator.Send(command);
 
         return Ok();
