@@ -12,17 +12,20 @@ public class AuthService : IAuthService
     private readonly SignInManager<IdentityUser> _signInManager;
     private readonly IUserDescriptionRepository _userDescriptionRepository;
     private readonly IAuthorUserDescriptionRepository _authorUserDescriptionRepository;
+    private readonly IEmailService _emailService;
  
     public AuthService(
         UserManager<IdentityUser> userManager, 
         SignInManager<IdentityUser> signInManager,
         IUserDescriptionRepository userDescriptionRepository,
-        IAuthorUserDescriptionRepository authorUserDescriptionRepository)
+        IAuthorUserDescriptionRepository authorUserDescriptionRepository,
+        IEmailService emailService)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _userDescriptionRepository = userDescriptionRepository;
         _authorUserDescriptionRepository = authorUserDescriptionRepository;
+        _emailService = emailService;
     }
     
     public async Task<bool> RegisterAsync(string userName, string password, string email, string confirmPassword)
@@ -42,6 +45,15 @@ public class AuthService : IAuthService
 
         await _userDescriptionRepository.AddAsync(userDescription);
         await _signInManager.SignInAsync(user, isPersistent: false);
+        
+        var subject = "Добро пожаловать в Market!";
+        var message = $"Здравствуйте, {userName}!\n\n" +
+                     "Спасибо за регистрацию в нашем магазине.\n" +
+                     $"Ваш логин: {email}\n" +
+                     $"Ваш пароль: {password}\n\n" +
+                     "С уважением,\nКоманда Market";
+        
+        await _emailService.SendEmailAsync(email, subject, message);
         
         return true;
     }
@@ -74,6 +86,15 @@ public class AuthService : IAuthService
 
         await _authorUserDescriptionRepository.AddAsync(authorUserDescription);
         await _signInManager.SignInAsync(user, isPersistent: false);
+        
+        var subject = "Добро пожаловать в Market как автор!";
+        var message = $"Здравствуйте, {authorUserName}!\n\n" +
+                     "Спасибо за регистрацию в качестве автора в нашем магазине.\n" +
+                     $"Ваш логин: {email}\n" +
+                     $"Ваш пароль: {password}\n\n" +
+                     "С уважением,\nКоманда Market";
+        
+        await _emailService.SendEmailAsync(email, subject, message);
         
         return true;
     }
