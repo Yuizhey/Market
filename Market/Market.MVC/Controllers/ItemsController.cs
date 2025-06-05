@@ -73,4 +73,11 @@ public class ItemsController : Controller
         await _mediator.Send(command);
         return RedirectToAction("Index");
     }
+
+    [HttpDelete("Items/Delete/{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        await _mediator.Send(new DeleteProductCommand(id));
+        return Ok();
+    }
 }

@@ -35,6 +35,15 @@ public class ProductRepository : IProductRepository
     {
         await _repository.AddAsync(product);
     }
+
+    public async Task DeleteProductAsync(Guid id)
+    {
+        var product = await _repository.Entities.FirstOrDefaultAsync(p => p.Id == id);
+        if (product != null)
+        {
+            await _repository.DeleteAsync(product);
+        }
+    }
     
     public async Task<int> GetTotalProductCountAsync()
     {

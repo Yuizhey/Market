@@ -196,8 +196,7 @@
                                                     <td>
                                                         <div class="btn-group" role="group" aria-label="Basic example">
                                                             <button type="button" class="btn btn-sm btn-primary"><i class="las la-edit"></i></button>
-
-                                                            <button type="button" class="btn btn-sm btn-danger"><i class="las la-trash-alt"></i></button>
+                                                            <button type="button" class="btn btn-sm btn-danger delete-product" data-product-id="@product.Id"><i class="las la-trash-alt"></i></button>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -229,3 +228,34 @@
 
     </div>
     </main>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-product');
+            
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', async function() {
+                    if (confirm('Вы уверены, что хотите удалить этот товар?')) {
+                        const productId = this.getAttribute('data-product-id');
+                        try {
+                            const response = await fetch(`/Items/Delete/${productId}`, {
+                                method: 'DELETE'
+                            });
+                            
+                            if (response.ok) {
+                                // Удаляем строку таблицы с товаром
+                                this.closest('tr').remove();
+                            } else {
+                                alert('Произошла ошибка при удалении товара');
+                            }
+                        } catch (error) {
+                            console.error('Ошибка:', error);
+                            alert('Произошла ошибка при удалении товара');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

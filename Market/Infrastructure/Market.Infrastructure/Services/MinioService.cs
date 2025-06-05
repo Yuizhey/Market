@@ -51,17 +51,26 @@ public class MinioService : IMinioService
         
         using (var stream = file.OpenReadStream())
         {
-            var putObjectArgs = new PutObjectArgs()
-                .WithBucket(_bucketName)
-                .WithObject(objectName)
-                .WithStreamData(stream)
-                .WithObjectSize(file.Length)
-                .WithContentType(file.ContentType);
-
-            await _minioClient.PutObjectAsync(putObjectArgs, cancellationToken);
+            await _minioClient.PutObjectAsync(
+                new PutObjectArgs()
+                    .WithBucket(_bucketName)
+                    .WithObject(objectName)
+                    .WithStreamData(stream)
+                    .WithObjectSize(file.Length)
+                    .WithContentType(file.ContentType),
+                cancellationToken);
         }
 
         return objectName;
+    }
+
+    public async Task DeleteFileAsync(string filePath, CancellationToken cancellationToken)
+    {
+        await _minioClient.RemoveObjectAsync(
+            new RemoveObjectArgs()
+                .WithBucket(_bucketName)
+                .WithObject(filePath),
+            cancellationToken);
     }
 
     public async Task<string> GetCoverImageUrlAsync(string objectName, CancellationToken cancellationToken)
