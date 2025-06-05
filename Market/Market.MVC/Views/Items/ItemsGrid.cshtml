@@ -198,7 +198,7 @@
                                 <div class="card item-card h-100 border-0">
                                     <div class="item-card__image rounded">
                                         <a asp-controller="Items" asp-action="Details" asp-route-id="@product.Id">
-                                            <img src="assets/img/520x400.png" class="img-fluid rounded" alt="">
+                                            <img src="@product.ImageURL" class="img-fluid rounded" alt="">
                                         </a>
                                         <div onclick="addToCart('@product.Id')" class="hover-icons">
                                             <ul class="list-unstyled">

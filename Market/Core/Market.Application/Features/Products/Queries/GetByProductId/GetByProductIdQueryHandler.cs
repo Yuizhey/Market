@@ -19,6 +19,7 @@ public class GetByProductIdQueryHandler : IRequestHandler<GetByProductIdQuery, G
             Title = product.Title,
             Price = product.Price,
             Text = product.Text,
+            ImageURL = product.CoverImagePath
         };
     }
 }
