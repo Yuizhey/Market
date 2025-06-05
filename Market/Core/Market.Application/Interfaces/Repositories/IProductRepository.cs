@@ -8,4 +8,5 @@ public interface IProductRepository
     Task<Product> GetProductByIdAsync(Guid id);
     Task AddProductAsync(Product product);
     Task<int> GetTotalProductCountAsync();
+    Task<IEnumerable<Product>> GetProductsByUserId(Guid userId);
 }

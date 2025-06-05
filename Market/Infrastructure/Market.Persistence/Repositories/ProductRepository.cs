@@ -40,4 +40,8 @@ public class ProductRepository : IProductRepository
         return await _repository.Entities.CountAsync();
     }
 
+    public async Task<IEnumerable<Product>> GetProductsByUserId(Guid userId)
+    {
+        return await _repository.Entities.Where(e => e.AuthorUserId == userId).ToListAsync();
+    }
 }

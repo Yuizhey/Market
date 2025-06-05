@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Market.Application.Features.Products.Queries.GetByUserId;
 using Market.Application.Features.Profile.Commands.AddAuthorUserDescription;
 using Market.Application.Features.Profile.Commands.AddUserDescription;
 using Market.MVC.Models.Profile;
@@ -69,5 +70,17 @@ public class ProfileController : Controller
     public IActionResult Settings()
     {
         return View("PrifileSettings");
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> MyProducts()
+    {
+        var query = new GetByUserIdQuery();
+        var myProducts = await _mediator.Send(query);
+        var viewModel = new MyProductsVM
+        {
+            MyProducts = myProducts
+        };
+        return View(viewModel);
     }
 }

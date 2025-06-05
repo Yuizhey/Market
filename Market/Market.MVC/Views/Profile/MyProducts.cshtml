@@ -1,0 +1,231 @@
+@model Market.MVC.Models.Profile.MyProductsVM
+
+<main role="main">
+    <div class="wrapper">
+        <div class="breadcrumb-wrap">
+            <div class="container py-3">
+                <div class="row d-flex justify-content-md-between justify-content-sm-center">
+                    <div class="col-md-4">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item mr-1 font-weight-bold"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item ml-1 font-weight-bold active" aria-current="page">
+                                    Library
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-ghost grey-dark font-weight-bold">
+                            <i class="las la-share-alt"></i>
+                            <span>Share</span>
+                        </button>
+                        <button class="btn btn-ghost grey-dark like-button font-weight-bold">
+                            <i class="las la-hand-holding-heart"></i>
+                            <span>150 Likes</span>
+                        </button>
+                        <button class="btn btn-ghost grey-dark font-weight-bold">
+                            <i class="las la-bookmark"></i>
+                            <span><span>Save for Later</span></span>
+                        </button>
+
+                        <!---->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container">
+            <div class="row">
+                <aside class="col-lg-3 pt-4 pt-lg-0">
+                    <div class="row">
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card mb-4">
+                                <div class="card-body px-3 py-2">
+                                    <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
+                                        <img src="assets/img/100x100.png" class="img-lg rounded-circle" alt="profile image">
+                                        <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
+                                            <h6 class="mb-0">Seller Profile</h6>
+                                            <p class="text-muted mb-1">shoot@gmail.com</p>
+                                            <p class="mb-0 text-primary font-weight-bold small">Seller Profile</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <ul class="nav flex-column dash-nav">
+                            <li class="nav-item">
+                                <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dashboard.html">
+                                    <div><i class="las la-arrow-right"></i>Dashboard</div>
+                                    <div class="d-flex  align-items-center">
+                                        <p class="mb-0 text-small text-success">
+                                            Profile Verified
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dash-downloads.html">
+                                <div><i class="las la-cloud-download-alt"></i>Downloads</div>
+                                <div class="d-flex  align-items-center">
+                                    <p class="mb-0 text-small">6 downloads</p>
+                                </div>
+                            </a>
+                            <li class="nav-item">
+                                <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dash-my-items.html">
+                                    <div><i class="las la-file"></i>My items</div>
+                                    <div class="d-flex  align-items-center">
+                                        <p class="mb-0 text-small text-danger">2 Pending</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dash-add-item.html">
+                                    <div><i class="las la-plus"></i>Add item</div>
+
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dash-settings.html">
+                                    <div><i class="las la-cog"></i>Settings</div>
+
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dash-invoice.html">
+                                    <div><i class="las la-receipt"></i>Invoice</div>
+                                    <div class="d-flex  align-items-center">
+                                        <p class="mb-0 text-small text-success">
+
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active d-flex justify-content-between align-items-center text-danger" aria-current="page" href="#">
+                                    <div><i class="las la-sign-out-alt"></i>Logout</div>
+
+                                </a>
+                            </li>
+                        </ul>
+
+                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center mt-lg-6 mt-sm-3 mb-1 text-muted">
+                            <span>Help center</span>
+                            <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                                </svg>
+                            </a>
+                        </h6>
+                        <ul class="nav flex-column dash-nav">
+
+                            <li class="nav-item">
+                                <a class="nav-link active d-flex justify-content-between align-items-center text-small" aria-current="page" href="#">
+
+                                    Faq
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active d-flex justify-content-between align-items-center text-small" aria-current="page" href="#">
+                                    Support
+
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active d-flex justify-content-between align-items-center text-small" aria-current="page" href="#">
+                                    Contact
+
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </aside>
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class="col">
+                            <!-- my items table -->
+                            <div class="card product_item_list mb-4">
+                                <div class="card-header py-3 border-bottom">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <h6 class="card-title mb-0">Published Items</h6>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="card-body pt-4">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover m-b-0">
+                                            <thead>
+                                            <tr>
+                                                <th class="border-0">Item Name</th>
+                                                <th class="border-0">Product Name</th>
+                                                <th class="border-0" data-breakpoints="sm xs">Reviews</th>
+                                                <th class="border-0" data-breakpoints="xs">Price</th>
+
+                                                <th class="border-0" data-breakpoints="sm xs md">Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach (var product in Model.MyProducts)
+                                            {
+                                                <tr>
+                                                    <td><img src="assets/img/100x100.png" alt="Product img" class="img-lg rounded"></td>
+                                                    <td>
+                                                        <h6>@product.Title</h6>
+                                                    </td>
+                                                    <td>
+
+                                                        <span class="text-muted">6 ratings</span>
+                                                        <div class="d-flex mb-4">
+                                                            <i class="icon_star_alt text-warning ml-0"></i>
+                                                            <i class="las la-star text-success mr-1"></i>
+                                                            <i class="las la-star text-success mr-1"></i>
+                                                            <i class="las la-star text-success mr-1"></i>
+                                                            <i class="las la-star text-success mr-1"></i>
+                                                        </div>
+                                                    </td>
+                                                    <td>@product.Price</td>
+
+                                                    <td>
+                                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                                            <button type="button" class="btn btn-sm btn-primary"><i class="las la-edit"></i></button>
+
+                                                            <button type="button" class="btn btn-sm btn-danger"><i class="las la-trash-alt"></i></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <hr>
+                                    <div class="px-3 py-2">
+                                        <nav aria-label="pagin">
+                                            <ul class="pagination pagination-sm">
+                                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                                <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end: My items table-->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </main>
