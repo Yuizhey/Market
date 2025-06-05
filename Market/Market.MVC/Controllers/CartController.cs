@@ -17,9 +17,7 @@ public class CartController : Controller
     
     public async Task<IActionResult> Index()
     {
-        var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-
-        var dto = await _mediator.Send(new GetUserCartQuery(userId));
+        var dto = await _mediator.Send(new GetUserCartQuery());
 
         var viewModel = new CartVM
         {

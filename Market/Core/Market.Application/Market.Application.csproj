@@ -9,6 +9,7 @@
     <ItemGroup>
       <Folder Include="Common\" />
       <Folder Include="Features\Products\Commands\IncrementProductViewsCount\" />
+      <Folder Include="Features\Products\Queries\GetByUserId\" />
     </ItemGroup>
 
     <ItemGroup>
