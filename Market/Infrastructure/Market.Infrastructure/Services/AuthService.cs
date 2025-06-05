@@ -1,4 +1,6 @@
+using Market.Application.Interfaces.Repositories;
 using Market.Application.Interfaces.Services;
+using Market.Domain.Entities;
 using Market.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 
@@ -8,22 +10,37 @@ public class AuthService : IAuthService
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly IUserDescriptionRepository _userDescriptionRepository;
+    private readonly IAuthorUserDescriptionRepository _authorUserDescriptionRepository;
  
-    public AuthService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+    public AuthService(
+        UserManager<IdentityUser> userManager, 
+        SignInManager<IdentityUser> signInManager,
+        IUserDescriptionRepository userDescriptionRepository,
+        IAuthorUserDescriptionRepository authorUserDescriptionRepository)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _userDescriptionRepository = userDescriptionRepository;
+        _authorUserDescriptionRepository = authorUserDescriptionRepository;
     }
     
-    public async Task<bool> RegisterAsync(string fullName, string password,string email, string confirmPassword)
+    public async Task<bool> RegisterAsync(string userName, string password, string email, string confirmPassword)
     {
-        var user = new IdentityUser { Email = email, UserName = fullName };
+        var user = new IdentityUser { Email = email, UserName = userName };
         var result = await _userManager.CreateAsync(user, password);
         await _userManager.AddToRoleAsync(user, UserRoles.CLientUser.ToString());
 
         if (!result.Succeeded)
             return false;
- 
+
+        var userDescription = new UserDescription
+        {
+            Id = Guid.NewGuid(),
+            IdentityUserId = Guid.Parse(user.Id),
+        };
+
+        await _userDescriptionRepository.AddAsync(userDescription);
         await _signInManager.SignInAsync(user, isPersistent: false);
         
         return true;
@@ -40,7 +57,7 @@ public class AuthService : IAuthService
         return true;
     }
     
-    public async Task<bool> AuthorRegisterAsync(string authorUserName, string password,string email)
+    public async Task<bool> AuthorRegisterAsync(string authorUserName, string password, string email)
     {
         var user = new IdentityUser { Email = email, UserName = authorUserName };
         var result = await _userManager.CreateAsync(user, password);
@@ -48,7 +65,14 @@ public class AuthService : IAuthService
 
         if (!result.Succeeded)
             return false;
- 
+
+        var authorUserDescription = new AuthorUserDescription
+        {
+            Id = Guid.NewGuid(),
+            IdentityUserId = Guid.Parse(user.Id),
+        };
+
+        await _authorUserDescriptionRepository.AddAsync(authorUserDescription);
         await _signInManager.SignInAsync(user, isPersistent: false);
         
         return true;

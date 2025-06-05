@@ -30,6 +30,8 @@ public static class IServiceCollectionExtensions
             .AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork))
             .AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>))
             .AddTransient<IProductRepository, ProductRepository>()
-            .AddTransient<ICartRepository, CartRepository>();
+            .AddTransient<ICartRepository, CartRepository>()
+            .AddTransient<IUserDescriptionRepository, UserDescriptionRepository>()
+            .AddTransient<IAuthorUserDescriptionRepository, AuthorUserDescriptionRepository>();
     }
 }

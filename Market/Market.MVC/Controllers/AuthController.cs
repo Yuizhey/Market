@@ -43,7 +43,7 @@ public class AuthController : Controller
             Email = model.Email,
             Password = model.Password,
             ConfirmPassword = model.ConfirmPassword,
-            FullName = model.FullName,
+            FullName = model.UserName,
         });
 
         if (result)

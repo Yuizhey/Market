@@ -7,11 +7,11 @@ public class AuthorUserDescription : BaseAuditableEntity
 {
     public Guid Id { get; set; }
     public Guid IdentityUserId { get; set; }
-    public required string FirstName { get; set; }
-    public required string LastName { get; set; }
-    public required string Country { get; set; }
-    public Gender Gender { get; set; }
-    public required string Phone { get; set; }
-    public required string HomeAddress { get; set; }
-    public required string Address { get; set; }
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public string? Country { get; set; }
+    public Gender? Gender { get; set; }
+    public string? Phone { get; set; }
+    public string? HomeAddress { get; set; }
+    public string? Address { get; set; }
 }

@@ -8,8 +8,8 @@ public class UserDescription : BaseAuditableEntity
 {
     public Guid Id { get; set; }
     public Guid IdentityUserId { get; set; }
-    public required string FirstName { get; set; }
-    public required string LastName { get; set; }
-    public Gender Gender { get; set; }
-    public required string Phone { get; set; }
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public Gender? Gender { get; set; }
+    public string? Phone { get; set; }
 }
