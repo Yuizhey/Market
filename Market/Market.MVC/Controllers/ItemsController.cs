@@ -45,6 +45,7 @@ public class ItemsController : Controller
             Title = product.Title,
             Price = product.Price,
             Text = product.Text,
+            ImageURL = product.ImageURL,
         };
         return View("SingleItem", viewModel);
     }

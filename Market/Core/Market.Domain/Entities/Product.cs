@@ -1,4 +1,5 @@
 using Market.Domain.Common;
+using Market.Domain.Enums;
 
 namespace Market.Domain.Entities;
 
@@ -11,4 +12,5 @@ public sealed class Product : BaseAuditableEntity
     public Guid AuthorUserId { get; set; } 
     public AuthorUserDescription? Author { get; set; }
     public string? CoverImagePath { get; set; }
+    public ProductType ProductType { get; set; }
 }

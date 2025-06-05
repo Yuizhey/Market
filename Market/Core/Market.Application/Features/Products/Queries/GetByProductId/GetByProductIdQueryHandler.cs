@@ -13,6 +13,7 @@ public class GetByProductIdQueryHandler : IRequestHandler<GetByProductIdQuery, G
         IMinioService minioService)
     {
         _productRepository = productRepository;
+        _minioService = minioService;
     }
     public async Task<GetByProductIdDto> Handle(GetByProductIdQuery request, CancellationToken cancellationToken)
     {
