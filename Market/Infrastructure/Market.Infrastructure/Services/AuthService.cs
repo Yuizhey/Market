@@ -41,6 +41,7 @@ public class AuthService : IAuthService
         {
             Id = Guid.NewGuid(),
             IdentityUserId = Guid.Parse(user.Id),
+            Email = user.Email,
         };
 
         await _userDescriptionRepository.AddAsync(userDescription);
@@ -82,6 +83,7 @@ public class AuthService : IAuthService
         {
             Id = Guid.NewGuid(),
             IdentityUserId = Guid.Parse(user.Id),
+            Email = user.Email,
         };
 
         await _authorUserDescriptionRepository.AddAsync(authorUserDescription);
