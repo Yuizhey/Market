@@ -9,10 +9,10 @@ public sealed class Purchase : BaseAuditableEntity
     public Guid ProductId { get; set; }
     public Product Product { get; set; }
 
-    public Guid BuyerUserId { get; set; }
+    public Guid BuyerId { get; set; }
     public UserDescription Buyer { get; set; }
 
-    public Guid SellerUserId { get; set; }
+    public Guid SellerId { get; set; }
     public AuthorUserDescription Seller { get; set; }
 
     public decimal Price { get; set; }  
