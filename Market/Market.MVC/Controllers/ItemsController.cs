@@ -4,6 +4,7 @@ using Market.Application.Features.Products.Queries.GetByProductId;
 using Market.Domain.Enums;
 using Market.MVC.Models.Items;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Market.MVC.Controllers;
@@ -17,6 +18,7 @@ public class ItemsController : Controller
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> Index([FromQuery] string type, [FromQuery] int page = 1, [FromQuery] string? productTypes = null)
     {
         var pageSize = type == "grid" ? 15 : 9;
@@ -43,6 +45,7 @@ public class ItemsController : Controller
     }
 
     [HttpGet("Items/Details/{id}")]
+    [AllowAnonymous]
     public async Task<IActionResult> Details(Guid id)
     {
         var query = new GetByProductIdQuery(id);
@@ -61,6 +64,7 @@ public class ItemsController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = nameof(UserRoles.AuthorUser))]
     public async Task<IActionResult> Create([FromForm] AddItemVM viewModel)
     {
         var command = new AddNewProductCommand
@@ -75,6 +79,7 @@ public class ItemsController : Controller
     }
 
     [HttpDelete("Items/Delete/{id}")]
+    [Authorize(Roles = nameof(UserRoles.AuthorUser))]
     public async Task<IActionResult> Delete(Guid id)
     {
         await _mediator.Send(new DeleteProductCommand(id));

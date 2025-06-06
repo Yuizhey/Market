@@ -4,10 +4,12 @@ using Market.Application.Features.Carts.Queries.GetCartByUserId;
 using Market.MVC.Models.Cart;
 using Market.MVC.Views.Cart;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Market.MVC.Controllers;
 
+[Authorize]
 public class CartController : Controller
 {
     private readonly IMediator _mediator;
