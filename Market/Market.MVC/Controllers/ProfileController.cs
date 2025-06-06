@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Market.Application.Features.Products.Queries.GetByUserId;
 using Market.Application.Features.Profile.Commands.AddAuthorUserDescription;
 using Market.Application.Features.Profile.Commands.AddUserDescription;
+using Market.Domain.Enums;
 using Market.MVC.Models.Profile;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -24,12 +25,14 @@ public class ProfileController : Controller
         return View();
     }
     
+    [Authorize(Roles = nameof(UserRoles.AuthorUser))]
     public IActionResult AddNewItem()
     {
         return View();
     }
     
     [HttpPost]
+    [Authorize(Roles = nameof(UserRoles.CLientUser))]
     public async Task<IActionResult> AddUserDescription(UserDescriptionVM vm)
     {
         if (!ModelState.IsValid)
@@ -48,6 +51,7 @@ public class ProfileController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = nameof(UserRoles.AuthorUser))]
     public async Task<IActionResult> AddAuthorUserDescription(AuthorUserDescriptionVM vm)
     {
         if (!ModelState.IsValid)
@@ -75,6 +79,7 @@ public class ProfileController : Controller
     }
 
     [HttpGet]
+    [Authorize(Roles = nameof(UserRoles.AuthorUser))]
     public async Task<IActionResult> MyProducts()
     {
         var query = new GetByUserIdQuery();
