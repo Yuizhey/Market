@@ -13,6 +13,8 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<CartItem> CartItems { get; set; }
     public DbSet<UserDescription> UserDescriptions { get; set; }
     public DbSet<AuthorUserDescription> AuthorUserDescriptions { get; set; }
+    public DbSet<Purchase> Purchases { get; set; }
+    public DbSet<ProductSaleStatistics> ProductSaleStatistics { get; set; }
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
     }
