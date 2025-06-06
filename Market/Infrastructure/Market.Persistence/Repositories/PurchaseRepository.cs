@@ -17,4 +17,20 @@ public class PurchaseRepository : IPurchaseRepository
     {
         return await _repository.AddAsync(purchase);
     }
+
+    public async Task<IEnumerable<Purchase>> GetPurchasesByBuyerIdAsync(Guid buyerId)
+    {
+        return await _repository.Entities
+            .Where(p => p.BuyerId == buyerId)
+            .Include(p => p.Product)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Purchase>> GetPurchasesBySellerIdAsync(Guid sellerId)
+    {
+        return await _repository.Entities
+            .Where(p => p.SellerId == sellerId)
+            .Include(p => p.Product)
+            .ToListAsync();
+    }
 } 
