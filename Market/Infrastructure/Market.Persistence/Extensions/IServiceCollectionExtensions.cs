@@ -33,6 +33,7 @@ public static class IServiceCollectionExtensions
             .AddTransient<ICartRepository, CartRepository>()
             .AddTransient<IUserDescriptionRepository, UserDescriptionRepository>()
             .AddTransient<IAuthorUserDescriptionRepository, AuthorUserDescriptionRepository>()
-            .AddTransient<IProductSaleStatisticsRepository, ProductSaleStatisticsRepository>();
+            .AddTransient<IProductSaleStatisticsRepository, ProductSaleStatisticsRepository>()
+            .AddTransient<IPurchaseRepository, PurchaseRepository>();
     }
 }
