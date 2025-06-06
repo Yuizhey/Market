@@ -16,7 +16,7 @@
                             <form method="post" asp-controller="Auth" asp-action="Login">
                                 <div class="form-group mb-3">
                                     <label for="emailaddress">Email address</label>
-                                    <input class="form-control" type="email" name="@nameof(Model.Email)" required="" placeholder="Enter your email">
+                                    <input class="form-control" type="email" name="@nameof(Model.Email)" required="" placeholder="Enter your email" pattern="[a-zA-Z0-9._%+-]+\@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="password">Password</label>

@@ -29,7 +29,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"> <i class="las la-envelope"></i> </span>
                                         </div>
-                                        <input name="@nameof(Model.Email)" class="form-control" placeholder="Email address" type="email">
+                                        <input name="@nameof(Model.Email)" class="form-control" placeholder="Email address" type="email" pattern="[a-zA-Z0-9._%+-]+\@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
                                     </div>
                                     <div class="form-group input-group">
                                         <div class="input-group-prepend">
