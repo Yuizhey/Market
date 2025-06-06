@@ -13,4 +13,5 @@ public sealed class Product : BaseAuditableEntity
     public AuthorUserDescription? Author { get; set; }
     public string? CoverImagePath { get; set; }
     public ProductType ProductType { get; set; }
+    public List<string> AdditionalFilePaths { get; set; } = new List<string>();
 }

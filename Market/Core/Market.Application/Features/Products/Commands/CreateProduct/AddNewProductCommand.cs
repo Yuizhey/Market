@@ -10,4 +10,5 @@ public class AddNewProductCommand : IRequest
     public decimal Price { get; set; }
     public Guid AuthorUserId { get; set; } 
     public IFormFile? CoverImage { get; set; }
+    public IFormFile[]? AdditionalFiles { get; set; }
 }

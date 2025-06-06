@@ -43,10 +43,16 @@ public class AddNewProductCommandHandler : IRequestHandler<AddNewProductCommand>
             Id = Guid.NewGuid(),
             AuthorUserId = authorId
         };
-        
+
         if (request.CoverImage != null)
         {
             product.CoverImagePath = await _minioService.UploadCoverImageAsync(request.CoverImage, product.Id, cancellationToken);
+        }
+
+        if (request.AdditionalFiles != null && request.AdditionalFiles.Any())
+        {
+            var filePaths = await _minioService.UploadAdditionalFilesAsync(request.AdditionalFiles, product.Id, cancellationToken);
+            product.AdditionalFilePaths = filePaths;
         }
 
         await _productRepository.AddProductAsync(product);

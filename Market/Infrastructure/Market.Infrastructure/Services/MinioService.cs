@@ -87,4 +87,62 @@ public class MinioService : IMinioService
 
         return await _minioClient.PresignedGetObjectAsync(presignedUrlArgs);
     }
+    
+    public async Task<List<string>> UploadAdditionalFilesAsync(IFormFile[] files, Guid productId, CancellationToken cancellationToken)
+    {
+        if (files == null || !files.Any())
+        {
+            throw new ArgumentException("No files provided.");
+        }
+
+        if (files.Length > 10)
+        {
+            throw new ArgumentException("Cannot upload more than 10 files.");
+        }
+
+        const long maxFileSize = 10 * 1024 * 1024; // 10MB limit for additional files
+        var filePaths = new List<string>();
+
+        var bucketExists = await _minioClient.BucketExistsAsync(
+            new BucketExistsArgs().WithBucket(_bucketName), 
+            cancellationToken);
+        if (!bucketExists)
+        {
+            await _minioClient.MakeBucketAsync(
+                new MakeBucketArgs().WithBucket(_bucketName), 
+                cancellationToken);
+        }
+
+        foreach (var file in files)
+        {
+            if (file == null || file.Length == 0)
+            {
+                continue; 
+            }
+
+            if (file.Length > maxFileSize)
+            {
+                throw new ArgumentException($"File {file.FileName} exceeds the 10MB limit.");
+            }
+
+            var fileName = $"{productId}_{Guid.NewGuid()}_{Path.GetFileName(file.FileName)}";
+            var objectName = $"additional-files/{fileName}";
+
+            using (var stream = file.OpenReadStream())
+            {
+                await _minioClient.PutObjectAsync(
+                    new PutObjectArgs()
+                        .WithBucket(_bucketName)
+                        .WithObject(objectName)
+                        .WithStreamData(stream)
+                        .WithObjectSize(file.Length)
+                        .WithContentType(file.ContentType),
+                    cancellationToken);
+            }
+
+            filePaths.Add(objectName);
+        }
+
+        return filePaths;
+    }
 }

@@ -72,7 +72,8 @@ public class ItemsController : Controller
             Title = viewModel.Title,
             Price = viewModel.Price,
             Text = viewModel.Text,
-            CoverImage = viewModel.CoverImage
+            CoverImage = viewModel.CoverImage,
+            AdditionalFiles = viewModel.AdditionalFiles,
         };
         await _mediator.Send(command);
         return RedirectToAction("Index");
