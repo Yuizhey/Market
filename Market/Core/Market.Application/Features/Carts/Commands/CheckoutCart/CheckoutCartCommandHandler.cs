@@ -36,7 +36,7 @@ public class CheckoutCartCommandHandler : IRequestHandler<CheckoutCartCommand>
         foreach (var item in cart.Items)
         {
             await _productSaleStatisticsRepository.UpdateProductStatisticsAsync(item.ProductId, item.Product.Price);
-            var purchase = new Purchase
+            var purchase = new Domain.Entities.Purchase
             {
                 Id = Guid.NewGuid(),
                 ProductId = item.ProductId,

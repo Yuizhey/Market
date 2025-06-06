@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Market.Application.Features.Products.Queries.GetByUserId;
 using Market.Application.Features.Profile.Commands.AddAuthorUserDescription;
 using Market.Application.Features.Profile.Commands.AddUserDescription;
+using Market.Application.Features.Purchase.Queries.GetUserPurchases;
 using Market.Domain.Enums;
 using Market.MVC.Models.Profile;
 using MediatR;
@@ -89,5 +90,16 @@ public class ProfileController : Controller
             MyProducts = myProducts
         };
         return View(viewModel);
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> MyDownloads()
+    {
+        var purchases = await _mediator.Send(new GetUserPurchasesQuery());
+        var viewmodel = new MyDownloadsVM
+        {
+            Downloads = purchases
+        };
+        return View(viewmodel);
     }
 }
