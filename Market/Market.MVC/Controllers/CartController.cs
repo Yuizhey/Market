@@ -1,6 +1,8 @@
 using Market.Application.Features.Carts.Commands.AddItemToCart;
+using Market.Application.Features.Carts.Commands.CheckoutCart;
 using Market.Application.Features.Carts.Queries.GetCartByUserId;
 using Market.MVC.Models.Cart;
+using Market.MVC.Views.Cart;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,5 +41,12 @@ public class CartController : Controller
         await _mediator.Send(command);
 
         return Ok();
+    }
+
+    [HttpPost("Cart/Checkout")]
+    public async Task<IActionResult> Checkout([FromForm]CartCheckOutVM model)
+    {
+        await _mediator.Send(new CheckoutCartCommand(Guid.Parse(model.CartId), model.Email));
+        return RedirectToAction("Index");
     }
 }

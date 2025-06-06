@@ -18,39 +18,60 @@ public class CartRepository : ICartRepository
     {
         return await _dbContext.Carts
             .Include(c => c.Items)
-            .ThenInclude(ci => ci.Product)
+            .ThenInclude(i => i.Product)
             .FirstOrDefaultAsync(c => c.UserId == userId);
     }
 
     public async Task AddProductToCartAsync(Guid userId, Guid productId)
     {
-        var cart = await _dbContext.Carts
-            .FirstOrDefaultAsync(c => c.UserId == userId);
-
+        var cart = await GetByUserIdAsync(userId);
         if (cart == null)
         {
             cart = new Cart
             {
                 Id = Guid.NewGuid(),
-                UserId = userId
+                UserId = userId,
+                Items = new List<CartItem>()
             };
-            _dbContext.Carts.Add(cart);
-            await _dbContext.SaveChangesAsync(); 
+            await _dbContext.Carts.AddAsync(cart);
         }
-        
-        var itemExists = await _dbContext.CartItems
-            .AnyAsync(ci => ci.CartId == cart.Id && ci.ProductId == productId);
 
-        if (!itemExists)
+        var cartItem = cart.Items.FirstOrDefault(i => i.ProductId == productId);
+        if (cartItem == null)
         {
-            _dbContext.CartItems.Add(new CartItem
+            cartItem = new CartItem
             {
                 Id = Guid.NewGuid(),
                 CartId = cart.Id,
                 ProductId = productId
-            });
+            };
+            cart.Items.Add(cartItem);
+        }
 
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task DeleteCartAsync(Guid cartId)
+    {
+        var cart = await _dbContext.Carts
+            .Include(c => c.Items)
+            .FirstOrDefaultAsync(c => c.Id == cartId);
+
+        if (cart != null)
+        {
+            _dbContext.CartItems.RemoveRange(cart.Items);
+            
+            _dbContext.Carts.Remove(cart);
+            
             await _dbContext.SaveChangesAsync();
         }
+    }
+    
+    public async Task<Cart?> GetByIdAsync(Guid Id)
+    {
+        return await _dbContext.Carts
+            .Include(c => c.Items)
+            .ThenInclude(i => i.Product)
+            .FirstOrDefaultAsync(c => c.Id == Id);
     }
 }

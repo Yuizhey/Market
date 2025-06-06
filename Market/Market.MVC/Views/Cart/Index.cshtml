@@ -44,7 +44,7 @@
                     <div class="col-md-4 order-md-2 mb-4">
                         <h4 class="d-flex justify-content-between align-items-center mb-3">
                             <span>Your cart</span>
-                            <span class="badge bg-primary text-white rounded-pill">3</span>
+                            <span class="badge bg-primary text-white rounded-pill">@Model.Items.Count</span>
                         </h4>
                         <ul class="list-group mb-3">
                             @foreach (var item in Model.Items)
@@ -84,8 +84,8 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form id="checkoutForm" role="form" class="form-width">
-                                    <input type="hidden" name="cartId" value="@Model.CartId" />
+                                <form asp-action="Checkout" asp-controller="Cart" method="post" role="form" class="form-width">
+                                    <input type="hidden" name="CartId" value="@Model.CartId" />
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             <input type="text" class="form-control" placeholder="First Name" />
@@ -102,7 +102,7 @@
                                             <i class="fa fa-phone iconalign"></i>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <input type="email" class="form-control" placeholder="E-Mail" />
+                                            <input type="email" name="Email" class="form-control" placeholder="E-Mail" required />
                                             <i class="fa fa-envelope iconalign"></i>
                                         </div>
                                     </div>
