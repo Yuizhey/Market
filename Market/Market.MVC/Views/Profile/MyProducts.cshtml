@@ -69,29 +69,30 @@
                                             @foreach (var product in Model.MyProducts)
                                             {
                                                 <tr>
-                                                    <td><img src="assets/img/100x100.png" alt="Product img" class="img-lg rounded"></td>
-                                                    <td>
-                                                        <h6>@product.Title</h6>
-                                                    </td>
-                                                    <td>
+                                                    <a asp-controller="Items" asp-action="Details" asp-route-id="@product.Id">
+                                                        <td>
+                                                            <h6>@product.Title</h6>
+                                                        </td>
+                                                        <td>
 
-                                                        <span class="text-muted">6 ratings</span>
-                                                        <div class="d-flex mb-4">
-                                                            <i class="icon_star_alt text-warning ml-0"></i>
-                                                            <i class="las la-star text-success mr-1"></i>
-                                                            <i class="las la-star text-success mr-1"></i>
-                                                            <i class="las la-star text-success mr-1"></i>
-                                                            <i class="las la-star text-success mr-1"></i>
-                                                        </div>
-                                                    </td>
-                                                    <td>@product.Price</td>
+                                                            <span class="text-muted">6 ratings</span>
+                                                            <div class="d-flex mb-4">
+                                                                <i class="icon_star_alt text-warning ml-0"></i>
+                                                                <i class="las la-star text-success mr-1"></i>
+                                                                <i class="las la-star text-success mr-1"></i>
+                                                                <i class="las la-star text-success mr-1"></i>
+                                                                <i class="las la-star text-success mr-1"></i>
+                                                            </div>
+                                                        </td>
+                                                        <td>@product.Price</td>
 
-                                                    <td>
-                                                        <div class="btn-group" role="group" aria-label="Basic example">
-                                                            <button type="button" class="btn btn-sm btn-primary"><i class="las la-edit"></i></button>
-                                                            <button type="button" class="btn btn-sm btn-danger delete-product" data-product-id="@product.Id"><i class="las la-trash-alt"></i></button>
-                                                        </div>
-                                                    </td>
+                                                        <td>
+                                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                                <button type="button" class="btn btn-sm btn-primary"><i class="las la-edit"></i></button>
+                                                                <button type="button" class="btn btn-sm btn-danger delete-product" data-product-id="@product.Id"><i class="las la-trash-alt"></i></button>
+                                                            </div>
+                                                        </td>
+                                                    </a>
                                                 </tr>
                                             }
                                             </tbody>

@@ -50,7 +50,7 @@
                                 <li class="d-flex justify-content-between align-items-center rounded p-3 border mb-3">
                                     <div class="d-flex flex-grow-1 align-items-start">
                                         <div>
-                                            <h6 class="d-flex align-items-center mb-2"><span>@item.ProductName</span></h6>
+                                        <h6 class="d-flex align-items-center mb-2"><a asp-controller="Items" asp-action="Details" asp-route-id="@item.ProductId">@item.ProductName</a></h6>
                                             <div class="text-small"><span class="mr-3"><span class="text-muted">Price: </span> <span>@item.Price</span></span><span class="release"><span class="text-muted">Purchase date: </span> <span>@item.PurchaseDate</span></span>
                                             </div>
                                         </div>
