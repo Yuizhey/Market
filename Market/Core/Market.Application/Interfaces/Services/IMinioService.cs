@@ -9,4 +9,5 @@ public interface IMinioService
     Task DeleteFileAsync(string filePath, CancellationToken cancellationToken);
     Task<List<string>> UploadAdditionalFilesAsync(IFormFile[] files, Guid productId, CancellationToken cancellationToken);
     Task<List<string>> GetAdditionalFilesUrlsAsync(List<string> objectNames, CancellationToken cancellationToken);
+    Task<byte[]> CreateZipFromFilesAsync(List<string> objectNames, CancellationToken cancellationToken);
 }

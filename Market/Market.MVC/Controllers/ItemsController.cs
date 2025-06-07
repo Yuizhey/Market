@@ -96,7 +96,12 @@ public class ItemsController : Controller
     public async Task<IActionResult> DownloadAdditionalFiles(Guid productId, CancellationToken cancellationToken)
     {
         var query = new GetAdditionalFilesUrlsQuery(productId);
-        var urls = await _mediator.Send(query, cancellationToken);
-        return Json(urls);
+        var zipFile = await _mediator.Send(query, cancellationToken);
+        if (zipFile == null || zipFile.Length == 0)
+        {
+            return NotFound("Файлы для скачивания отсутствуют.");
+        }
+
+        return File(zipFile, "application/zip", $"AdditionalFiles_{productId}.zip");
     }
 }

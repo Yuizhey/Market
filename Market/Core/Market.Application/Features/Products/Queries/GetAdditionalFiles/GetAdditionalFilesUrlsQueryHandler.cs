@@ -1,10 +1,11 @@
+using System.IO.Compression;
 using Market.Application.Interfaces.Repositories;
 using Market.Application.Interfaces.Services;
 using MediatR;
 
 namespace Market.Application.Features.Products.Queries.GetAdditionalFiles;
 
-public class GetAdditionalFilesUrlsQueryHandler : IRequestHandler<GetAdditionalFilesUrlsQuery, List<string>>
+public class GetAdditionalFilesUrlsQueryHandler : IRequestHandler<GetAdditionalFilesUrlsQuery, byte[]>
 {
     private readonly IProductRepository _productRepository;
     private readonly IMinioService _minioService;
@@ -15,7 +16,7 @@ public class GetAdditionalFilesUrlsQueryHandler : IRequestHandler<GetAdditionalF
         _minioService = minioService;
     }
 
-    public async Task<List<string>> Handle(GetAdditionalFilesUrlsQuery request, CancellationToken cancellationToken)
+    public async Task<byte[]> Handle(GetAdditionalFilesUrlsQuery request, CancellationToken cancellationToken)
     {
         var product = await _productRepository.GetProductByIdAsync(request.ProductId);
         if (product == null)
@@ -23,6 +24,11 @@ public class GetAdditionalFilesUrlsQueryHandler : IRequestHandler<GetAdditionalF
             throw new KeyNotFoundException($"Продукт с ID {request.ProductId} не найден.");
         }
 
-        return await _minioService.GetAdditionalFilesUrlsAsync(product.AdditionalFilePaths, cancellationToken);
+        if (product.AdditionalFilePaths == null || !product.AdditionalFilePaths.Any())
+        {
+            return Array.Empty<byte>();
+        }
+
+        return await _minioService.CreateZipFromFilesAsync(product.AdditionalFilePaths, cancellationToken);
     }
 }

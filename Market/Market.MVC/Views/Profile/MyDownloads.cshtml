@@ -88,31 +88,31 @@
                     const response = await fetch(`/Items/DownloadAdditionalFiles?productId=${productId}`, {
                         method: 'GET',
                         headers: {
-                            'Accept': 'application/json'
+                            'Accept': 'application/zip'
                         }
                     });
 
                     if (!response.ok) {
-                        throw new Error('Failed to fetch download URLs');
+                        throw new Error('Не удалось загрузить ZIP-архив');
                     }
 
-                    const urls = await response.json();
-                    if (urls.length === 0) {
-                        alert('No files available for download.');
+                    const blob = await response.blob();
+                    if (blob.size === 0) {
+                        alert('Файлы для скачивания отсутствуют.');
                         return;
                     }
 
-                    urls.forEach(url => {
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.download = '';
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                    });
+                    const url = window.URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `AdditionalFiles_${productId}.zip`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(url);
                 } catch (error) {
-                    console.error('Error downloading files:', error);
-                    alert('An error occurred while downloading files.');
+                    console.error('Ошибка при скачивании файлов:', error);
+                    alert('Произошла ошибка при скачивании ZIP-архива.');
                 }
             });
         });

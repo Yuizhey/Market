@@ -1,3 +1,4 @@
+using System.IO.Compression;
 using Market.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -175,5 +176,40 @@ public class MinioService : IMinioService
         }
 
         return urls;
+    }
+    
+    public async Task<byte[]> CreateZipFromFilesAsync(List<string> objectNames, CancellationToken cancellationToken)
+    {
+        if (objectNames == null || !objectNames.Any())
+        {
+            return Array.Empty<byte>();
+        }
+
+        using var memoryStream = new MemoryStream();
+        using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+        {
+            using var httpClient = new HttpClient();
+            foreach (var objectName in objectNames)
+            {
+                if (string.IsNullOrEmpty(objectName))
+                {
+                    continue;
+                }
+
+                var presignedUrlArgs = new PresignedGetObjectArgs()
+                    .WithBucket(_bucketName)
+                    .WithObject(objectName)
+                    .WithExpiry(3600);
+
+                var presignedUrl = await _minioClient.PresignedGetObjectAsync(presignedUrlArgs);
+                var fileStream = await httpClient.GetStreamAsync(presignedUrl, cancellationToken);
+                var entry = archive.CreateEntry(Path.GetFileName(objectName));
+
+                using var entryStream = entry.Open();
+                await fileStream.CopyToAsync(entryStream, cancellationToken);
+            }
+        }
+
+        return memoryStream.ToArray();
     }
 }
