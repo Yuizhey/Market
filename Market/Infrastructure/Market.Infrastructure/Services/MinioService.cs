@@ -145,4 +145,35 @@ public class MinioService : IMinioService
 
         return filePaths;
     }
+    
+    public async Task<List<string>> GetAdditionalFilesUrlsAsync(List<string> objectNames, CancellationToken cancellationToken)
+    {
+        if (objectNames == null || !objectNames.Any())
+        {
+            return new List<string>();
+        }
+
+        var urls = new List<string>();
+        foreach (var objectName in objectNames)
+        {
+            if (string.IsNullOrEmpty(objectName))
+            {
+                continue;
+            }
+
+            var presignedUrlArgs = new PresignedGetObjectArgs()
+                .WithBucket(_bucketName)
+                .WithObject(objectName)
+                .WithExpiry(3600)
+                .WithHeaders(new Dictionary<string, string>
+                {
+                    { "Content-Disposition", $"attachment; filename=\"{Path.GetFileName(objectName)}\"" }
+                });
+
+            var url = await _minioClient.PresignedGetObjectAsync(presignedUrlArgs);
+            urls.Add(url);
+        }
+
+        return urls;
+    }
 }

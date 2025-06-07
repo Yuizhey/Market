@@ -1,7 +1,11 @@
 using Market.Application.Features.Products.Commands;
+using Market.Application.Features.Products.Queries.GetAdditionalFiles;
 using Market.Application.Features.Products.Queries.GetByPageNumber;
 using Market.Application.Features.Products.Queries.GetByProductId;
+using Market.Application.Interfaces.Repositories;
+using Market.Application.Interfaces.Services;
 using Market.Domain.Enums;
+using Market.Infrastructure.Services;
 using Market.MVC.Models.Items;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -85,5 +89,14 @@ public class ItemsController : Controller
     {
         await _mediator.Send(new DeleteProductCommand(id));
         return Ok();
+    }
+    
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> DownloadAdditionalFiles(Guid productId, CancellationToken cancellationToken)
+    {
+        var query = new GetAdditionalFilesUrlsQuery(productId);
+        var urls = await _mediator.Send(query, cancellationToken);
+        return Json(urls);
     }
 }
