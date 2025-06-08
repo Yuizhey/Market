@@ -52,15 +52,15 @@
                                 <span class="sidebar-widget-title--sm">Category</span>
                                 <!-- Category -->
                                 <div class="custom-control custom-checkbox mb-2">
-                                    <input type="checkbox" class="custom-control-input product-type-checkbox" id="webTemplates" data-type="WebTemplates">
+                                    <input type="checkbox" class="custom-control-input product-type-checkbox" id="webTemplates" data-type="0">
                                     <label class="custom-control-label w-100" for="webTemplates">Web<span class="badge badge-light float-right">875</span></label>
                                 </div>
                                 <div class="custom-control custom-checkbox mb-2">
-                                    <input type="checkbox" class="custom-control-input product-type-checkbox" id="graphics" data-type="Graphics">
+                                    <input type="checkbox" class="custom-control-input product-type-checkbox" id="graphics" data-type="1">
                                     <label class="custom-control-label w-100" for="graphics">Graphics<span class="badge badge-light float-right">1485</span></label>
                                 </div>
                                 <div class="custom-control custom-checkbox mb-2">
-                                    <input type="checkbox" class="custom-control-input product-type-checkbox" id="fonts" data-type="Fonts">
+                                    <input type="checkbox" class="custom-control-input product-type-checkbox" id="fonts" data-type="2">
                                     <label class="custom-control-label w-100" for="fonts">Fonts<span class="badge badge-light float-right">626</span></label>
                                 </div>
                                 <hr> <span class="sidebar-widget-title--sm">Price range</span>
@@ -240,4 +240,34 @@
         }
     }
 
+    // Обработка фильтрации по типам товаров
+    document.addEventListener('DOMContentLoaded', function() {
+        const checkboxes = document.querySelectorAll('.product-type-checkbox');
+        
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const selectedTypes = Array.from(checkboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.dataset.type);
+                
+                // Получаем текущий URL и параметры
+                const url = new URL(window.location.href);
+                const searchParams = new URLSearchParams(url.search);
+                
+                // Обновляем параметр productTypes
+                if (selectedTypes.length > 0) {
+                    searchParams.set('productTypes', selectedTypes.join(','));
+                } else {
+                    searchParams.delete('productTypes');
+                }
+                
+                // Сбрасываем страницу на первую при изменении фильтров
+                searchParams.set('page', '1');
+                
+                // Обновляем URL и перезагружаем страницу
+                url.search = searchParams.toString();
+                window.location.href = url.toString();
+            });
+        });
+    });
 </script>
