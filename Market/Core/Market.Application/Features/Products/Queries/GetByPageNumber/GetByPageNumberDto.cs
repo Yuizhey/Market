@@ -6,4 +6,5 @@ public class GetByPageNumberDto
     public required string Title { get; set; }
     public decimal Price { get; set; }
     public string? ImageURL { get; set; }
+    public bool IsLiked { get; set; }
 }

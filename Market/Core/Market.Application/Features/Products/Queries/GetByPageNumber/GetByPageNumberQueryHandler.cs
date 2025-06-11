@@ -1,7 +1,10 @@
+using System.Security.Claims;
 using Market.Application.Interfaces.Repositories;
 using Market.Application.Interfaces.Services;
 using Market.Domain.Entities;
+using Market.Domain.Enums;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace Market.Application.Features.Products.Queries.GetByPageNumber;
 
@@ -9,13 +12,25 @@ public class GetByPageNumberQueryHandler : IRequestHandler<GetByPageNumberQuery,
 {
     private readonly IProductRepository _productRepository;
     private readonly IMinioService _minioService;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IUserDescriptionRepository _userDescriptionRepository;
+    private readonly IAuthorUserDescriptionRepository _authorUserDescriptionRepository;
+    private readonly ILikeRepository _likeRepository;
 
     public GetByPageNumberQueryHandler(
         IProductRepository productRepository,
-        IMinioService minioService)
+        IMinioService minioService,
+        IHttpContextAccessor httpContextAccessor,
+        IUserDescriptionRepository userDescriptionRepository,
+        IAuthorUserDescriptionRepository authorUserDescriptionRepository,
+        ILikeRepository likeRepository)
     {
         _productRepository = productRepository;
         _minioService = minioService;
+        _httpContextAccessor = httpContextAccessor;
+        _userDescriptionRepository = userDescriptionRepository;
+        _authorUserDescriptionRepository = authorUserDescriptionRepository;
+        _likeRepository = likeRepository;
     }
 
     public async Task<GetByPageNumberREsult> Handle(GetByPageNumberQuery request, CancellationToken cancellationToken)
@@ -36,6 +51,29 @@ public class GetByPageNumberQueryHandler : IRequestHandler<GetByPageNumberQuery,
 
         var totalPages = (int)Math.Ceiling((double)totalCount / request.PageSize);
 
+        var identityUserId = _httpContextAccessor.HttpContext!.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userRole = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
+        
+        Guid userId;
+        if (userRole == UserRoles.CLientUser.ToString())
+        {
+            var userDescriptionId = await _userDescriptionRepository.GetBusinessIdByIdentityUserIdAsync(Guid.Parse(identityUserId!));
+            if (userDescriptionId == null)
+                throw new InvalidOperationException("User description not found");
+            userId = userDescriptionId;
+        }
+        else if (userRole == UserRoles.AuthorUser.ToString())
+        {
+            var authorUserDescriptionId = await _authorUserDescriptionRepository.GetBusinessIdByIdentityUserIdAsync(Guid.Parse(identityUserId!));
+            if (authorUserDescriptionId == null)
+                throw new InvalidOperationException("Author user description not found");
+            userId = authorUserDescriptionId;
+        }
+        else
+        {
+            throw new InvalidOperationException("Invalid user role");
+        }
+        var usersLikes = await _likeRepository.GetLikedProductIdsByUserIdAsync(userId);
         var productDtos = new List<GetByPageNumberDto>();
         foreach (var product in products)
         {
@@ -57,7 +95,8 @@ public class GetByPageNumberQueryHandler : IRequestHandler<GetByPageNumberQuery,
                 Id = product.Id,
                 Title = product.Title,
                 Price = product.Price,
-                ImageURL = imageUrl ?? "assets/img/520x400.png"
+                ImageURL = imageUrl ?? "assets/img/520x400.png",
+                IsLiked = usersLikes.Contains(product.Id)
             });
         }
 

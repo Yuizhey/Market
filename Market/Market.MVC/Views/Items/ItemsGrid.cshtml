@@ -174,7 +174,7 @@
                                         <div class="hover-icons">
                                             <ul class="list-unstyled">
                                                 <li onclick="toggleLike('@product.Id')">
-                                                    <a href="#" data-product-id="@product.Id" data-toggle="tooltip" title="Лайк">
+                                                    <a href="#" class="@(product.IsLiked ? "text-danger" : "")" data-product-id="@product.Id" data-toggle="tooltip" title="Лайк">
                                                         <i class="las la-hand-holding-heart"></i>
                                                     </a>
                                                 </li>
@@ -284,7 +284,7 @@
 
             if (response.ok) {
                 const icon = document.querySelector(`[data-product-id='${productId}'] i`);
-                icon.classList.toggle('text-danger'); // Добавляем визуальный эффект (опционально)
+                icon.classList.toggle('text-danger'); 
             } else {
                 const err = await response.text();
                 alert("Ошибка: " + err);

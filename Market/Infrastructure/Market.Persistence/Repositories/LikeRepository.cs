@@ -33,4 +33,12 @@ public class LikeRepository : ILikeRepository
         return await _genericRepository.Entities
             .CountAsync(l => l.ProductId == productId);
     }
+    
+    public async Task<List<Guid>> GetLikedProductIdsByUserIdAsync(Guid userId)
+    {
+        return await _genericRepository.Entities
+            .Where(l => l.UserId == userId)
+            .Select(l => l.ProductId)
+            .ToListAsync();
+    }
 }
