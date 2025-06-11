@@ -1,10 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Market.Domain.Common;
 
 namespace Market.Domain.Entities
 {
-    public class Like
+    public class Like : BaseAuditableEntity
     {
         [Key]
         public Guid Id { get; set; }
