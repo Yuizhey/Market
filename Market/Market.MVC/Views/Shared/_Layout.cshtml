@@ -19,6 +19,7 @@
 <body>
 
 @await Html.PartialAsync("_Header")
+<div id="toast-container" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
 @RenderBody()
 @await Html.PartialAsync("_SecondFooter")
     <script src="assets/vendor/js/jquery.js"></script>
@@ -26,6 +27,8 @@
     <script src="assets/vendor/js/bootstrap.js"></script>
     <script src="assets/vendor/js/swiper.min.js"></script>
     <script src="assets/vendor/js/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script src="~/js/site.js"></script>
 
 <script src="assets/js/custom.js"></script>
 @RenderSection("Scripts", required: false)

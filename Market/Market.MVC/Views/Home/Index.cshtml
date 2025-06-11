@@ -772,47 +772,4 @@
             </div>
         </section>
     </div>
-
-
-    <div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
-
-    <script>
-        const connection = new signalR.HubConnectionBuilder()
-            .withUrl("/notificationhub")
-            .build();
-
-        connection.on("ReceiveBroadcast", function (message) {
-            showToast(message);
-        });
-
-        connection.start().then(function () {
-            console.log("Connected to SignalR");
-        }).catch(function (err) {
-            return console.error(err.toString());
-        });
-
-        function showToast(message) {
-            const toast = document.createElement("div");
-            toast.textContent = message;
-            toast.style.cssText = `
-            background-color: #333;
-            color: white;
-            padding: 12px 20px;
-            margin-top: 10px;
-            border-radius: 4px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            animation: fadein 0.5s, fadeout 0.5s 3s;
-        `;
-
-            document.getElementById("toast-container").appendChild(toast);
-
-            setTimeout(() => toast.remove(), 15000);
-        }
-
-        // Optional: keyframes for smooth fade in/out (can add to <style> block)
-    </script>
-
-
-
 </main>

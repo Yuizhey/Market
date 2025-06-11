@@ -1,0 +1,37 @@
+@{
+    ViewData["Title"] = "Отправить уведомление";
+    Layout = "_Layout";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (ViewBag.Success != null)
+{
+    <div style="color: green">@ViewBag.Success</div>
+}
+
+<form method="post" asp-action="Send">
+    <div>
+        <label>Сообщение:</label><br />
+        <textarea name="message" rows="4" cols="50" required></textarea>
+    </div>
+    <div>
+        <label>Отправить конкретному пользователю (UserId):</label><br />
+        <input type="text" name="userId" />
+    </div>
+    <div>
+        <label>Отправить по роли (Admin, ClientUser, AuthorUser):</label><br />
+        <input type="text" name="role" />
+    </div>
+    <div>
+        <label>
+            <input type="checkbox" name="sendToAll" /> Отправить всем
+        </label>
+    </div>
+    <div>
+        <label>
+            <input type="checkbox" name="sendToUnauthenticated" /> Отправить неавторизованным (гостям)
+        </label>
+    </div>
+    <button type="submit">Отправить</button>
+</form>
