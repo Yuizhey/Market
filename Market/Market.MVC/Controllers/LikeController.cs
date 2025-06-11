@@ -16,11 +16,11 @@ namespace Market.MVC.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost("Like/Toggle/{productId}")]
         public async Task<IActionResult> Toggle(Guid productId)
         {
             await _mediator.Send(new ToggleLikeCommand(productId));
-            return Json(new { success = true });
+            return Ok();
         }
     }
 }
