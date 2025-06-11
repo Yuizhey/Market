@@ -55,16 +55,18 @@ public class Program
             app.UseExceptionHandler("/Home/Error");
             app.UseHsts();
         }
-        app.MapHub<NotificationHub>("/notificationhub");
-        app.UseHttpsRedirection();
+        
         app.UseStaticFiles();
-
+        
         app.UseRouting();
+
         app.UseAuthentication();
         app.UseAuthorization();
-        
-        app.MapControllers(); 
-        
+
+        app.MapHub<NotificationHub>("/notificationhub");
+
+        app.MapControllers();
+
         app.MapControllerRoute(
             name: "areas",
             pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
