@@ -48,7 +48,7 @@ public class AuthController : Controller
 
         if (result)
         {
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Admin");
         }
         
         ModelState.AddModelError(string.Empty, "Email or password is incorrect.");
@@ -66,7 +66,7 @@ public class AuthController : Controller
 
         if (result)
         {
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Admin");
         }
         
         ModelState.AddModelError(string.Empty, "Email or password is incorrect.");
@@ -85,7 +85,7 @@ public class AuthController : Controller
 
         if (result)
         {
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Admin");
         }
         
         ModelState.AddModelError(string.Empty, "Email or password is incorrect.");
@@ -97,6 +97,6 @@ public class AuthController : Controller
     public async Task<IActionResult> Logout()
     {
         await _mediator.Send(new LogoutCommand());
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "Admin");
     }
 }
