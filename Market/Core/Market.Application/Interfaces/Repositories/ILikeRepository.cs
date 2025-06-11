@@ -7,4 +7,5 @@ public interface ILikeRepository
     Task<Like?> GetByUserAndProductAsync(Guid userId, Guid productId);
     Task AddAsync(Like like);
     Task DeleteAsync(Like like);
+    Task<int> GetLikesCountByProductIdAsync(Guid productId);
 }

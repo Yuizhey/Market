@@ -8,12 +8,15 @@ public class GetByProductIdQueryHandler : IRequestHandler<GetByProductIdQuery, G
 {
     private readonly IProductRepository _productRepository;
     private readonly IMinioService _minioService;
+    private readonly ILikeRepository _likeRepository;
 
     public GetByProductIdQueryHandler(IProductRepository productRepository,
-        IMinioService minioService)
+        IMinioService minioService,
+        ILikeRepository likeRepository)
     {
         _productRepository = productRepository;
         _minioService = minioService;
+        _likeRepository = likeRepository;
     }
     public async Task<GetByProductIdDto> Handle(GetByProductIdQuery request, CancellationToken cancellationToken)
     {
@@ -30,12 +33,16 @@ public class GetByProductIdQueryHandler : IRequestHandler<GetByProductIdQuery, G
                 imageUrl = "assets/img/520x400.png"; 
             }
         }
+
+        var likesCount = await _likeRepository.GetLikesCountByProductIdAsync(product.Id);
         return new GetByProductIdDto()
         {
+            Id = product.Id,
             Title = product.Title,
             Price = product.Price,
             Text = product.Text,
-            ImageURL = imageUrl ?? "assets/img/520x400.png"
+            ImageURL = imageUrl ?? "assets/img/520x400.png",
+            LikesCount = likesCount
         };
     }
 }

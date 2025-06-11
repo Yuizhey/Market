@@ -27,4 +27,10 @@ public class LikeRepository : ILikeRepository
     {
         await _genericRepository.DeleteAsync(like);
     }
+    
+    public async Task<int> GetLikesCountByProductIdAsync(Guid productId)
+    {
+        return await _genericRepository.Entities
+            .CountAsync(l => l.ProductId == productId);
+    }
 }

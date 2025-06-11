@@ -59,10 +59,12 @@ public class ItemsController : Controller
 
         var viewModel = new SingleItemVM
         {
+            Id = product.Id,
             Title = product.Title,
             Price = product.Price,
             Text = product.Text,
             ImageURL = product.ImageURL,
+            LikesCount = product.LikesCount,
         };
         return View("SingleItem", viewModel);
     }
