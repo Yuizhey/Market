@@ -11,6 +11,7 @@ public static class IServiceCollectionExtensions
     {
         collection.AddServices();
         collection.AddSignalRService();
+        collection.AddHostedService<UnauthenticatedNotificationService>();
     }
 
     private static void AddServices(this IServiceCollection sericeCollection)
