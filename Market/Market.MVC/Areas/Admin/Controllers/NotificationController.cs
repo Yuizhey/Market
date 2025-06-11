@@ -21,31 +21,70 @@ namespace Market.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Send(string message, string userId, string role, bool sendToAll, bool sendToUnauthenticated)
+        public async Task<IActionResult> SendBroadcast(string message)
         {
-            if (sendToAll)
+            if (string.IsNullOrEmpty(message))
             {
-                await _notificationService.Broadcast(message);
-            }
-            else if (sendToUnauthenticated)
-            {
-                await _notificationService.SendToUnauthenticated(message);
-            }
-            else if (!string.IsNullOrEmpty(userId))
-            {
-                await _notificationService.SendMessage(userId, message);
-            }
-            else if (!string.IsNullOrEmpty(role))
-            {
-                await _notificationService.SendToRole(role, message);
-            }
-            else
-            {
-                ModelState.AddModelError("", "Выберите получателя.");
+                ModelState.AddModelError("", "Сообщение не может быть пустым");
                 return View("Index");
             }
 
-            ViewBag.Success = "Сообщение отправлено!";
+            await _notificationService.Broadcast(message);
+            ViewBag.Success = "Сообщение отправлено всем пользователям!";
+            return View("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendToUser(string message, string userId)
+        {
+            if (string.IsNullOrEmpty(message))
+            {
+                ModelState.AddModelError("", "Сообщение не может быть пустым");
+                return View("Index");
+            }
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                ModelState.AddModelError("", "ID пользователя не может быть пустым");
+                return View("Index");
+            }
+
+            await _notificationService.SendMessage(userId, message);
+            ViewBag.Success = $"Сообщение отправлено пользователю {userId}!";
+            return View("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendToRole(string message, string role)
+        {
+            if (string.IsNullOrEmpty(message))
+            {
+                ModelState.AddModelError("", "Сообщение не может быть пустым");
+                return View("Index");
+            }
+
+            if (string.IsNullOrEmpty(role))
+            {
+                ModelState.AddModelError("", "Роль не может быть пустой");
+                return View("Index");
+            }
+
+            await _notificationService.SendToRole(role, message);
+            ViewBag.Success = $"Сообщение отправлено роли {role}!";
+            return View("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendToUnauthenticated(string message)
+        {
+            if (string.IsNullOrEmpty(message))
+            {
+                ModelState.AddModelError("", "Сообщение не может быть пустым");
+                return View("Index");
+            }
+
+            await _notificationService.SendToUnauthenticated(message);
+            ViewBag.Success = "Сообщение отправлено неавторизованным пользователям!";
             return View("Index");
         }
     }

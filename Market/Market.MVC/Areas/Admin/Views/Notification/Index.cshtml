@@ -1,37 +1,103 @@
 @{
-    ViewData["Title"] = "Отправить уведомление";
+    ViewData["Title"] = "Отправка уведомлений";
     Layout = "_Layout";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="container mt-4">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
 
-@if (ViewBag.Success != null)
-{
-    <div style="color: green">@ViewBag.Success</div>
-}
+    @if (ViewBag.Success != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @ViewBag.Success
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
 
-<form method="post" asp-action="Send">
-    <div>
-        <label>Сообщение:</label><br />
-        <textarea name="message" rows="4" cols="50" required></textarea>
+    <div class="row">
+        <!-- Отправка всем пользователям -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">Отправить всем пользователям</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-action="SendBroadcast">
+                        <div class="mb-3">
+                            <label class="form-label">Сообщение:</label>
+                            <textarea name="message" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Отправить всем</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Отправка конкретному пользователю -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0">Отправить конкретному пользователю</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-action="SendToUser">
+                        <div class="mb-3">
+                            <label class="form-label">ID пользователя:</label>
+                            <input type="text" name="userId" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Сообщение:</label>
+                            <textarea name="message" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success">Отправить пользователю</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Отправка по роли -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="card-title mb-0">Отправить по роли</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-action="SendToRole">
+                        <div class="mb-3">
+                            <label class="form-label">Роль:</label>
+                            <select name="role" class="form-select" required>
+                                <option value="">Выберите роль</option>
+                                <option value="Admin">Admin</option>
+                                <option value="ClientUser">ClientUser</option>
+                                <option value="AuthorUser">AuthorUser</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Сообщение:</label>
+                            <textarea name="message" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-info text-white">Отправить роли</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Отправка неавторизованным -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="card-title mb-0">Отправить неавторизованным</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-action="SendToUnauthenticated">
+                        <div class="mb-3">
+                            <label class="form-label">Сообщение:</label>
+                            <textarea name="message" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-warning">Отправить гостям</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <label>Отправить конкретному пользователю (UserId):</label><br />
-        <input type="text" name="userId" />
-    </div>
-    <div>
-        <label>Отправить по роли (Admin, ClientUser, AuthorUser):</label><br />
-        <input type="text" name="role" />
-    </div>
-    <div>
-        <label>
-            <input type="checkbox" name="sendToAll" /> Отправить всем
-        </label>
-    </div>
-    <div>
-        <label>
-            <input type="checkbox" name="sendToUnauthenticated" /> Отправить неавторизованным (гостям)
-        </label>
-    </div>
-    <button type="submit">Отправить</button>
-</form>
+</div>
