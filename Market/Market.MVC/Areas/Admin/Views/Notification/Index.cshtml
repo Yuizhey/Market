@@ -6,13 +6,7 @@
 <div class="container mt-4">
     <h2 class="mb-4">@ViewData["Title"]</h2>
 
-    @if (ViewBag.Success != null)
-    {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            @ViewBag.Success
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    }
+    <div id="alertContainer"></div>
 
     <div class="row">
         <!-- Отправка всем пользователям -->
@@ -22,7 +16,7 @@
                     <h5 class="card-title mb-0">Отправить всем пользователям</h5>
                 </div>
                 <div class="card-body">
-                    <form method="post" asp-action="SendBroadcast">
+                    <form id="broadcastForm" onsubmit="return handleSubmit(event, 'SendBroadcast')">
                         <div class="mb-3">
                             <label class="form-label">Сообщение:</label>
                             <textarea name="message" class="form-control" rows="3" required></textarea>
@@ -40,7 +34,7 @@
                     <h5 class="card-title mb-0">Отправить конкретному пользователю</h5>
                 </div>
                 <div class="card-body">
-                    <form method="post" asp-action="SendToUser">
+                    <form id="userForm" onsubmit="return handleSubmit(event, 'SendToUser')">
                         <div class="mb-3">
                             <label class="form-label">ID пользователя:</label>
                             <input type="text" name="userId" class="form-control" required />
@@ -62,7 +56,7 @@
                     <h5 class="card-title mb-0">Отправить по роли</h5>
                 </div>
                 <div class="card-body">
-                    <form method="post" asp-action="SendToRole">
+                    <form id="roleForm" onsubmit="return handleSubmit(event, 'SendToRole')">
                         <div class="mb-3">
                             <label class="form-label">Роль:</label>
                             <select name="role" class="form-select" required>
@@ -89,7 +83,7 @@
                     <h5 class="card-title mb-0">Отправить неавторизованным</h5>
                 </div>
                 <div class="card-body">
-                    <form method="post" asp-action="SendToUnauthenticated">
+                    <form id="unauthenticatedForm" onsubmit="return handleSubmit(event, 'SendToUnauthenticated')">
                         <div class="mb-3">
                             <label class="form-label">Сообщение:</label>
                             <textarea name="message" class="form-control" rows="3" required></textarea>
@@ -101,3 +95,68 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        async function handleSubmit(event, action) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            const submitButton = form.querySelector('button[type="submit"]');
+            
+            // Отключаем кнопку на время отправки
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Отправка...';
+
+            try {
+                const response = await fetch(`/Admin/Notification/${action}`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Ошибка при отправке');
+                }
+
+                const result = await response.text();
+                
+                // Показываем успешное сообщение
+                showAlert('Сообщение успешно отправлено!', 'success');
+                
+                // Очищаем форму
+                form.reset();
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showAlert('Произошла ошибка при отправке сообщения', 'danger');
+            } finally {
+                // Возвращаем кнопку в исходное состояние
+                submitButton.disabled = false;
+                submitButton.innerHTML = submitButton.getAttribute('data-original-text') || 'Отправить';
+            }
+
+            return false;
+        }
+
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} alert-dismissible fade show`;
+            alert.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            alertContainer.appendChild(alert);
+
+            // Удаляем уведомление через 5 секунд
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+        }
+
+        // Сохраняем оригинальный текст кнопок
+        document.querySelectorAll('button[type="submit"]').forEach(button => {
+            button.setAttribute('data-original-text', button.textContent);
+        });
+    </script>
+}

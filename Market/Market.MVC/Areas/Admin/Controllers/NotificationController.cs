@@ -25,13 +25,11 @@ namespace Market.MVC.Areas.Admin.Controllers
         {
             if (string.IsNullOrEmpty(message))
             {
-                ModelState.AddModelError("", "Сообщение не может быть пустым");
-                return View("Index");
+                return Json(new { success = false, message = "Сообщение не может быть пустым" });
             }
 
             await _notificationService.Broadcast(message);
-            ViewBag.Success = "Сообщение отправлено всем пользователям!";
-            return View("Index");
+            return Json(new { success = true, message = "Сообщение отправлено всем пользователям!" });
         }
 
         [HttpPost]
@@ -39,19 +37,16 @@ namespace Market.MVC.Areas.Admin.Controllers
         {
             if (string.IsNullOrEmpty(message))
             {
-                ModelState.AddModelError("", "Сообщение не может быть пустым");
-                return View("Index");
+                return Json(new { success = false, message = "Сообщение не может быть пустым" });
             }
 
             if (string.IsNullOrEmpty(userId))
             {
-                ModelState.AddModelError("", "ID пользователя не может быть пустым");
-                return View("Index");
+                return Json(new { success = false, message = "ID пользователя не может быть пустым" });
             }
 
             await _notificationService.SendMessage(userId, message);
-            ViewBag.Success = $"Сообщение отправлено пользователю {userId}!";
-            return View("Index");
+            return Json(new { success = true, message = $"Сообщение отправлено пользователю {userId}!" });
         }
 
         [HttpPost]
@@ -59,19 +54,16 @@ namespace Market.MVC.Areas.Admin.Controllers
         {
             if (string.IsNullOrEmpty(message))
             {
-                ModelState.AddModelError("", "Сообщение не может быть пустым");
-                return View("Index");
+                return Json(new { success = false, message = "Сообщение не может быть пустым" });
             }
 
             if (string.IsNullOrEmpty(role))
             {
-                ModelState.AddModelError("", "Роль не может быть пустой");
-                return View("Index");
+                return Json(new { success = false, message = "Роль не может быть пустой" });
             }
 
             await _notificationService.SendToRole(role, message);
-            ViewBag.Success = $"Сообщение отправлено роли {role}!";
-            return View("Index");
+            return Json(new { success = true, message = $"Сообщение отправлено роли {role}!" });
         }
 
         [HttpPost]
@@ -79,13 +71,11 @@ namespace Market.MVC.Areas.Admin.Controllers
         {
             if (string.IsNullOrEmpty(message))
             {
-                ModelState.AddModelError("", "Сообщение не может быть пустым");
-                return View("Index");
+                return Json(new { success = false, message = "Сообщение не может быть пустым" });
             }
 
             await _notificationService.SendToUnauthenticated(message);
-            ViewBag.Success = "Сообщение отправлено неавторизованным пользователям!";
-            return View("Index");
+            return Json(new { success = true, message = "Сообщение отправлено неавторизованным пользователям!" });
         }
     }
 }

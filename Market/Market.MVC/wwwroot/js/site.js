@@ -1,21 +1,27 @@
 ﻿const connection = new signalR.HubConnectionBuilder()
     .withUrl("/notificationhub")
     .withAutomaticReconnect([0, 2000, 5000, 10000, 20000]) // Попытки переподключения через 0, 2, 5, 10 и 20 секунд
+    .configureLogging(signalR.LogLevel.Debug) // Добавляем подробное логирование
     .build();
 
+// Обработчики сообщений с логированием
 connection.on("ReceiveBroadcast", function (message) {
+    console.log("Получено broadcast сообщение:", message);
     showToast(`[Broadcast] ${message}`);
 });
 
 connection.on("ReceiveByRole", function (message) {
+    console.log("Получено сообщение для роли:", message);
     showToast(`[Role message] ${message}`);
 });
 
 connection.on("ReceiveMessage", function (message) {
+    console.log("Получено персональное сообщение:", message);
     showToast(`[Personal message] ${message}`);
 });
 
 connection.on("ReceiveUnauthenticated", function (message) {
+    console.log("Получено сообщение для гостей:", message);
     showToast(`[Guest message] ${message}`);
 });
 
@@ -40,6 +46,7 @@ async function startConnection() {
     try {
         await connection.start();
         console.log("Connected to SignalR");
+        showToast("Подключено к серверу уведомлений");
     } catch (err) {
         console.error("Ошибка подключения к SignalR:", err);
         showToast("Ошибка подключения к серверу");
@@ -52,6 +59,8 @@ async function startConnection() {
 startConnection();
 
 function showToast(message) {
+    console.log("Показываем уведомление:", message);
+    
     const toast = document.createElement("div");
     toast.textContent = message;
     toast.style.cssText = `
@@ -66,9 +75,19 @@ function showToast(message) {
         word-wrap: break-word;
         opacity: 0;
         transition: opacity 0.5s ease-in-out;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
     `;
 
-    document.getElementById("toast-container").appendChild(toast);
+    const container = document.getElementById("toast-container");
+    if (!container) {
+        console.error("Контейнер для уведомлений не найден!");
+        return;
+    }
+
+    container.appendChild(toast);
     
     // Плавное появление
     setTimeout(() => {

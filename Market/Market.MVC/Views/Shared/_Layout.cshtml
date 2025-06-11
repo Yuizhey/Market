@@ -14,14 +14,25 @@
     <link rel="stylesheet" href="/assets/css/theme.css">
     <link rel="stylesheet" href="/assets/css/custom.css">
     <link rel="stylesheet" href="/assets/css/rtl.css">
+    <style>
+        #toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+    </style>
 </head>
 
 <body>
-
-@await Html.PartialAsync("_Header")
-<div id="toast-container" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
-@RenderBody()
-@await Html.PartialAsync("_SecondFooter")
+    <div id="toast-container"></div>
+    @await Html.PartialAsync("_Header")
+    @RenderBody()
+    @await Html.PartialAsync("_SecondFooter")
     <script src="assets/vendor/js/jquery.js"></script>
     <script src="assets/vendor/js/popper.js"></script>
     <script src="assets/vendor/js/bootstrap.js"></script>
@@ -30,8 +41,7 @@
     <script src="~/js/site.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
     <script src="assets/js/custom.js"></script>
-@RenderSection("Scripts", required: false)
-
+    @RenderSection("Scripts", required: false)
 </body>
 
 </html>
