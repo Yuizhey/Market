@@ -1,4 +1,5 @@
 using Market.Application.Extensions;
+using Market.Application.Localization;
 using Market.Domain.Extensions;
 using Market.Infrastructure.Extensions;
 using Market.Infrastructure.Services;
@@ -43,6 +44,8 @@ public class Program
         builder.Services.AddControllersWithViews();
 
         var app = builder.Build();
+        
+        app.UseLocalization();
         
         using (var scope = app.Services.CreateScope())
         {

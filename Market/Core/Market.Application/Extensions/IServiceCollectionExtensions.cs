@@ -1,4 +1,6 @@
 using System.Reflection;
+using Market.Application.Middleware;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Market.Application.Extensions;
