@@ -24,7 +24,7 @@ public class ContactController : Controller
     {
         if (!ModelState.IsValid)
         {
-            return View("Index", model);
+            return View("/Index", model);
         }
 
         var command = new AddContactRequestCommand
