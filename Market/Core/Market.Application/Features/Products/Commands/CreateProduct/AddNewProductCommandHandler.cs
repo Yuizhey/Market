@@ -41,7 +41,10 @@ public class AddNewProductCommandHandler : IRequestHandler<AddNewProductCommand>
             Text = request.Text,
             Price = request.Price,
             Id = Guid.NewGuid(),
-            AuthorUserId = authorId
+            AuthorUserId = authorId,
+            Subtitle = request.Subtitle,
+            ShortDescription = request.ShortDescription,
+            ProductType = request.ProductType
         };
 
         if (request.CoverImage != null)

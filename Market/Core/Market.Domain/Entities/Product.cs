@@ -14,4 +14,7 @@ public sealed class Product : BaseAuditableEntity
     public string? CoverImagePath { get; set; }
     public ProductType ProductType { get; set; }
     public List<string> AdditionalFilePaths { get; set; } = new List<string>();
+
+    public required string Subtitle { get; set; }
+    public required string ShortDescription { get; set; }
 }

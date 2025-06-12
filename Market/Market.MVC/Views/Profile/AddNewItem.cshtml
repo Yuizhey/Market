@@ -68,26 +68,22 @@
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label for="l302">Subtitle</label>
-                                                            <input type="text" class="form-control" id="l302" />
+                                                            <input type="text" class="form-control" name="@nameof(Model.Subtitle)" id="l302" />
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="form-control-label" for="l20">Category</label>
-                                                    <select multiple="" class="form-control height-300" id="l20">
-                                                        <option value="Option 1">— Web Template</option>
-                                                        <option value="Option 2">    — Creative</option>
-                                                        <option value="Option 3">   — Minimal</option>
-                                                        <option value="Option 4">        — Business</option>
-                                                        <option value="Option 4">        — Portfolio</option>
-                                                        <option value="Option 5">— Graphic</option>
-                                                        <option value="Option 2">    — Illustration</option>
-                                                        <option value="Option 2">    — Icons</option>
+                                                    <label class="form-control-label" for="productType">Category</label>
+                                                    <select class="form-control" id="productType" name="ProductType" required>
+                                                        <option value="">-- Select category --</option>
+                                                        <option value="WebTemplates">Web Templates</option>
+                                                        <option value="Graphics">Graphics</option>
+                                                        <option value="Fonts">Fonts</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="l15">Short Description</label>
-                                                    <textarea class="form-control" rows="3" id="l15"></textarea>
+                                                    <textarea class="form-control" name="@nameof(Model.ShortDescription)" rows="3" id="l15"></textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="l151">Full Description</label>
@@ -103,35 +99,9 @@
                                                             <input type="text" class="form-control" name="@nameof(Model.Price)" required />
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label for="l31">Discount Price</label>
-                                                            <input type="text" class="form-control" id="l31" />
-                                                        </div>
-                                                    </div>
                                                 </div>
                                                 <br />
 
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="l14">Colors</label>
-                                                    <select multiple="" class="form-control" id="l14">
-                                                        <option value="Option 1">Option 1</option>
-                                                        <option value="Option 2">Option 2</option>
-                                                        <option value="Option 3">Option 3</option>
-                                                        <option value="Option 4">Option 4</option>
-                                                        <option value="Option 5">Option 5</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="l13">Option</label>
-                                                    <select class="form-control" id="l13">
-                                                        <option value="Option 1">Option 1</option>
-                                                        <option value="Option 2">Option 2</option>
-                                                        <option value="Option 3">Option 3</option>
-                                                        <option value="Option 4">Option 4</option>
-                                                        <option value="Option 5">Option 5</option>
-                                                    </select>
-                                                </div>
                                                 <h4 class="mt-4 mb-3">Upload cover image</h4>
                                                 <div class="input-group mb-3">
                                                     <div class="custom-file">
@@ -142,7 +112,7 @@
                                                 <h4 class="mt-4 mb-3">Upload additional files (up to 10)</h4>
                                                 <div class="input-group mb-3">
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="inputGroupFile02" name="AdditionalFiles" multiple />
+                                                        <input type="file" class="custom-file-input" id="inputGroupFile02" name="@nameof(Model.AdditionalFiles)" multiple />
                                                         <label class="custom-file-label" for="inputGroupFile02">Choose files</label>
                                                     </div>
                                                 </div>

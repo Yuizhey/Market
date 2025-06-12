@@ -1,3 +1,4 @@
+using Market.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
@@ -11,4 +12,7 @@ public class AddNewProductCommand : IRequest
     public Guid AuthorUserId { get; set; } 
     public IFormFile? CoverImage { get; set; }
     public IFormFile[]? AdditionalFiles { get; set; }
+    public required string Subtitle { get; set; }
+    public required string ShortDescription { get; set; }
+    public required ProductType ProductType { get; set; }
 }

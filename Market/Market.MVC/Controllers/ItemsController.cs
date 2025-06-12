@@ -80,6 +80,9 @@ public class ItemsController : Controller
             Text = viewModel.Text,
             CoverImage = viewModel.CoverImage,
             AdditionalFiles = viewModel.AdditionalFiles,
+            Subtitle = viewModel.Subtitle,
+            ShortDescription = viewModel.ShortDescription,
+            ProductType = viewModel.ProductType,
         };
         await _mediator.Send(command);
         return RedirectToAction("Index");
