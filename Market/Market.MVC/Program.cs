@@ -45,7 +45,6 @@ public class Program
 
         var app = builder.Build();
         
-        app.UseLocalization();
         
         using (var scope = app.Services.CreateScope())
         {
