@@ -102,20 +102,28 @@
                                                 </div>
                                                 <br />
 
-                                                <h4 class="mt-4 mb-3">Upload cover image</h4>
+                                                <h4 class="mt-4 mb-3">Upload cover images (up to 5)</h4>
                                                 <div class="input-group mb-3">
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="inputGroupFile01" name="@nameof(Model.CoverImage)" accept="image/*" />
-                                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                                        <input type="file" class="custom-file-input" id="coverImages" name="@nameof(Model.CoverImage)" accept="image/*" multiple onchange="previewCoverImages(this)" />
+                                                        <label class="custom-file-label" for="coverImages">Choose files</label>
                                                     </div>
                                                 </div>
+                                                <div id="coverImagesPreview" class="mb-3">
+                                                    <div class="row" id="coverImagesList"></div>
+                                                </div>
+
                                                 <h4 class="mt-4 mb-3">Upload additional files (up to 10)</h4>
                                                 <div class="input-group mb-3">
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="inputGroupFile02" name="@nameof(Model.AdditionalFiles)" multiple />
-                                                        <label class="custom-file-label" for="inputGroupFile02">Choose files</label>
+                                                        <input type="file" class="custom-file-input" id="additionalFiles" name="@nameof(Model.AdditionalFiles)" multiple onchange="updateFileList(this)" />
+                                                        <label class="custom-file-label" for="additionalFiles">Choose files</label>
                                                     </div>
                                                 </div>
+                                                <div id="fileList" class="mb-3">
+                                                    <ul class="list-group" id="selectedFiles"></ul>
+                                                </div>
+
                                                 <div class="form-actions my-4">
                                                     <button type="submit" class="btn btn-primary width-150">
                                                         Save Product
@@ -154,3 +162,110 @@
 
         </div>
     </main>
+
+@section Scripts {
+    <script>
+        function previewCoverImages(input) {
+            const previewContainer = document.getElementById('coverImagesList');
+            const label = input.nextElementSibling;
+            
+            previewContainer.innerHTML = '';
+            
+            if (input.files.length > 0) {
+                label.textContent = `${input.files.length} file(s) selected`;
+                
+                Array.from(input.files).forEach((file, index) => {
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(e) {
+                            const col = document.createElement('div');
+                            col.className = 'col-md-4 mb-3';
+                            
+                            const card = document.createElement('div');
+                            card.className = 'card';
+                            
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
+                            img.className = 'card-img-top';
+                            img.style.height = '200px';
+                            img.style.objectFit = 'cover';
+                            
+                            const cardBody = document.createElement('div');
+                            cardBody.className = 'card-body p-2';
+                            
+                            const removeButton = document.createElement('button');
+                            removeButton.className = 'btn btn-danger btn-sm w-100';
+                            removeButton.textContent = 'Удалить';
+                            removeButton.onclick = function() {
+                                const dt = new DataTransfer();
+                                const files = input.files;
+                                
+                                for (let i = 0; i < files.length; i++) {
+                                    if (i !== index) {
+                                        dt.items.add(files[i]);
+                                    }
+                                }
+                                
+                                input.files = dt.files;
+                                previewCoverImages(input);
+                            };
+                            
+                            cardBody.appendChild(removeButton);
+                            card.appendChild(img);
+                            card.appendChild(cardBody);
+                            col.appendChild(card);
+                            previewContainer.appendChild(col);
+                        }
+                        
+                        reader.readAsDataURL(file);
+                    }
+                });
+            } else {
+                label.textContent = 'Choose files';
+            }
+        }
+
+        function updateFileList(input) {
+            const fileList = document.getElementById('selectedFiles');
+            const label = input.nextElementSibling;
+            
+            fileList.innerHTML = '';
+            
+            if (input.files.length > 0) {
+                label.textContent = `${input.files.length} file(s) selected`;
+                
+                Array.from(input.files).forEach((file, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                    
+                    const fileInfo = document.createElement('span');
+                    fileInfo.textContent = `${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+                    
+                    const removeButton = document.createElement('button');
+                    removeButton.className = 'btn btn-danger btn-sm';
+                    removeButton.textContent = 'Удалить';
+                    removeButton.onclick = function() {
+                        const dt = new DataTransfer();
+                        const files = input.files;
+                        
+                        for (let i = 0; i < files.length; i++) {
+                            if (i !== index) {
+                                dt.items.add(files[i]);
+                            }
+                        }
+                        
+                        input.files = dt.files;
+                        updateFileList(input);
+                    };
+                    
+                    li.appendChild(fileInfo);
+                    li.appendChild(removeButton);
+                    fileList.appendChild(li);
+                });
+            } else {
+                label.textContent = 'Choose files';
+            }
+        }
+    </script>
+}
