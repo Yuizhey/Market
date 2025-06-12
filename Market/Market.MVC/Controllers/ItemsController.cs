@@ -23,7 +23,12 @@ public class ItemsController : Controller
 
     [HttpGet]
     [AllowAnonymous]
-    public async Task<IActionResult> Index([FromQuery] string type, [FromQuery] int page = 1, [FromQuery] string? productTypes = null)
+    public async Task<IActionResult> Index(
+        [FromQuery] string type, 
+        [FromQuery] int page = 1, 
+        [FromQuery] string? productTypes = null,
+        [FromQuery] decimal? minPrice = null,
+        [FromQuery] decimal? maxPrice = null)
     {
         var pageSize = type == "grid" ? 15 : 9;
         
@@ -35,7 +40,7 @@ public class ItemsController : Controller
                 .ToList();
         }
 
-        var query = new GetByPageNumberQuery(page, pageSize, selectedTypes);
+        var query = new GetByPageNumberQuery(page, pageSize, selectedTypes, minPrice, maxPrice);
         var result = await _mediator.Send(query);
 
         var viewModel = new ItemsVM

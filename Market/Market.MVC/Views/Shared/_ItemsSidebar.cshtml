@@ -183,4 +183,63 @@
             alert("Произошла ошибка.");
         }
     }
+
+    // Обработка фильтрации по цене
+    document.addEventListener('DOMContentLoaded', function() {
+        const minPriceInput = document.getElementById('price-min-input');
+        const maxPriceInput = document.getElementById('price-max-input');
+        const priceSearchButton = document.querySelector('.price-range .btn-primary');
+
+        // Восстанавливаем значения цен из URL при загрузке страницы
+        const url = new URL(window.location.href);
+        const minPrice = url.searchParams.get('minPrice');
+        const maxPrice = url.searchParams.get('maxPrice');
+
+        if (minPrice) minPriceInput.value = minPrice;
+        if (maxPrice) maxPriceInput.value = maxPrice;
+
+        priceSearchButton.addEventListener('click', function() {
+            const minPrice = minPriceInput.value;
+            const maxPrice = maxPriceInput.value;
+
+            // Получаем текущий URL и параметры
+            const url = new URL(window.location.href);
+            const searchParams = new URLSearchParams(url.search);
+
+            // Обновляем параметры цены
+            if (minPrice) {
+                searchParams.set('minPrice', minPrice);
+            } else {
+                searchParams.delete('minPrice');
+            }
+
+            if (maxPrice) {
+                searchParams.set('maxPrice', maxPrice);
+            } else {
+                searchParams.delete('maxPrice');
+            }
+
+            // Сбрасываем страницу на первую при изменении фильтров
+            searchParams.set('page', '1');
+
+            // Обновляем URL и перезагружаем страницу
+            url.search = searchParams.toString();
+            window.location.href = url.toString();
+        });
+
+        // Обработка выбора значений из выпадающего списка
+        document.querySelectorAll('#price-min .dropdown-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                minPriceInput.value = this.dataset.value;
+            });
+        });
+
+        document.querySelectorAll('#price-max .dropdown-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                maxPriceInput.value = this.dataset.value;
+            });
+        });
+    });
 </script>

@@ -1,10 +1,10 @@
 using System.Security.Claims;
 using Market.Application.Interfaces.Repositories;
 using Market.Application.Interfaces.Services;
-using Market.Domain.Entities;
 using Market.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+
 
 namespace Market.Application.Features.Products.Queries.GetByPageNumber;
 
@@ -35,22 +35,29 @@ public class GetByPageNumberQueryHandler : IRequestHandler<GetByPageNumberQuery,
 
     public async Task<GetByPageNumberREsult> Handle(GetByPageNumberQuery request, CancellationToken cancellationToken)
     {
-        IEnumerable<Product> products;
-        int totalCount;
+        var products = await _productRepository.GetFilteredProductsAsync(
+            request.Page,
+            request.PageSize,
+            request.ProductTypes,
+            request.MinPrice,
+            request.MaxPrice);
 
-        if (request.Types != null && request.Types.Any())
-        {
-            products = await _productRepository.GetProductsByTypes(request.Types, request.Page, request.PageSize);
-            totalCount = await _productRepository.GetTotalProductCountByTypesAsync(request.Types);
-        }
-        else
-        {
-            products = await _productRepository.GetProductsByPage(request.Page, request.PageSize);
-            totalCount = await _productRepository.GetTotalProductCountAsync();
-        }
+        var totalItems = await _productRepository.GetFilteredProductsCountAsync(
+            request.ProductTypes,
+            request.MinPrice,
+            request.MaxPrice);
 
-        var totalPages = (int)Math.Ceiling((double)totalCount / request.PageSize);
-        
+        var totalPages = (int)Math.Ceiling(totalItems / (double)request.PageSize);
+
+        var productDtos = products.Select(p => new GetByPageNumberDto
+        {
+            Id = p.Id,
+            Title = p.Title,
+            Price = p.Price,
+            ImageURL = p.CoverImagePath,
+            IsLiked = false // Это значение будет установлено позже
+        });
+
         var identityUserId = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
         var userRole = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Role);
 
@@ -87,15 +94,15 @@ public class GetByPageNumberQueryHandler : IRequestHandler<GetByPageNumberQuery,
             }
         }
 
-        var productDtos = new List<GetByPageNumberDto>();
-        foreach (var product in products)
+        var productDtosList = new List<GetByPageNumberDto>();
+        foreach (var product in productDtos)
         {
             string? imageUrl = null;
-            if (!string.IsNullOrEmpty(product.CoverImagePath))
+            if (!string.IsNullOrEmpty(product.ImageURL))
             {
                 try
                 {
-                    imageUrl = await _minioService.GetCoverImageUrlAsync(product.CoverImagePath, cancellationToken);
+                    imageUrl = await _minioService.GetCoverImageUrlAsync(product.ImageURL, cancellationToken);
                 }
                 catch
                 {
@@ -103,7 +110,7 @@ public class GetByPageNumberQueryHandler : IRequestHandler<GetByPageNumberQuery,
                 }
             }
 
-            productDtos.Add(new GetByPageNumberDto
+            productDtosList.Add(new GetByPageNumberDto
             {
                 Id = product.Id,
                 Title = product.Title,
@@ -115,10 +122,9 @@ public class GetByPageNumberQueryHandler : IRequestHandler<GetByPageNumberQuery,
 
         return new GetByPageNumberREsult
         {
-            Products = productDtos,
+            Products = productDtosList,
             TotalPages = totalPages,
             CurrentPage = request.Page
         };
     }
-
 }
