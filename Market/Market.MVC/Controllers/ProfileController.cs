@@ -10,6 +10,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Market.Application.Features.Products.Queries.GetSalesStatistics;
 
 namespace Market.MVC.Controllers;
 
@@ -102,8 +103,9 @@ public class ProfileController : Controller
     }
 
     [Authorize(Roles = nameof(UserRoles.AuthorUser))]
-    public IActionResult MySales()
+    public async Task<IActionResult> MySales()
     {
-        return View("MySales");
+        var statistics = await _mediator.Send(new GetSalesStatisticsQuery());
+        return View(statistics);
     }
 }

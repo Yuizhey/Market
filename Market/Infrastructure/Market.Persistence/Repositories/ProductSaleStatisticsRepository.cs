@@ -20,6 +20,13 @@ public class ProductSaleStatisticsRepository : IProductSaleStatisticsRepository
             .FirstOrDefaultAsync(s => s.ProductId == productId);
     }
 
+    public async Task<IEnumerable<ProductSaleStatistics>> GetByProductIdsAsync(IEnumerable<Guid> productIds)
+    {
+        return await _dbContext.ProductSaleStatistics
+            .Where(s => productIds.Contains(s.ProductId))
+            .ToListAsync();
+    }
+
     public async Task UpdateProductStatisticsAsync(Guid productId, decimal salePrice)
     {
         var statistics = await GetByProductIdAsync(productId);
