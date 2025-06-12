@@ -35,6 +35,7 @@ public static class IServiceCollectionExtensions
             .AddTransient<IAuthorUserDescriptionRepository, AuthorUserDescriptionRepository>()
             .AddTransient<IProductSaleStatisticsRepository, ProductSaleStatisticsRepository>()
             .AddTransient<IPurchaseRepository, PurchaseRepository>()
-            .AddScoped<ILikeRepository, LikeRepository>();
+            .AddScoped<ILikeRepository, LikeRepository>()
+            .AddScoped<IContactRequestsRepository, ContactRequestsRepository>();;
     }
 }
