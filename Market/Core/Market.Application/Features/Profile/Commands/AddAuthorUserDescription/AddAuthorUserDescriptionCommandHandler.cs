@@ -10,13 +10,16 @@ public class AddAuthorUserDescriptionCommandHandler : IRequestHandler<AddAuthorU
 {
     private readonly IGenericRepository<AuthorUserDescription> _repository;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IAuthorUserDescriptionRepository _authorUserDescriptionRepository;
 
     public AddAuthorUserDescriptionCommandHandler(
         IGenericRepository<AuthorUserDescription> repository,
-        IHttpContextAccessor httpContextAccessor)
+        IHttpContextAccessor httpContextAccessor,
+        IAuthorUserDescriptionRepository authorUserDescriptionRepository)
     {
         _repository = repository;
         _httpContextAccessor = httpContextAccessor;
+        _authorUserDescriptionRepository = authorUserDescriptionRepository;
     }
 
     public async Task Handle(AddAuthorUserDescriptionCommand request, CancellationToken cancellationToken)
@@ -24,7 +27,6 @@ public class AddAuthorUserDescriptionCommandHandler : IRequestHandler<AddAuthorU
         var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         var entity = new AuthorUserDescription
         {
-            Id = Guid.NewGuid(),
             FirstName = request.FirstName,
             LastName = request.LastName,
             Gender = request.Gender,
@@ -34,6 +36,6 @@ public class AddAuthorUserDescriptionCommandHandler : IRequestHandler<AddAuthorU
             HomeAddress = request.HomeAddress,
             IdentityUserId = Guid.Parse(userId),
         };
-        await _repository.AddAsync(entity);
+        await _authorUserDescriptionRepository.UpdateAsync(entity);
     }
 }

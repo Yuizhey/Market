@@ -6,4 +6,5 @@ public interface IUserDescriptionRepository
 {
     Task<Guid> GetBusinessIdByIdentityUserIdAsync(Guid identityUserId);
     Task<UserDescription> AddAsync(UserDescription entity);
+    Task UpdateAsync(UserDescription entity);
 } 

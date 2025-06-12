@@ -10,13 +10,16 @@ public class AddUserDescriptionCommandHandler : IRequestHandler<AddUserDescripti
 {
     private readonly IGenericRepository<UserDescription> _repository;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IUserDescriptionRepository _UserDescriptionRepository;
 
     public AddUserDescriptionCommandHandler(
         IGenericRepository<UserDescription> repository,
-        IHttpContextAccessor httpContextAccessor)
+        IHttpContextAccessor httpContextAccessor,
+        IUserDescriptionRepository UserDescriptionRepository)
     {
         _repository = repository;
         _httpContextAccessor = httpContextAccessor;
+        _UserDescriptionRepository = UserDescriptionRepository;
     }
 
     public async Task Handle(AddUserDescriptionCommand request, CancellationToken cancellationToken)
@@ -24,13 +27,12 @@ public class AddUserDescriptionCommandHandler : IRequestHandler<AddUserDescripti
         var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         var entity = new UserDescription
         {
-            Id = Guid.NewGuid(),
             FirstName = request.FirstName,
             LastName = request.LastName,
             Gender = request.Gender,
             Phone = request.Phone,
             IdentityUserId = Guid.Parse(userId),
         };
-        await _repository.AddAsync(entity);
+        await _UserDescriptionRepository.UpdateAsync(entity);
     }
 }
