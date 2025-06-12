@@ -10,9 +10,12 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">Pages</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" asp-action="Index" asp-controller="Items" asp-route-type="grid">Result grid</a>
-                            <a class="dropdown-item" asp-action="Index" asp-controller="Items" asp-route-type="list">Resulst list</a>
-                            <a class="dropdown-item" asp-action="Index" asp-controller="Cart">Cart</a>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="Items" asp-route-type="grid">Items grid</a>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="Items" asp-route-type="list">Items list</a>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="dropdown-item" asp-action="Index" asp-controller="Cart">Cart</a>
+                            }
                             <a class="dropdown-item" asp-controller="Contact" asp-action="Index">Contact</a>
                         </div>
                     </li>
