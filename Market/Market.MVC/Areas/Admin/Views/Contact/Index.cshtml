@@ -55,19 +55,16 @@
             <tbody>
             @foreach (var item in Model.Responses)
             {
-              <tr>
+              <tr id="contact-@item.Id">
                 <td>@item.FirstName</td>
                 <td>@item.LastName</td>
                 <td>@item.Email</td>
                 <td>@item.Message</td>
                 <td>@item.Type</td>
                 <td class="actions">
-                  <span class="contact-edit" data-toggle="modal" data-target="#contactEditModal">
-                    <img src="../../../assets/img/svg/c-edit.svg" alt="" class="svg">
-                  </span>
-                  <span class="contact-close">
-                    <img src="../../../assets/img/svg/c-close.svg" alt="" class="svg">
-                  </span>
+                  <button class="btn btn-danger btn-sm resolve-btn" onclick="resolveRequest('@item.Id')">
+                    Решено
+                  </button>
                 </td>
               </tr>
             }
@@ -186,3 +183,32 @@
     </div>
   </div>
 </div>
+
+@section Scripts {
+    <script>
+        async function resolveRequest(id) {
+            try {
+                const response = await fetch('@Url.Action("Delete", "Contact", new { area = "Admin" })', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id: id })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    const row = document.getElementById(`contact-${id}`);
+                    row.style.transition = 'opacity 0.3s';
+                    row.style.opacity = '0';
+                    setTimeout(() => row.remove(), 300);
+                } else {
+                    alert('Произошла ошибка при удалении запроса');
+                }
+            } catch (error) {
+                alert('Произошла ошибка при удалении запроса');
+            }
+        }
+    </script>
+}

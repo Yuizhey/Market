@@ -1,7 +1,7 @@
+using Market.Application.Features.Contact.Commands.DeleteContactRequest;
 using Market.Application.Features.Contact.Queries.GetContactRequests;
 using Market.Domain.Enums;
 using Market.MVC.Areas.Admin.Models;
-using Market.MVC.Models.Contact;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,5 +27,12 @@ public class ContactController : Controller
             Responses = requests
         };
         return View(viewModel);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete([FromBody] DeleteContactRequestCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Json(new { success = result });
     }
 }
