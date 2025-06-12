@@ -19,7 +19,6 @@ connection.on("ReceiveUnauthenticated", function (message) {
     showToast(message);
 });
 
-// Обработка состояния подключения
 connection.onreconnecting((error) => {
     console.log("Переподключение к SignalR...", error);
 });
@@ -32,7 +31,6 @@ connection.onclose((error) => {
     console.log("Соединение закрыто", error);
 });
 
-// Функция для установки соединения
 async function startConnection() {
     try {
         await connection.start();
@@ -44,7 +42,6 @@ async function startConnection() {
     }
 }
 
-// Запуск соединения
 startConnection();
 
 function showToast(message) {
@@ -54,10 +51,10 @@ function showToast(message) {
         background-color: #333;
         color: white;
         padding: 12px 20px;
-        margin-top: 10px;
+        margin-top: 50px;
         border-radius: 4px;
         box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        animation: fadein 0.5s, fadeout 0.5s 29.5s;
+        animation: fadein 0.5s, fadeout 0.5s 15.5s;
         max-width: 300px;
         word-wrap: break-word;
         opacity: 0;
@@ -72,19 +69,16 @@ function showToast(message) {
 
     container.appendChild(toast);
     
-    // Плавное появление
     setTimeout(() => {
         toast.style.opacity = "1";
     }, 10);
-
-    // Плавное исчезновение и удаление
+    
     setTimeout(() => {
         toast.style.opacity = "0";
         setTimeout(() => toast.remove(), 500);
-    }, 29500);
+    }, 15500);
 }
 
-// Добавляем стили для анимации
 const style = document.createElement('style');
 style.textContent = `
     @keyframes fadein {
