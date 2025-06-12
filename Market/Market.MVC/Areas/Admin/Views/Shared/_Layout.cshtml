@@ -187,6 +187,10 @@
                             </a>
                         </li>
 
+                        <li lass="@(Context.Request.Path == "/Admin/Contact" ? "active" : "")">
+                            <a href="/Admin/Contact"><i class="icofont-contact-add"></i> <span class="link-title">contact</span></a>
+                        </li>
+
                         <li class="@(Context.Request.Path.StartsWithSegments("/AdminPanel") ? "active sub-menu-opened" : "")">
                             <a href="#"><i class="icofont-shopping-cart"></i> <span class="link-title">Ecommerce</span></a>
                             <ul class="nav sub-menu">
