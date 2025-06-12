@@ -162,4 +162,14 @@ public class ProductRepository : IProductRepository
             .OrderByDescending(x => x.CreatedDate)
             .ToListAsync();
     }
+
+    public async Task<IEnumerable<Product>> GetLatestByTypeAsync(ProductType type, int count)
+    {
+        return await _context.Products
+            .AsNoTracking()
+            .Where(p => p.ProductType == type)
+            .OrderByDescending(p => p.CreatedDate)
+            .Take(count)
+            .ToListAsync();
+    }
 }

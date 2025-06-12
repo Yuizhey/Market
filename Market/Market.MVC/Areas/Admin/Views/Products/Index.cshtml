@@ -35,9 +35,6 @@
                                 <td>@product.ProductType</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="@Url.Action("Edit", new { id = product.Id })" class="btn btn-sm btn-primary">
-                                            <i class="fas fa-edit"></i> Редактировать
-                                        </a>
                                         <a href="@Url.Action("Delete", new { id = product.Id })" class="btn btn-sm btn-danger" 
                                            onclick="return confirm('Вы уверены, что хотите удалить этот продукт?');">
                                             <i class="fas fa-trash"></i> Удалить

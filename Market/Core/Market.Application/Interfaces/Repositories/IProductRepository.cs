@@ -28,4 +28,5 @@ public interface IProductRepository
         decimal? minPrice = null,
         decimal? maxPrice = null);
     Task<IEnumerable<Product>> GetAllAsync();
+    Task<IEnumerable<Product>> GetLatestByTypeAsync(ProductType type, int count);
 }

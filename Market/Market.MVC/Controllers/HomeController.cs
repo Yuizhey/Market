@@ -2,22 +2,37 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Market.MVC.Models;
 using Microsoft.AspNetCore.Authorization;
+using Market.Application.Features.Products.Queries.GetLatestByType;
+using Market.Domain.Enums;
+using MediatR;
 
 namespace Market.MVC.Controllers;
-
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly IMediator _mediator;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, IMediator mediator)
     {
         _logger = logger;
+        _mediator = mediator;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var latestUIKits = await _mediator.Send(new GetLatestProductsByTypeQuery(ProductType.WebTemplates));
+        var latestWordPress = await _mediator.Send(new GetLatestProductsByTypeQuery(ProductType.Fonts));
+        var latestHTML = await _mediator.Send(new GetLatestProductsByTypeQuery(ProductType.Graphics));
+
+        var viewModel = new HomeViewModel
+        {
+            LatestUIKits = latestUIKits,
+            LatestWordPress = latestWordPress,
+            LatestHTML = latestHTML
+        };
+
+        return View(viewModel);
     }
 
     public IActionResult Privacy()

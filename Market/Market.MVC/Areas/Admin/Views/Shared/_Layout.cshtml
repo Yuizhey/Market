@@ -200,27 +200,7 @@
                         </li>
 
                         <li class="@(Context.Request.Path.StartsWithSegments("/AdminPanel") ? "active sub-menu-opened" : "")">
-                            <a href="#"><i class="icofont-shopping-cart"></i> <span class="link-title">Ecommerce</span></a>
-                            <ul class="nav sub-menu">
-                                <li class="@(Context.Request.Path == "/AdminPanel/Dashboard1" ? "active" : "")">
-                                    <a href="/AdminPanel/Dashboard1">Dashboard 1</a>
-                                </li>
-                                <li class="@(Context.Request.Path == "/AdminPanel/Dashboard2" ? "active" : "")">
-                                    <a href="/AdminPanel/Dashboard2">Dashboard 2</a>
-                                </li>
-                                <li class="@(Context.Request.Path == "/AdminPanel/Orders" ? "active" : "")">
-                                    <a href="/AdminPanel/Orders">Orders</a>
-                                </li>
-                                <li class="@(Context.Request.Path == "/AdminPanel/ProductsCatalog" ? "active" : "")">
-                                    <a href="/AdminPanel/ProductsCatalog">Products Catalog</a>
-                                </li>
-                                <li class="@(Context.Request.Path == "/AdminPanel/ProductDetails" ? "active" : "")">
-                                    <a href="/AdminPanel/ProductDetails">Product Details</a>
-                                </li>
-                                <li class="@(Context.Request.Path == "/AdminPanel/CartList" ? "active" : "")">
-                                    <a href="/AdminPanel/CartList">Cart List</a>
-                                </li>
-                            </ul>
+                            <a href="/Admin/Products"><i class="icofont-shopping-cart"></i> <span class="link-title">Products</span></a>
                         </li>
 
                         <li><a href="../social-media.html"><i class="icofont-chart-histogram"></i> <span class="link-title">Social Media Analytics</span></a></li>
