@@ -8,4 +8,6 @@ public sealed class SingleItemVM
     public decimal Price { get; set; }
     public string? ImageURL { get; set; }
     public int LikesCount { get; set; }
+    public string Subtitle { get; set; }
+    public string ShortDescription { get; set; }
 }
