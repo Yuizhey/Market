@@ -1,5 +1,7 @@
 using Market.Application.Features.Contact.Queries.GetContactRequests;
 using Market.Domain.Enums;
+using Market.MVC.Areas.Admin.Models;
+using Market.MVC.Models.Contact;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +22,10 @@ public class ContactController : Controller
     {
         var query = new GetContactRequestsQuery { Type = type };
         var requests = await _mediator.Send(query);
-        return View(requests);
+        var viewModel = new AdminContactVM()
+        {
+            Responses = requests
+        };
+        return View(viewModel);
     }
 }
