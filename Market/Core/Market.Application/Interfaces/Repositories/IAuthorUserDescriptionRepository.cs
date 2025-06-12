@@ -8,4 +8,5 @@ public interface IAuthorUserDescriptionRepository
     Task<AuthorUserDescription> AddAsync(AuthorUserDescription entity);
     Task UpdateAsync(AuthorUserDescription entity);
     Task<AuthorUserDescription?> GetByIdentityUserIdAsync(Guid identityUserId);
+    Task<IEnumerable<AuthorUserDescription>> GetAllAsync();
 } 

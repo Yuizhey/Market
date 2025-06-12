@@ -9,6 +9,7 @@
     <ItemGroup>
       <Folder Include="Common\" />
       <Folder Include="Features\Purchase\" />
+      <Folder Include="Features\Users\Queries\GetAllUsers\" />
     </ItemGroup>
 
     <ItemGroup>

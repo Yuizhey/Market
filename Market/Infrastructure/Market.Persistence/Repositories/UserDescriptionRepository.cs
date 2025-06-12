@@ -47,4 +47,12 @@ public class UserDescriptionRepository : IUserDescriptionRepository
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.IdentityUserId == identityUserId);
     }
+
+    public async Task<IEnumerable<UserDescription>> GetAllAsync()
+    {
+        return await _context.UserDescriptions
+            .AsNoTracking()
+            .OrderByDescending(x => x.CreatedDate)
+            .ToListAsync();
+    }
 } 

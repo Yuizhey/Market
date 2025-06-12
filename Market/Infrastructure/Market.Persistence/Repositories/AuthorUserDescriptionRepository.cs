@@ -50,4 +50,12 @@ public class AuthorUserDescriptionRepository : IAuthorUserDescriptionRepository
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.IdentityUserId == identityUserId);
     }
+
+    public async Task<IEnumerable<AuthorUserDescription>> GetAllAsync()
+    {
+        return await _context.AuthorUserDescriptions
+            .AsNoTracking()
+            .OrderByDescending(x => x.CreatedDate)
+            .ToListAsync();
+    }
 } 
