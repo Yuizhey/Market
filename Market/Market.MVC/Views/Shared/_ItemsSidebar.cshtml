@@ -11,15 +11,21 @@
             <!-- Category -->
             <div class="custom-control custom-checkbox mb-2">
                 <input type="checkbox" class="custom-control-input product-type-checkbox" id="webTemplates" data-type="0">
-                <label class="custom-control-label w-100" for="webTemplates">Web</label>
+                <label class="custom-control-label w-100" for="webTemplates">
+                    <span class="checkbox-label">Web</span>
+                </label>
             </div>
             <div class="custom-control custom-checkbox mb-2">
                 <input type="checkbox" class="custom-control-input product-type-checkbox" id="graphics" data-type="1">
-                <label class="custom-control-label w-100" for="graphics">Graphics</label>
+                <label class="custom-control-label w-100" for="graphics">
+                    <span class="checkbox-label">Graphics</span>
+                </label>
             </div>
             <div class="custom-control custom-checkbox mb-2">
                 <input type="checkbox" class="custom-control-input product-type-checkbox" id="fonts" data-type="2">
-                <label class="custom-control-label w-100" for="fonts">Fonts</label>
+                <label class="custom-control-label w-100" for="fonts">
+                    <span class="checkbox-label">Fonts</span>
+                </label>
             </div>
             <hr> <span class="sidebar-widget-title--sm">Price range</span>
             <div class="price-range d-flex justify-content-between align-items-center">
@@ -90,6 +96,17 @@
         </div>
     </div>
 </div>
+<style>
+    .custom-control-input:checked ~ .custom-control-label .checkbox-label {
+        color: #007bff;
+        font-weight: bold;
+    }
+    
+    .custom-control-input:checked ~ .custom-control-label::before {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+</style>
 <script>
     async function addToCart(productId) {
         try {
@@ -112,8 +129,16 @@
     // Обработка фильтрации по типам товаров
     document.addEventListener('DOMContentLoaded', function() {
         const checkboxes = document.querySelectorAll('.product-type-checkbox');
-
+        
+        // Восстанавливаем состояние чекбоксов из URL при загрузке страницы
+        const url = new URL(window.location.href);
+        const selectedTypes = url.searchParams.get('productTypes')?.split(',') || [];
+        
         checkboxes.forEach(checkbox => {
+            if (selectedTypes.includes(checkbox.dataset.type)) {
+                checkbox.checked = true;
+            }
+            
             checkbox.addEventListener('change', function() {
                 const selectedTypes = Array.from(checkboxes)
                     .filter(cb => cb.checked)
