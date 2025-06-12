@@ -1,14 +1,13 @@
-using Market.Domain.Common;
 using Market.Domain.Enums;
+using MediatR;
 
-namespace Market.Domain.Entities;
+namespace Market.Application.Features.Contact.Commands.AddContactRequest;
 
-public class ContactRequests : BaseAuditableEntity
+public class AddContactRequestCommand : IRequest<AddContactRequestResponse>
 {
-    public Guid Id { get; set; }
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
     public required string Email { get; set; }
     public required string Message { get; set; }
     public ContactType Type { get; set; }
-}
+} 
