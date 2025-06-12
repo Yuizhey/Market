@@ -24,9 +24,6 @@
             <li class="nav-item">
                 <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" asp-action="MyDownloads" asp-controller="Profile">
                     <div><i class="las la-cloud-download-alt"></i>Downloads</div>
-                    <div class="d-flex  align-items-center">
-                        <p class="mb-0 text-small">6 downloads</p>
-                    </div>
                 </a>
             </li>
             @if (isAuthor)
@@ -34,9 +31,6 @@
                 <li class="nav-item">
                     <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" asp-action="MyProducts" asp-controller="Profile">
                         <div><i class="las la-file"></i>My items</div>
-                        <div class="d-flex  align-items-center">
-                            <p class="mb-0 text-small text-danger">2 Pending</p>
-                        </div>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -50,15 +44,18 @@
                     <div><i class="las la-cog"></i>Settings</div>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dash-invoice.html">
-                    <div><i class="las la-receipt"></i>Invoice</div>
-                    <div class="d-flex  align-items-center">
-                        <p class="mb-0 text-small text-success">
-                        </p>
-                    </div>
-                </a>
-            </li>
+            @if (isAuthor)
+            {
+                <li class="nav-item">
+                    <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="dash-invoice.html">
+                        <div><i class="las la-receipt"></i>Sales</div>
+                        <div class="d-flex  align-items-center">
+                            <p class="mb-0 text-small text-success">
+                            </p>
+                        </div>
+                    </a>
+                </li>
+            }
             <li class="nav-item">
                 <form id="logoutForm2" method="post" asp-controller="Auth" asp-action="Logout" style="display: none;">
                 </form>

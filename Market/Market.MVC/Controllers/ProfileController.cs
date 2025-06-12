@@ -9,6 +9,7 @@ using Market.MVC.Models.Profile;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Market.MVC.Controllers;
 
@@ -98,5 +99,11 @@ public class ProfileController : Controller
             Downloads = purchases
         };
         return View(viewmodel);
+    }
+
+    [Authorize(Roles = nameof(UserRoles.AuthorUser))]
+    public IActionResult MySales()
+    {
+        return View("MySales");
     }
 }
