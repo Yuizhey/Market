@@ -3,6 +3,7 @@ using Market.Application.Features.Products.Queries.GetByUserId;
 using Market.Application.Features.Profile.Commands.AddAuthorUserDescription;
 using Market.Application.Features.Profile.Commands.AddUserDescription;
 using Market.Application.Features.Purchase.Queries.GetUserPurchases;
+using Market.Application.Features.Profile.Queries.GetUserProfile;
 using Market.Domain.Enums;
 using Market.MVC.Models.Profile;
 using MediatR;
@@ -20,11 +21,6 @@ public class ProfileController : Controller
     {
         _mediator = mediator;
     }
-
-    public IActionResult Index()
-    {
-        return View();
-    }
     
     [Authorize(Roles = nameof(UserRoles.AuthorUser))]
     public IActionResult AddNewItem()
@@ -37,7 +33,7 @@ public class ProfileController : Controller
     public async Task<IActionResult> AddUserDescription(UserDescriptionVM vm)
     {
         if (!ModelState.IsValid)
-            return View("PrifileSettings", vm);
+            return View("PrifileSettings");
 
         var command = new AddUserDescriptionCommand
         {
@@ -56,7 +52,7 @@ public class ProfileController : Controller
     public async Task<IActionResult> AddAuthorUserDescription(AuthorUserDescriptionVM vm)
     {
         if (!ModelState.IsValid)
-            return View("PrifileSettings", vm);
+            return View("PrifileSettings");
 
         var command = new AddAuthorUserDescriptionCommand
         {
@@ -74,9 +70,10 @@ public class ProfileController : Controller
     }
     
     [HttpGet]
-    public IActionResult Settings()
+    public async Task<IActionResult> Settings()
     {
-        return View("PrifileSettings");
+        var profile = await _mediator.Send(new GetUserProfileQuery());
+        return View("PrifileSettings", profile);
     }
 
     [HttpGet]

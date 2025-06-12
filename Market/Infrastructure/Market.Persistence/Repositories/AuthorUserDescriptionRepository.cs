@@ -43,4 +43,11 @@ public class AuthorUserDescriptionRepository : IAuthorUserDescriptionRepository
                 .SetProperty(x => x.Address, entity.Address)
                 .SetProperty(x => x.UpdatedDate, DateTime.UtcNow));
     }
+
+    public async Task<AuthorUserDescription?> GetByIdentityUserIdAsync(Guid identityUserId)
+    {
+        return await _context.AuthorUserDescriptions
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.IdentityUserId == identityUserId);
+    }
 } 

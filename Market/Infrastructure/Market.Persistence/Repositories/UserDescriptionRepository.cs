@@ -40,4 +40,11 @@ public class UserDescriptionRepository : IUserDescriptionRepository
                 .SetProperty(x => x.Phone, entity.Phone)
                 .SetProperty(x => x.UpdatedDate, DateTime.UtcNow));
     }
+
+    public async Task<UserDescription?> GetByIdentityUserIdAsync(Guid identityUserId)
+    {
+        return await _context.UserDescriptions
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.IdentityUserId == identityUserId);
+    }
 } 
