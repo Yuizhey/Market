@@ -154,4 +154,12 @@ public class ProductRepository : IProductRepository
             .Where(e => e.AuthorUserId == userId)
             .ToListAsync();
     }
+
+    public async Task<IEnumerable<Product>> GetAllAsync()
+    {
+        return await _context.Products
+            .AsNoTracking()
+            .OrderByDescending(x => x.CreatedDate)
+            .ToListAsync();
+    }
 }
