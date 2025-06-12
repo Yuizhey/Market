@@ -50,30 +50,43 @@ public class GetByPageNumberQueryHandler : IRequestHandler<GetByPageNumberQuery,
         }
 
         var totalPages = (int)Math.Ceiling((double)totalCount / request.PageSize);
-
-        var identityUserId = _httpContextAccessor.HttpContext!.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var userRole = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
         
-        Guid userId;
-        if (userRole == UserRoles.CLientUser.ToString())
+        var identityUserId = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userRole = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Role);
+
+        HashSet<Guid> usersLikes = new();
+
+        if (!string.IsNullOrEmpty(identityUserId) && !string.IsNullOrEmpty(userRole))
         {
-            var userDescriptionId = await _userDescriptionRepository.GetBusinessIdByIdentityUserIdAsync(Guid.Parse(identityUserId!));
-            if (userDescriptionId == null)
-                throw new InvalidOperationException("User description not found");
-            userId = userDescriptionId;
+            try
+            {
+                Guid userId;
+                if (userRole == UserRoles.CLientUser.ToString())
+                {
+                    var userDescriptionId = await _userDescriptionRepository.GetBusinessIdByIdentityUserIdAsync(Guid.Parse(identityUserId));
+                    if (userDescriptionId != null)
+                        userId = userDescriptionId;
+                    else
+                        throw new InvalidOperationException("User description not found");
+
+                    usersLikes = (await _likeRepository.GetLikedProductIdsByUserIdAsync(userId)).ToHashSet();
+                }
+                else if (userRole == UserRoles.AuthorUser.ToString())
+                {
+                    var authorUserDescriptionId = await _authorUserDescriptionRepository.GetBusinessIdByIdentityUserIdAsync(Guid.Parse(identityUserId));
+                    if (authorUserDescriptionId != null)
+                        userId = authorUserDescriptionId;
+                    else
+                        throw new InvalidOperationException("Author user description not found");
+
+                    usersLikes = (await _likeRepository.GetLikedProductIdsByUserIdAsync(userId)).ToHashSet();
+                }
+            }
+            catch
+            {
+            }
         }
-        else if (userRole == UserRoles.AuthorUser.ToString())
-        {
-            var authorUserDescriptionId = await _authorUserDescriptionRepository.GetBusinessIdByIdentityUserIdAsync(Guid.Parse(identityUserId!));
-            if (authorUserDescriptionId == null)
-                throw new InvalidOperationException("Author user description not found");
-            userId = authorUserDescriptionId;
-        }
-        else
-        {
-            throw new InvalidOperationException("Invalid user role");
-        }
-        var usersLikes = await _likeRepository.GetLikedProductIdsByUserIdAsync(userId);
+
         var productDtos = new List<GetByPageNumberDto>();
         foreach (var product in products)
         {
@@ -84,9 +97,9 @@ public class GetByPageNumberQueryHandler : IRequestHandler<GetByPageNumberQuery,
                 {
                     imageUrl = await _minioService.GetCoverImageUrlAsync(product.CoverImagePath, cancellationToken);
                 }
-                catch (Exception)
+                catch
                 {
-                    imageUrl = "assets/img/520x400.png"; 
+                    imageUrl = "assets/img/520x400.png";
                 }
             }
 
@@ -107,4 +120,5 @@ public class GetByPageNumberQueryHandler : IRequestHandler<GetByPageNumberQuery,
             CurrentPage = request.Page
         };
     }
+
 }

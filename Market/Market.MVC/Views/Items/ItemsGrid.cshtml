@@ -2,40 +2,6 @@
 
 <main role="main">
     <div class="wrapper">
-
-        <div class="breadcrumb-wrap">
-            <div class="container py-3">
-                <div class="row d-flex justify-content-md-between justify-content-sm-center">
-                    <div class="col-md-4">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb mb-0">
-                                <li class="breadcrumb-item mr-1 font-weight-bold"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item ml-1 font-weight-bold active" aria-current="page">
-                                    Library
-                                </li>
-                            </ol>
-                        </nav>
-                    </div>
-                    <div class="header-actions">
-                        <button class="btn btn-ghost grey-dark font-weight-bold">
-                            <i class="las la-share-alt"></i>
-                            <span>Share</span>
-                        </button>
-                        <button class="btn btn-ghost grey-dark like-button font-weight-bold">
-                            <i class="las la-hand-holding-heart"></i>
-                            <span>150 Likes</span>
-                        </button>
-                        <button class="btn btn-ghost grey-dark font-weight-bold">
-                            <i class="las la-bookmark"></i>
-                            <span><span>Save for Later</span></span>
-                        </button>
-
-                        <!---->
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="container">
             <div class="row">
                 <div class="col-md-5 col-lg-3">
@@ -171,16 +137,19 @@
                                         <a asp-controller="Items" asp-action="Details" asp-route-id="@product.Id">
                                             <img src="@product.ImageURL" class="img-fluid rounded" alt="">
                                         </a>
-                                        <div class="hover-icons">
-                                            <ul class="list-unstyled">
-                                                <li onclick="toggleLike('@product.Id')">
-                                                    <a href="#" class="@(product.IsLiked ? "text-danger" : "")" data-product-id="@product.Id" data-toggle="tooltip" title="Лайк">
-                                                        <i class="las la-hand-holding-heart"></i>
-                                                    </a>
-                                                </li>
-                                                <li onclick="addToCart('@product.Id')"><a href="#" data-toggle="tooltip" data-placement="left" title="Bookmark"><i class="las la-shopping-cart"></i></a></li>
-                                            </ul>
-                                        </div>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <div class="hover-icons">
+                                                <ul class="list-unstyled">
+                                                    <li onclick="toggleLike('@product.Id')">
+                                                        <a href="#" class="@(product.IsLiked ? "text-danger" : "")" data-product-id="@product.Id" data-toggle="tooltip" title="Лайк">
+                                                            <i class="las la-hand-holding-heart"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li onclick="addToCart('@product.Id')"><a href="#" data-toggle="tooltip" data-placement="left" title="Bookmark"><i class="las la-shopping-cart"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        }
                                     </div>
                                     <!-- end: Item card image -->
                                     <div class="card-body px-0 pt-3">
