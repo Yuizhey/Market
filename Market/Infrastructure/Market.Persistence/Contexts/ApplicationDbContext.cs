@@ -16,6 +16,7 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Purchase> Purchases { get; set; }
     public DbSet<ProductSaleStatistics> ProductSaleStatistics { get; set; }
     public DbSet<Like> Likes { get; set; }
+    public DbSet<ContactRequests> ContactRequests { get; set; }
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
     }
