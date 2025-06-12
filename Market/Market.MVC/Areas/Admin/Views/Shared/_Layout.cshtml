@@ -188,7 +188,15 @@
                         </li>
 
                         <li lass="@(Context.Request.Path == "/Admin/Contact" ? "active" : "")">
-                            <a href="/Admin/Contact"><i class="icofont-contact-add"></i> <span class="link-title">contact</span></a>
+                            <a href="/Admin/Contact"><i class="icofont-contact-add"></i> <span class="link-title">Contact</span></a>
+                        </li>
+
+                        <li>
+                            <a href="/Admin/Users"><i class="icofont-ui-user"></i> <span class="link-title">Clients</span></a>
+                        </li>
+
+                        <li>
+                            <a href="/Admin/Authors"><i class="icofont-ui-user"></i> <span class="link-title">Authors</span></a>
                         </li>
 
                         <li class="@(Context.Request.Path.StartsWithSegments("/AdminPanel") ? "active sub-menu-opened" : "")">
