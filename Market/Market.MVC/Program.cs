@@ -55,6 +55,7 @@ public class Program
         {
             var services = scope.ServiceProvider;
             await RoleInitializer.SeedRolesAsync(services);
+            await DataSeeder.SeedAdminAsync(services);
         }
 
         if (!app.Environment.IsDevelopment())
