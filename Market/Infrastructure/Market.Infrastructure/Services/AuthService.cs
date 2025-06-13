@@ -3,6 +3,7 @@ using Market.Application.Interfaces.Services;
 using Market.Domain.Entities;
 using Market.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace Market.Infrastructure.Services;
 
@@ -13,29 +14,40 @@ public class AuthService : IAuthService
     private readonly IUserDescriptionRepository _userDescriptionRepository;
     private readonly IAuthorUserDescriptionRepository _authorUserDescriptionRepository;
     private readonly IEmailService _emailService;
- 
+    private readonly ILogger<AuthService> _logger;
+
     public AuthService(
         UserManager<IdentityUser> userManager, 
         SignInManager<IdentityUser> signInManager,
         IUserDescriptionRepository userDescriptionRepository,
         IAuthorUserDescriptionRepository authorUserDescriptionRepository,
-        IEmailService emailService)
+        IEmailService emailService,
+        ILogger<AuthService> logger)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _userDescriptionRepository = userDescriptionRepository;
         _authorUserDescriptionRepository = authorUserDescriptionRepository;
         _emailService = emailService;
+        _logger = logger;
     }
     
     public async Task<bool> RegisterAsync(string userName, string password, string email, string confirmPassword)
     {
+        _logger.LogInformation("Попытка регистрации нового пользователя: {Email}, {Username}", email, userName);
+        
         var user = new IdentityUser { Email = email, UserName = userName };
         var result = await _userManager.CreateAsync(user, password);
         await _userManager.AddToRoleAsync(user, UserRoles.CLientUser.ToString());
 
         if (!result.Succeeded)
+        {
+            _logger.LogWarning("Ошибка при регистрации пользователя {Email}: {Errors}", 
+                email, string.Join(", ", result.Errors.Select(e => e.Description)));
             return false;
+        }
+
+        _logger.LogInformation("Пользователь успешно зарегистрирован: {Email}", email);
 
         var userDescription = new UserDescription
         {
@@ -61,9 +73,14 @@ public class AuthService : IAuthService
  
     public async Task<bool> LoginAsync(string email, string password)
     {
+        _logger.LogInformation("Попытка входа пользователя: {Email}", email);
+        
         var user = await _userManager.FindByEmailAsync(email);
         if (user == null)
+        {
+            _logger.LogWarning("Пользователь не найден: {Email}", email);
             return false;
+        }
         
         await _signInManager.PasswordSignInAsync(user, password, false, false);
         
@@ -103,6 +120,7 @@ public class AuthService : IAuthService
     
     public async Task LogoutAsync()
     {
+        _logger.LogInformation("Выход пользователя из системы");
         await _signInManager.SignOutAsync();
     }
 

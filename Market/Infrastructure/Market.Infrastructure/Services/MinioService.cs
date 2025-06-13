@@ -2,6 +2,7 @@ using System.IO.Compression;
 using Market.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Minio;
 using Minio.DataModel.Args;
 
@@ -11,11 +12,13 @@ public class MinioService : IMinioService
 {
     private readonly IMinioClient _minioClient;
     private readonly string _bucketName;
+    private readonly ILogger<MinioService> _logger;
 
-    public MinioService(IMinioClient minioClient, IConfiguration configuration)
+    public MinioService(IMinioClient minioClient, IConfiguration configuration, ILogger<MinioService> logger)
     {
         _minioClient = minioClient;
         _bucketName = configuration["Minio:BucketName"] ?? throw new ArgumentNullException("Minio:BucketName configuration is missing");
+        _logger = logger;
     }
 
     public async Task<string> UploadCoverImageAsync(IFormFile file, Guid productId, CancellationToken cancellationToken)

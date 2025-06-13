@@ -1,8 +1,9 @@
 using System.Net;
 using System.Net.Mail;
-using Market.Application.Interfaces.Services;
+using Market.Application.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Market.Application.Interfaces.Services;
 
 namespace Market.Infrastructure.Services;
 
@@ -23,6 +24,8 @@ public class EmailService : IEmailService
         var smtpServer = configuration["EmailSettings:SmtpServer"];
         var port = int.Parse(configuration["EmailSettings:Port"]);
         
+        _logger.LogInformation("Инициализация EmailService. SMTP сервер: {Server}, порт: {Port}", smtpServer, port);
+        
         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
         _smtpClient = new SmtpClient(smtpServer, port)
@@ -37,6 +40,8 @@ public class EmailService : IEmailService
 
     public async Task SendEmailAsync(string email, string subject, string message)
     {
+        _logger.LogInformation("Начало отправки email на адрес: {Email}, тема: {Subject}", email, subject);
+        
         for (int attempt = 1; attempt <= MaxRetries; attempt++)
         {
             try
@@ -50,6 +55,7 @@ public class EmailService : IEmailService
                 };
                 mailMessage.To.Add(email);
 
+                _logger.LogInformation("Попытка {Attempt} отправки email", attempt);
                 await _smtpClient.SendMailAsync(mailMessage);
                 _logger.LogInformation("Email успешно отправлен на {Email}", email);
                 return; // Успешная отправка
@@ -67,6 +73,7 @@ public class EmailService : IEmailService
                     return;
                 }
                 
+                _logger.LogInformation("Ожидание {Delay}мс перед следующей попыткой", RetryDelayMs * attempt);
                 await Task.Delay(RetryDelayMs * attempt); // Увеличиваем задержку с каждой попыткой
             }
             catch (Exception ex)
