@@ -8,6 +8,36 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4 class="card-title">Добавить администратора</h4>
+                </div>
+                <div class="card-body">
+                    <form id="createAdminForm" onsubmit="createAdmin(event)">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required />
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="password">Пароль</label>
+                                    <input type="password" class="form-control" id="password" name="password" required />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary btn-block">Создать</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Список администраторов</h4>
@@ -18,7 +48,6 @@
                             <thead>
                                 <tr>
                                     <th>Email</th>
-                                    <th>Подтвержден</th>
                                     <th>Действия</th>
                                 </tr>
                             </thead>
@@ -45,6 +74,32 @@
 
 @section Scripts {
     <script>
+        function createAdmin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            fetch('/Admin/Admins/Create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify({ email, password }),
+                credentials: 'same-origin'
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    alert('Ошибка при создании администратора');
+                }
+            }).catch(error => {
+                console.error('Ошибка:', error);
+                alert('Ошибка при создании администратора');
+            });
+        }
+
         function deleteAdmin(id) {
             if (confirm('Вы уверены, что хотите удалить этого администратора?')) {
                 fetch(`/Admin/Admins/Delete/${id}`, {

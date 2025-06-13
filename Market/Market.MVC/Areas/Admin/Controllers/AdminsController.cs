@@ -2,6 +2,7 @@ using Market.Application.Features.Users.Commands.CreateAdmin;
 using Market.Application.Features.Users.Commands.DeleteAdmin;
 using Market.Application.Features.Users.Queries.GetAdmins;
 using Market.Domain.Enums;
+using Market.MVC.Areas.Admin.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,16 +27,24 @@ public class AdminsController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(string email, string password)
+    public async Task<IActionResult> Create([FromBody] CreateAdminRequest request)
     {
-        await _mediator.Send(new CreateAdminCommand(email, password));
-        return RedirectToAction(nameof(Index));
+        try
+        {
+            await _mediator.Send(new CreateAdminCommand(request.Email, request.Password));
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     [HttpPost]
     public async Task<IActionResult> Delete(Guid id)
     {
         await _mediator.Send(new DeleteAdminCommand(id));
-        return RedirectToAction(nameof(Index));
+        return Ok();
     }
-} 
+}
+
