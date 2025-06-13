@@ -71,6 +71,8 @@ public class Program
         app.UseAuthentication();
         app.UseAuthorization();
 
+        app.UseAdminRedirect();
+
         app.MapHub<NotificationHub>("/notificationhub");
 
         app.MapControllers();
