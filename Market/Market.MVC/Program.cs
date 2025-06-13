@@ -43,6 +43,11 @@ public class Program
 
         builder.Services.AddControllersWithViews();
 
+        builder.Services.ConfigureApplicationCookie(options =>
+        {
+            options.LoginPath = "/Admin/Account/Login";
+            options.AccessDeniedPath = "/Home/Index";
+        });
         var app = builder.Build();
         
         
