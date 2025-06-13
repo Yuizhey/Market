@@ -101,6 +101,7 @@
       <_ContentIncludedByDefault Remove="wwwroot\assets\vendor\js\popper.js" />
       <_ContentIncludedByDefault Remove="wwwroot\assets\vendor\js\prism.min.js" />
       <_ContentIncludedByDefault Remove="wwwroot\assets\vendor\js\swiper.min.js" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\Admin\Index.cshtml" />
     </ItemGroup>
 
     <ItemGroup>

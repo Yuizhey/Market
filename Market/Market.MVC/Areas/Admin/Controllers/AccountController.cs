@@ -33,7 +33,7 @@ public class AccountController : Controller
         if (result)
         {
             _logger.LogInformation("Успешный вход администратора: {Email}", email);
-            return RedirectToAction("Index", "Home", new { area = "Admin" });
+            return RedirectToAction("Index", "Admins", new { area = "Admin" });
         }
 
         _logger.LogWarning("Неудачная попытка входа администратора: {Email}", email);
@@ -41,10 +41,20 @@ public class AccountController : Controller
         return View();
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Logout()
     {
-        _logger.LogInformation("Выход администратора");
-        await _authService.LogoutAsync();
-        return RedirectToAction("Login");
+        try
+        {
+            _logger.LogInformation("Выход администратора");
+            await _authService.LogoutAsync();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Ошибка при выходе администратора");
+            return StatusCode(500);
+        }
     }
 } 

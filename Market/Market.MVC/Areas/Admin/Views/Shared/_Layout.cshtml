@@ -17,6 +17,7 @@
     
     <script src="/dashboard/assets/js/jquery.min.js"></script>
     <script src="/dashboard/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    @Html.AntiForgeryToken()
 </head>
 <body>
     <div class="offcanvas-overlay"></div>
@@ -41,7 +42,7 @@
                                     </a>
                                     @if (User.Identity.IsAuthenticated)
                                     {
-                                        <div class="dropdown-menu"><a href="#">My Profile</a> <a href="#">task</a> <a href="#">Settings</a> <a href="#">Log Out</a></div>
+                                        <a href="#" onclick="logout(event)">Log Out</a>
                                     }
                                 </div>
                                 <div class="main-header-menu d-block d-lg-none">
@@ -76,14 +77,7 @@
                         {
                             <li class="nav-category">Main</li>
 
-                            <li class="@(Context.Request.Path == "/AdminPanel/Dashboard" ? "active" : "")">
-                                <a href="/AdminPanel/Dashboard">
-                                    <i class="icofont-pie-chart"></i>
-                                    <span class="link-title">Dashboard</span>
-                                </a>
-                            </li>
-
-                            <li lass="@(Context.Request.Path == "/Admin/Contact" ? "active" : "")">
+                            <li class="@(Context.Request.Path == "/Admin/Contact" ? "active" : "")">
                                 <a href="/Admin/Contact"><i class="icofont-contact-add"></i> <span class="link-title">Contact</span></a>
                             </li>
 
@@ -93,6 +87,10 @@
 
                             <li>
                                 <a href="/Admin/Authors"><i class="icofont-ui-user"></i> <span class="link-title">Authors</span></a>
+                            </li>
+                            
+                            <li>
+                                <a href="/Admin/Admins"><i class="icofont-ui-user"></i> <span class="link-title">Admins</span></a>
                             </li>
 
                             <li class="@(Context.Request.Path.StartsWithSegments("/AdminPanel") ? "active sub-menu-opened" : "")">
@@ -288,6 +286,27 @@
     <script src="/dashboard/assets/js/main.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        function logout(event) {
+            event.preventDefault();
+            const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+            
+            fetch('/Admin/Account/Logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': token
+                },
+                credentials: 'same-origin'
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = '/Admin/Account/Login';
+                }
+            }).catch(error => {
+                console.error('Ошибка при выходе:', error);
+            });
+        }
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>     
