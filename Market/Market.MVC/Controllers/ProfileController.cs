@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Market.Application.Features.Products.Queries.GetSalesStatistics;
+using Microsoft.Extensions.Logging;
 
 namespace Market.MVC.Controllers;
 
@@ -18,15 +19,18 @@ namespace Market.MVC.Controllers;
 public class ProfileController : Controller
 {
     private readonly IMediator _mediator;
+    private readonly ILogger<ProfileController> _logger;
 
-    public ProfileController(IMediator mediator)
+    public ProfileController(IMediator mediator, ILogger<ProfileController> logger)
     {
         _mediator = mediator;
+        _logger = logger;
     }
     
     [Authorize(Roles = nameof(UserRoles.AuthorUser))]
     public IActionResult AddNewItem()
     {
+        _logger.LogInformation("Просмотр страницы добавления нового товара");
         return View();
     }
     
@@ -34,8 +38,14 @@ public class ProfileController : Controller
     [Authorize(Roles = nameof(UserRoles.CLientUser))]
     public async Task<IActionResult> AddUserDescription(UserDescriptionVM vm)
     {
+        _logger.LogInformation("Попытка добавления описания пользователя: {FirstName} {LastName}", 
+            vm.FirstName, vm.LastName);
+
         if (!ModelState.IsValid)
+        {
+            _logger.LogWarning("Невалидная форма описания пользователя");
             return View("PrifileSettings");
+        }
 
         var command = new AddUserDescriptionCommand
         {
@@ -46,6 +56,8 @@ public class ProfileController : Controller
         };
 
         await _mediator.Send(command);
+        _logger.LogInformation("Описание пользователя успешно добавлено: {FirstName} {LastName}", 
+            vm.FirstName, vm.LastName);
         return RedirectToAction("Index");
     }
 
@@ -53,8 +65,14 @@ public class ProfileController : Controller
     [Authorize(Roles = nameof(UserRoles.AuthorUser))]
     public async Task<IActionResult> AddAuthorUserDescription(AuthorUserDescriptionVM vm)
     {
+        _logger.LogInformation("Попытка добавления описания автора: {FirstName} {LastName}", 
+            vm.FirstName, vm.LastName);
+
         if (!ModelState.IsValid)
+        {
+            _logger.LogWarning("Невалидная форма описания автора");
             return View("PrifileSettings");
+        }
 
         var command = new AddAuthorUserDescriptionCommand
         {
@@ -68,12 +86,15 @@ public class ProfileController : Controller
         };
 
         await _mediator.Send(command);
+        _logger.LogInformation("Описание автора успешно добавлено: {FirstName} {LastName}", 
+            vm.FirstName, vm.LastName);
         return RedirectToAction("Index");
     }
     
     [HttpGet]
     public async Task<IActionResult> Settings()
     {
+        _logger.LogInformation("Просмотр настроек профиля");
         var profile = await _mediator.Send(new GetUserProfileQuery());
         return View("PrifileSettings", profile);
     }
@@ -82,8 +103,11 @@ public class ProfileController : Controller
     [Authorize(Roles = nameof(UserRoles.AuthorUser))]
     public async Task<IActionResult> MyProducts()
     {
+        _logger.LogInformation("Просмотр списка товаров автора");
         var query = new GetByUserIdQuery();
         var myProducts = await _mediator.Send(query);
+        _logger.LogInformation("Загружено {Count} товаров автора", myProducts.Count());
+        
         var viewModel = new MyProductsVM
         {
             MyProducts = myProducts
@@ -94,7 +118,10 @@ public class ProfileController : Controller
     [HttpGet]
     public async Task<IActionResult> MyDownloads()
     {
+        _logger.LogInformation("Просмотр списка загрузок пользователя");
         var purchases = await _mediator.Send(new GetUserPurchasesQuery());
+        _logger.LogInformation("Загружено {Count} покупок пользователя", purchases.Count());
+        
         var viewmodel = new MyDownloadsVM
         {
             Downloads = purchases
@@ -105,6 +132,7 @@ public class ProfileController : Controller
     [Authorize(Roles = nameof(UserRoles.AuthorUser))]
     public async Task<IActionResult> MySales()
     {
+        _logger.LogInformation("Просмотр статистики продаж автора");
         var statistics = await _mediator.Send(new GetSalesStatisticsQuery());
         return View(statistics);
     }

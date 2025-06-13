@@ -10,15 +10,19 @@ using Market.MVC.Models.Items;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Market.MVC.Controllers;
 
 public class ItemsController : Controller
 {
     private readonly IMediator _mediator;
-    public ItemsController(IMediator mediator)
+    private readonly ILogger<ItemsController> _logger;
+
+    public ItemsController(IMediator mediator, ILogger<ItemsController> logger)
     {
         _mediator = mediator;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -30,6 +34,8 @@ public class ItemsController : Controller
         [FromQuery] decimal? minPrice = null,
         [FromQuery] decimal? maxPrice = null)
     {
+        _logger.LogInformation("Просмотр списка товаров. Тип отображения: {Type}, Страница: {Page}", type, page);
+        
         var pageSize = type == "grid" ? 15 : 9;
         
         IEnumerable<ProductType>? selectedTypes = null;
@@ -57,10 +63,15 @@ public class ItemsController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> Details(Guid id)
     {
+        _logger.LogInformation("Просмотр деталей товара с ID: {ProductId}", id);
+        
         var query = new GetByProductIdQuery(id);
         var product = await _mediator.Send(query);
         if (product == null)
+        {
+            _logger.LogWarning("Товар с ID {ProductId} не найден", id);
             return NotFound();
+        }
 
         var viewModel = new SingleItemVM
         {
@@ -78,6 +89,8 @@ public class ItemsController : Controller
     [Authorize(Roles = nameof(UserRoles.AuthorUser))]
     public async Task<IActionResult> Create([FromForm] AddItemVM viewModel)
     {
+        _logger.LogInformation("Создание нового товара: {Title}", viewModel.Title);
+        
         var command = new AddNewProductCommand
         {
             Title = viewModel.Title,
@@ -90,6 +103,7 @@ public class ItemsController : Controller
             ProductType = viewModel.ProductType,
         };
         await _mediator.Send(command);
+        _logger.LogInformation("Товар успешно создан: {Title}", viewModel.Title);
         return RedirectToAction("Index");
     }
 
@@ -97,7 +111,9 @@ public class ItemsController : Controller
     [Authorize(Roles = nameof(UserRoles.AuthorUser))]
     public async Task<IActionResult> Delete(Guid id)
     {
+        _logger.LogInformation("Удаление товара с ID: {ProductId}", id);
         await _mediator.Send(new DeleteProductCommand(id));
+        _logger.LogInformation("Товар успешно удален: {ProductId}", id);
         return Ok();
     }
     
@@ -105,6 +121,7 @@ public class ItemsController : Controller
     [Authorize(Roles = $"{nameof(UserRoles.CLientUser)},{nameof(UserRoles.AuthorUser)}")]
     public async Task<IActionResult> DownloadAdditionalFiles(Guid productId, CancellationToken cancellationToken)
     {
+        _logger.LogInformation("Скачивание дополнительных файлов для товара: {ProductId}", productId);
         var query = new GetAdditionalFilesUrlsQuery(productId);
         var zipFile = await _mediator.Send(query, cancellationToken);
         if (zipFile == null || zipFile.Length == 0)
