@@ -35,10 +35,9 @@
                                 <td>@product.ProductType</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="@Url.Action("Delete", new { id = product.Id })" class="btn btn-sm btn-danger" 
-                                           onclick="return confirm('Вы уверены, что хотите удалить этот продукт?');">
+                                        <button onclick="deleteProduct('@product.Id')" class="btn btn-sm btn-danger">
                                             <i class="fas fa-trash"></i> Удалить
-                                        </a>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -48,4 +47,25 @@
             </div>
         </div>
     </div>
-</div> 
+</div>
+
+@section Scripts {
+    <script>
+        function deleteProduct(id) {
+            if (confirm('Вы уверены, что хотите удалить этот продукт?')) {
+                fetch(`/Admin/Products/Delete/${id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        window.location.reload();
+                    } else {
+                        alert('Произошла ошибка при удалении продукта');
+                    }
+                });
+            }
+        }
+    </script>
+} 

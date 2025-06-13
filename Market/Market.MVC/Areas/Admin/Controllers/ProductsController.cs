@@ -1,3 +1,4 @@
+using Market.Application.Features.Products.Commands;
 using Market.Application.Features.Products.Queries.GetAll;
 using Market.Domain.Enums;
 using MediatR;
@@ -29,5 +30,12 @@ public class ProductsController : Controller
         _logger.LogInformation("Загружено {Count} товаров", products.Count());
         
         return View(products);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        await _mediator.Send(new DeleteProductCommand(id));
+        return RedirectToAction(nameof(Index));
     }
 } 
