@@ -30,16 +30,6 @@
                         <div class="col-3 col-lg-1 col-xl-4">
                             <div class="main-header-left h-100 d-flex align-items-center">
                                 <div class="main-header-user">
-                                    <a href="#" class="d-flex align-items-center" data-toggle="dropdown">
-                                        <div class="menu-icon"><span></span> <span></span> <span></span></div>
-                                        <div class="user-profile d-xl-flex align-items-center d-none">
-                                            <div class="user-avatar"><img src="/dashboard/assets/img/avatar/user.png" alt=""></div>
-                                            <div class="user-info">
-                                                <h4 class="user-name">Abrilay Khatun</h4>
-                                                <p class="user-email">abrilakh@gmail.com</p>
-                                            </div>
-                                        </div>
-                                    </a>
                                     @if (User.Identity.IsAuthenticated)
                                     {
                                         <a href="#" onclick="logout(event)">Log Out</a>
