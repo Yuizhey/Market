@@ -21,15 +21,15 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var latestUIKits = await _mediator.Send(new GetLatestProductsByTypeQuery(ProductType.WebTemplates));
-        var latestWordPress = await _mediator.Send(new GetLatestProductsByTypeQuery(ProductType.Fonts));
-        var latestHTML = await _mediator.Send(new GetLatestProductsByTypeQuery(ProductType.Graphics));
+        var latestWeb = await _mediator.Send(new GetLatestProductsByTypeQuery(ProductType.WebTemplates));
+        var latestFonts = await _mediator.Send(new GetLatestProductsByTypeQuery(ProductType.Fonts));
+        var latestGraphics = await _mediator.Send(new GetLatestProductsByTypeQuery(ProductType.Graphics));
 
         var viewModel = new HomeViewModel
         {
-            LatestUIKits = latestUIKits,
-            LatestWordPress = latestWordPress,
-            LatestHTML = latestHTML
+            latestWeb = latestWeb,
+            latestFonts = latestFonts,
+            latestGraphics = latestGraphics
         };
 
         return View(viewModel);

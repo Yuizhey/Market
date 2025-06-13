@@ -27,11 +27,11 @@
         <div class="container">
             <div class="row mb-4 mt-5 d-flex justify-content-between align-items-center">
                 <div class="col-md-8">
-                    <h5 class="mb-0">Последние UI Kit</h5>
+                    <h5 class="mb-0">Последние Web шаблоны</h5>
                 </div>
             </div>
             <div class="row">
-                @foreach (var product in Model.LatestUIKits)
+                @foreach (var product in Model.latestWeb)
                 {
                     <div class="col-md-3">
                         <div class="card item-card h-100 border-0">
@@ -76,11 +76,11 @@
             
             <div class="row mb-4 mt-3 d-flex justify-content-between align-items-center">
                 <div class="col-md-8">
-                    <h5 class="mb-0">Последние WordPress</h5>
+                    <h5 class="mb-0">Последние Fonts</h5>
                 </div>
             </div>
             <div class="row">
-                @foreach (var product in Model.LatestWordPress)
+                @foreach (var product in Model.latestFonts)
                 {
                     <div class="col-md-3">
                         <div class="card item-card h-100 border-0">
@@ -125,11 +125,11 @@
             
             <div class="row mb-4 mt-3 d-flex justify-content-between align-items-center">
                 <div class="col-md-8">
-                    <h5 class="mb-0">Последние HTML</h5>
+                    <h5 class="mb-0">Последние Graphics</h5>
                 </div>
             </div>
             <div class="row">
-                @foreach (var product in Model.LatestHTML)
+                @foreach (var product in Model.latestGraphics)
                 {
                     <div class="col-md-3">
                         <div class="card item-card h-100 border-0">
