@@ -69,33 +69,35 @@
                 </div>
                 <div class="sidebar-body">
                     <ul class="nav">
-                        <li class="nav-category">Main</li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-category">Main</li>
 
-                        <li class="@(Context.Request.Path == "/AdminPanel/Dashboard" ? "active" : "")">
-                            <a href="/AdminPanel/Dashboard">
-                                <i class="icofont-pie-chart"></i>
-                                <span class="link-title">Dashboard</span>
-                            </a>
-                        </li>
+                            <li class="@(Context.Request.Path == "/AdminPanel/Dashboard" ? "active" : "")">
+                                <a href="/AdminPanel/Dashboard">
+                                    <i class="icofont-pie-chart"></i>
+                                    <span class="link-title">Dashboard</span>
+                                </a>
+                            </li>
 
-                        <li lass="@(Context.Request.Path == "/Admin/Contact" ? "active" : "")">
-                            <a href="/Admin/Contact"><i class="icofont-contact-add"></i> <span class="link-title">Contact</span></a>
-                        </li>
+                            <li lass="@(Context.Request.Path == "/Admin/Contact" ? "active" : "")">
+                                <a href="/Admin/Contact"><i class="icofont-contact-add"></i> <span class="link-title">Contact</span></a>
+                            </li>
 
-                        <li>
-                            <a href="/Admin/Users"><i class="icofont-ui-user"></i> <span class="link-title">Clients</span></a>
-                        </li>
+                            <li>
+                                <a href="/Admin/Users"><i class="icofont-ui-user"></i> <span class="link-title">Clients</span></a>
+                            </li>
 
-                        <li>
-                            <a href="/Admin/Authors"><i class="icofont-ui-user"></i> <span class="link-title">Authors</span></a>
-                        </li>
+                            <li>
+                                <a href="/Admin/Authors"><i class="icofont-ui-user"></i> <span class="link-title">Authors</span></a>
+                            </li>
 
-                        <li class="@(Context.Request.Path.StartsWithSegments("/AdminPanel") ? "active sub-menu-opened" : "")">
-                            <a href="/Admin/Products"><i class="icofont-shopping-cart"></i> <span class="link-title">Products</span></a>
-                        </li>
+                            <li class="@(Context.Request.Path.StartsWithSegments("/AdminPanel") ? "active sub-menu-opened" : "")">
+                                <a href="/Admin/Products"><i class="icofont-shopping-cart"></i> <span class="link-title">Products</span></a>
+                            </li>
 
-                        <li><a href="/Admin/Notification"><i class="icofont-wechat"></i> <span class="link-title">Notification</span></a></li>
-
+                            <li><a href="/Admin/Notification"><i class="icofont-wechat"></i> <span class="link-title">Notification</span></a></li>
+                        }
                         <li><a href="../social-media.html"><i class="icofont-chart-histogram"></i> <span class="link-title">Social Media Analytics</span></a></li>
                         <li class="nav-category">apps</li>
                         <li>

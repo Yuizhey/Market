@@ -102,7 +102,7 @@ public class ItemsController : Controller
     }
     
     [HttpGet]
-    [Authorize]
+    [Authorize(Roles = $"{nameof(UserRoles.CLientUser)},{nameof(UserRoles.AuthorUser)}")]
     public async Task<IActionResult> DownloadAdditionalFiles(Guid productId, CancellationToken cancellationToken)
     {
         var query = new GetAdditionalFilesUrlsQuery(productId);
@@ -114,4 +114,5 @@ public class ItemsController : Controller
 
         return File(zipFile, "application/zip", $"AdditionalFiles_{productId}.zip");
     }
+
 }
