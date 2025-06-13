@@ -18,7 +18,7 @@ public class AdminRedirectMiddleware
             var path = context.Request.Path.Value?.ToLower();
             if (path != null && !path.StartsWith("/admin") && !path.StartsWith("/_blazor") && !path.StartsWith("/css") && !path.StartsWith("/js") && !path.StartsWith("/lib") && !path.StartsWith("/images"))
             {
-                context.Response.Redirect("/Admin/Contact");
+                context.Response.Redirect("/Admin/Admins");
                 return;
             }
         }

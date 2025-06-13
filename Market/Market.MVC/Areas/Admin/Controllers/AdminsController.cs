@@ -1,4 +1,5 @@
 using Market.Application.Features.Users.Commands.CreateAdmin;
+using Market.Application.Features.Users.Commands.DeleteAdmin;
 using Market.Application.Features.Users.Queries.GetAdmins;
 using Market.Domain.Enums;
 using MediatR;
@@ -28,6 +29,13 @@ public class AdminsController : Controller
     public async Task<IActionResult> Create(string email, string password)
     {
         await _mediator.Send(new CreateAdminCommand(email, password));
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        await _mediator.Send(new DeleteAdminCommand(id));
         return RedirectToAction(nameof(Index));
     }
 } 

@@ -46,6 +46,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Email</th>
+                            <th>Действия</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,6 +55,13 @@
                             <tr>
                                 <td>@admin.Id</td>
                                 <td>@admin.Email</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button onclick="deleteAdmin('@admin.Id')" class="btn btn-sm btn-danger">
+                                            <i class="fas fa-trash"></i> Удалить
+                                        </button>
+                                    </div>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -61,4 +69,25 @@
             </div>
         </div>
     </div>
-</div> 
+</div>
+
+@section Scripts {
+    <script>
+        function deleteAdmin(id) {
+            if (confirm('Вы уверены, что хотите удалить этого администратора?')) {
+                fetch(`/Admin/Admins/Delete/${id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        window.location.reload();
+                    } else {
+                        alert('Произошла ошибка при удалении администратора');
+                    }
+                });
+            }
+        }
+    </script>
+} 
