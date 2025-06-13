@@ -39,7 +39,10 @@
                                             </div>
                                         </div>
                                     </a>
-                                    <div class="dropdown-menu"><a href="#">My Profile</a> <a href="#">task</a> <a href="#">Settings</a> <a href="#">Log Out</a></div>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <div class="dropdown-menu"><a href="#">My Profile</a> <a href="#">task</a> <a href="#">Settings</a> <a href="#">Log Out</a></div>
+                                    }
                                 </div>
                                 <div class="main-header-menu d-block d-lg-none">
                                     <div class="header-toogle-menu"><img src="/dashboard/assets/img/menu.png" alt=""></div>
