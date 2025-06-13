@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Market.MVC.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = nameof(UserRoles.Admin))]
 public class ContactController : Controller
 {
     private readonly IMediator _mediator;

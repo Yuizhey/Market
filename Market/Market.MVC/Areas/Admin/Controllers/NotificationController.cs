@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Market.Application.Interfaces.Services;
+using Market.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Market.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = nameof(UserRoles.Admin))]
     public class NotificationController : Controller
     {
         private readonly INotificationService _notificationService;

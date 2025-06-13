@@ -1,4 +1,5 @@
 using Market.Application.Features.Products.Queries.GetAll;
+using Market.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Market.MVC.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = nameof(UserRoles.Admin))]
 public class ProductsController : Controller
 {
     private readonly IMediator _mediator;
