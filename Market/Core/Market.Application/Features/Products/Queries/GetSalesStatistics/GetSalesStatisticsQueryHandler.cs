@@ -11,15 +11,18 @@ public class GetSalesStatisticsQueryHandler : IRequestHandler<GetSalesStatistics
     private readonly IProductRepository _productRepository;
     private readonly IProductSaleStatisticsRepository _statisticsRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IAuthorUserDescriptionRepository _authorUserDescriptionRepository;
 
     public GetSalesStatisticsQueryHandler(
         IProductRepository productRepository,
         IProductSaleStatisticsRepository statisticsRepository,
-        IHttpContextAccessor httpContextAccessor)
+        IHttpContextAccessor httpContextAccessor,
+        IAuthorUserDescriptionRepository authorUserDescriptionRepository)
     {
         _productRepository = productRepository;
         _statisticsRepository = statisticsRepository;
         _httpContextAccessor = httpContextAccessor;
+        _authorUserDescriptionRepository = authorUserDescriptionRepository;
     }
 
     public async Task<IEnumerable<GetSalesStatisticsDto>> Handle(GetSalesStatisticsQuery request, CancellationToken cancellationToken)
@@ -30,8 +33,8 @@ public class GetSalesStatisticsQueryHandler : IRequestHandler<GetSalesStatistics
             throw new UnauthorizedAccessException("Пользователь не авторизован");
         }
 
-        var authorId = Guid.Parse(userId);
-        var products = await _productRepository.GetProductsByUserId(authorId);
+        var authorUserDescriptionId = await _authorUserDescriptionRepository.GetBusinessIdByIdentityUserIdAsync(Guid.Parse(userId!));
+        var products = await _productRepository.GetProductsByUserId(authorUserDescriptionId);
         var productIds = products.Select(p => p.Id).ToList();
         
         var statistics = await _statisticsRepository.GetByProductIdsAsync(productIds);
