@@ -6,4 +6,5 @@ public interface IAuthService
     Task<bool> LoginAsync(string email, string password);
     Task<bool> AuthorRegisterAsync(string authorUserName, string password, string email);
     Task LogoutAsync();
+    Task<bool> AdminLoginAsync(string email, string password);
 }

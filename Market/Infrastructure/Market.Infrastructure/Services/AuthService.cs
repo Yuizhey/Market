@@ -105,4 +105,18 @@ public class AuthService : IAuthService
     {
         await _signInManager.SignOutAsync();
     }
+
+    public async Task<bool> AdminLoginAsync(string email, string password)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+            return false;
+
+        var isAdmin = await _userManager.IsInRoleAsync(user, UserRoles.Admin.ToString());
+        if (!isAdmin)
+            return false;
+        
+        var result = await _signInManager.PasswordSignInAsync(user, password, false, false);
+        return result.Succeeded;
+    }
 }
