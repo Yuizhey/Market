@@ -10,4 +10,5 @@ public sealed class SingleItemVM
     public int LikesCount { get; set; }
     public string Subtitle { get; set; }
     public string ShortDescription { get; set; }
+    public bool IsLiked { get; set; }
 }

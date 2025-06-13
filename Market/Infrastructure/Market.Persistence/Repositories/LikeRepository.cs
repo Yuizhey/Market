@@ -41,4 +41,10 @@ public class LikeRepository : ILikeRepository
             .Select(l => l.ProductId)
             .ToListAsync();
     }
+
+    public async Task<bool> IsProductLikedByUserAsync(Guid productId, Guid userId)
+    {
+        return await _genericRepository.Entities
+            .AnyAsync(l => l.ProductId == productId && l.UserId == userId);
+    }
 }

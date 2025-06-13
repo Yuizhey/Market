@@ -81,6 +81,7 @@ public class ItemsController : Controller
             Text = product.Text,
             ImageURL = product.ImageURL,
             LikesCount = product.LikesCount,
+            IsLiked = product.IsLiked,
         };
         return View("SingleItem", viewModel);
     }

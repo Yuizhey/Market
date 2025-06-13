@@ -9,4 +9,5 @@ public interface ILikeRepository
     Task DeleteAsync(Like like);
     Task<int> GetLikesCountByProductIdAsync(Guid productId);
     Task<List<Guid>> GetLikedProductIdsByUserIdAsync(Guid userId);
+    Task<bool> IsProductLikedByUserAsync(Guid productId, Guid userId);
 }
