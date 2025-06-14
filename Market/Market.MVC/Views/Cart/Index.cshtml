@@ -18,7 +18,14 @@
                                         <h6 class="my-0">@item.Title</h6>
                                         <small class="text-muted">Brief description</small>
                                     </div>
-                                    <span class="text-muted font-weight-bold">$@item.Price</span>
+                                    <div class="d-flex align-items-center">
+                                        <span class="text-muted font-weight-bold me-3">$@item.Price</span>
+                                        <button class="btn btn-outline-danger btn-sm remove-item" 
+                                                data-cart-id="@Model.CartId" 
+                                                data-product-id="@item.ProductId">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
                                 </li>
                             }
                         </ul>
@@ -213,3 +220,51 @@
 
         </div>
     </main>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const removeButtons = document.querySelectorAll('.remove-item');
+            
+            removeButtons.forEach(button => {
+                button.addEventListener('click', async function() {
+                    const cartId = this.dataset.cartId;
+                    const productId = this.dataset.productId;
+                    
+                    try {
+                        const response = await fetch('/Cart/RemoveItem', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                cartId: cartId,
+                                productId: productId
+                            })
+                        });
+                        
+                        if (response.ok) {
+                            // Удаляем элемент из DOM
+                            this.closest('li').remove();
+                            
+                            // Обновляем счетчик товаров
+                            const badge = document.querySelector('.badge');
+                            const currentCount = parseInt(badge.textContent);
+                            badge.textContent = currentCount - 1;
+                            
+                            // Если корзина пуста, обновляем страницу
+                            if (currentCount - 1 === 0) {
+                                window.location.reload();
+                            }
+                        } else {
+                            alert('Ошибка при удалении товара');
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('Произошла ошибка при удалении товара');
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -1,6 +1,7 @@
 using Market.Application.Features.Carts.Commands.AddItemToCart;
 using Market.Application.Features.Carts.Commands.CheckoutCart;
 using Market.Application.Features.Carts.Queries.GetCartByUserId;
+using Market.Application.Features.Carts.Commands.RemoveItem;
 using Market.MVC.Models.Cart;
 using Market.MVC.Views.Cart;
 using MediatR;
@@ -63,5 +64,19 @@ public class CartController : Controller
         
         _logger.LogInformation("Заказ успешно оформлен. Email: {Email}", model.Email);
         return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> RemoveItem([FromBody] RemoveItemCommand command)
+    {
+        try
+        {
+            await _mediator.Send(command);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 }
