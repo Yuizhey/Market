@@ -91,15 +91,17 @@
                     method: 'POST'
                 });
 
+                const responseText = await response.text();
+                
                 if (response.ok) {
                     alert("Товар добавлен в корзину!");
                 } else {
-                    const err = await response.text();
-                    alert("Ошибка: " + err);
+                    const errorMessage = responseText.split('\n')[0].replace('System.InvalidOperationException: ', '');
+                    alert(errorMessage);
                 }
             } catch (error) {
                 console.error("Ошибка при добавлении в корзину:", error);
-                alert("Произошла ошибка.");
+                alert("Произошла ошибка при добавлении товара в корзину.");
             }
         }
 
