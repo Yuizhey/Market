@@ -32,7 +32,8 @@ public class ItemsController : Controller
         [FromQuery] int page = 1, 
         [FromQuery] string? productTypes = null,
         [FromQuery] decimal? minPrice = null,
-        [FromQuery] decimal? maxPrice = null)
+        [FromQuery] decimal? maxPrice = null,
+        [FromQuery] string? searchTerm = null)
     {
         _logger.LogInformation("Просмотр списка товаров. Тип отображения: {Type}, Страница: {Page}", type, page);
         
@@ -46,7 +47,7 @@ public class ItemsController : Controller
                 .ToList();
         }
 
-        var query = new GetByPageNumberQuery(page, pageSize, selectedTypes, minPrice, maxPrice);
+        var query = new GetByPageNumberQuery(page, pageSize, selectedTypes, minPrice, maxPrice, searchTerm);
         var result = await _mediator.Send(query);
 
         var viewModel = new ItemsVM

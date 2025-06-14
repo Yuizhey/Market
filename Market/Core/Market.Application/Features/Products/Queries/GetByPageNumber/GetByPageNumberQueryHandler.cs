@@ -40,12 +40,14 @@ public class GetByPageNumberQueryHandler : IRequestHandler<GetByPageNumberQuery,
             request.PageSize,
             request.ProductTypes,
             request.MinPrice,
-            request.MaxPrice);
+            request.MaxPrice,
+            request.SearchTerm);
 
         var totalItems = await _productRepository.GetFilteredProductsCountAsync(
             request.ProductTypes,
             request.MinPrice,
-            request.MaxPrice);
+            request.MaxPrice,
+            request.SearchTerm);
 
         var totalPages = (int)Math.Ceiling(totalItems / (double)request.PageSize);
 

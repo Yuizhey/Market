@@ -22,11 +22,13 @@ public interface IProductRepository
         int pageSize, 
         IEnumerable<ProductType>? types = null,
         decimal? minPrice = null,
-        decimal? maxPrice = null);
+        decimal? maxPrice = null,
+        string? searchTerm = null);
     Task<int> GetFilteredProductsCountAsync(
         IEnumerable<ProductType>? types = null,
         decimal? minPrice = null,
-        decimal? maxPrice = null);
+        decimal? maxPrice = null,
+        string? searchTerm = null);
     Task<IEnumerable<Product>> GetAllAsync();
     Task<IEnumerable<Product>> GetLatestByTypeAsync(ProductType type, int count);
 }

@@ -10,14 +10,22 @@ public class GetByPageNumberQuery : IRequest<GetByPageNumberREsult>
     public IEnumerable<ProductType>? ProductTypes { get; }
     public decimal? MinPrice { get; }
     public decimal? MaxPrice { get; }
+    public string? SearchTerm { get; }
 
-    public GetByPageNumberQuery(int page, int pageSize, IEnumerable<ProductType>? productTypes = null, decimal? minPrice = null, decimal? maxPrice = null)
+    public GetByPageNumberQuery(
+        int page, 
+        int pageSize, 
+        IEnumerable<ProductType>? productTypes = null, 
+        decimal? minPrice = null, 
+        decimal? maxPrice = null,
+        string? searchTerm = null)
     {
         Page = page;
         PageSize = pageSize;
         ProductTypes = productTypes;
         MinPrice = minPrice;
         MaxPrice = maxPrice;
+        SearchTerm = searchTerm;
     }
 }
 

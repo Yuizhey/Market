@@ -98,7 +98,8 @@ public class ProductRepository : IProductRepository
         int pageSize, 
         IEnumerable<ProductType>? types = null,
         decimal? minPrice = null,
-        decimal? maxPrice = null)
+        decimal? maxPrice = null,
+        string? searchTerm = null)
     {
         var query = _context.Products.AsQueryable();
 
@@ -115,6 +116,15 @@ public class ProductRepository : IProductRepository
         if (maxPrice.HasValue)
         {
             query = query.Where(p => p.Price <= maxPrice.Value);
+        }
+
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            searchTerm = searchTerm.ToLower();
+            query = query.Where(p => 
+                p.Title.ToLower().Contains(searchTerm) || 
+                p.Subtitle.ToLower().Contains(searchTerm) ||
+                p.ShortDescription.ToLower().Contains(searchTerm));
         }
 
         return await query
@@ -126,7 +136,8 @@ public class ProductRepository : IProductRepository
     public async Task<int> GetFilteredProductsCountAsync(
         IEnumerable<ProductType>? types = null,
         decimal? minPrice = null,
-        decimal? maxPrice = null)
+        decimal? maxPrice = null,
+        string? searchTerm = null)
     {
         var query = _context.Products.AsQueryable();
 
@@ -143,6 +154,15 @@ public class ProductRepository : IProductRepository
         if (maxPrice.HasValue)
         {
             query = query.Where(p => p.Price <= maxPrice.Value);
+        }
+
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            searchTerm = searchTerm.ToLower();
+            query = query.Where(p => 
+                p.Title.ToLower().Contains(searchTerm) || 
+                p.Subtitle.ToLower().Contains(searchTerm) ||
+                p.ShortDescription.ToLower().Contains(searchTerm));
         }
 
         return await query.CountAsync();
