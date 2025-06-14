@@ -20,16 +20,16 @@ namespace Market.MVC.Controllers
         [Route("Error/{statusCode}")]
         public IActionResult Error(int statusCode)
         {
-            if (statusCode == 404)
+            return statusCode switch
             {
-                return View("Error404");
-            }
-            else if (statusCode == 403)
-            {
-                return View("Error403");
-            }
-            
-            return View("Error404"); // По умолчанию показываем 404
+                400 => View("Error400"),
+                401 => View("Error401"),
+                403 => View("Error403"),
+                404 => View("Error404"),
+                500 => View("Error500"),
+                503 => View("Error503"),
+                _ => View("Error404")
+            };
         }
     }
 } 
