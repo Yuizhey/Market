@@ -45,8 +45,8 @@ public class Program
 
         builder.Services.ConfigureApplicationCookie(options =>
         {
-            options.LoginPath = "/Admin/Account/Login";
-            options.AccessDeniedPath = "/Home/Index";
+            options.LoginPath = "/login";
+            options.AccessDeniedPath = "/Error/403";
         });
         var app = builder.Build();
         
@@ -64,8 +64,7 @@ public class Program
             app.UseExceptionHandler("/Error/404");
             app.UseHsts();
         }
-
-        // Добавляем обработку ошибок до всех остальных middleware
+        
         app.UseStatusCodePagesWithReExecute("/Error/{0}");
 
         app.UseHttpsRedirection();
