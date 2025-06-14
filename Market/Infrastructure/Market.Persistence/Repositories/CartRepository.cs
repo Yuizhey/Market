@@ -24,31 +24,49 @@ public class CartRepository : ICartRepository
 
     public async Task AddProductToCartAsync(Guid userId, Guid productId)
     {
-        var cart = await GetByUserIdAsync(userId);
-        if (cart == null)
+        using var transaction = await _dbContext.Database.BeginTransactionAsync();
+        try
         {
-            cart = new Cart
-            {
-                Id = Guid.NewGuid(),
-                UserId = userId,
-                Items = new List<CartItem>()
-            };
-            await _dbContext.Carts.AddAsync(cart);
-        }
+            // Получаем корзину с блокировкой строки
+            var cart = await _dbContext.Carts
+                .Include(c => c.Items)
+                .FirstOrDefaultAsync(c => c.UserId == userId);
 
-        var cartItem = cart.Items.FirstOrDefault(i => i.ProductId == productId);
-        if (cartItem == null)
+            if (cart == null)
+            {
+                cart = new Cart
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = userId,
+                    Items = new List<CartItem>()
+                };
+                await _dbContext.Carts.AddAsync(cart);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            // Проверяем, есть ли уже такой товар в корзине
+            var existingItem = cart.Items.FirstOrDefault(i => i.ProductId == productId);
+            if (existingItem == null)
+            {
+                var cartItem = new CartItem
+                {
+                    Id = Guid.NewGuid(),
+                    CartId = cart.Id,
+                    ProductId = productId
+                };
+                
+                // Добавляем новый элемент
+                await _dbContext.CartItems.AddAsync(cartItem);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            await transaction.CommitAsync();
+        }
+        catch (Exception)
         {
-            cartItem = new CartItem
-            {
-                Id = Guid.NewGuid(),
-                CartId = cart.Id,
-                ProductId = productId
-            };
-            cart.Items.Add(cartItem);
+            await transaction.RollbackAsync();
+            throw;
         }
-
-        await _dbContext.SaveChangesAsync();
     }
 
     public async Task DeleteCartAsync(Guid cartId)
