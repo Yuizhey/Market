@@ -58,14 +58,19 @@ public class Program
             await DataSeeder.SeedAdminAsync(services);
         }
 
+        // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {
-            app.UseExceptionHandler("/Home/Error");
+            app.UseExceptionHandler("/Error/404");
             app.UseHsts();
         }
-        
+
+        // Добавляем обработку ошибок до всех остальных middleware
+        app.UseStatusCodePagesWithReExecute("/Error/{0}");
+
+        app.UseHttpsRedirection();
         app.UseStaticFiles();
-        
+
         app.UseRouting();
 
         app.UseAuthentication();
@@ -74,8 +79,6 @@ public class Program
         app.UseAdminRedirect();
 
         app.MapHub<NotificationHub>("/notificationhub");
-
-        app.MapControllers();
 
         app.MapControllerRoute(
             name: "areas",
