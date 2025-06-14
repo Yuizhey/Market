@@ -12,6 +12,7 @@ public sealed class AddItemToCartCommandHandler : IRequestHandler<AddItemToCartC
     private readonly ICartRepository _cartRepository;
     private readonly IUserDescriptionRepository _userDescriptionRepository;
     private readonly IAuthorUserDescriptionRepository _authorUserDescriptionRepository;
+    private readonly IPurchaseRepository _purchaseRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly ILogger<AddItemToCartCommandHandler> _logger;
 
@@ -19,12 +20,14 @@ public sealed class AddItemToCartCommandHandler : IRequestHandler<AddItemToCartC
         ICartRepository cartRepository,
         IUserDescriptionRepository userDescriptionRepository,
         IAuthorUserDescriptionRepository authorUserDescriptionRepository,
+        IPurchaseRepository purchaseRepository,
         IHttpContextAccessor httpContextAccessor,
         ILogger<AddItemToCartCommandHandler> logger)
     {
         _cartRepository = cartRepository;
         _userDescriptionRepository = userDescriptionRepository;
         _authorUserDescriptionRepository = authorUserDescriptionRepository;
+        _purchaseRepository = purchaseRepository;
         _httpContextAccessor = httpContextAccessor;
         _logger = logger;
     }
@@ -62,6 +65,20 @@ public sealed class AddItemToCartCommandHandler : IRequestHandler<AddItemToCartC
         {
             _logger.LogError("Некорректная роль пользователя {Role} для {UserId}", userRole, identityUserId);
             throw new InvalidOperationException("Invalid user role");
+        }
+        
+        var userPurchases = await _purchaseRepository.GetPurchasesByBuyerIdAsync(userId);
+        if (userPurchases.Any(p => p.ProductId == request.itemId))
+        {
+            _logger.LogWarning("Пользователь {UserId} пытается добавить уже купленный товар {ItemId}", userId, request.itemId);
+            throw new InvalidOperationException("Этот товар уже был куплен. Перейдите в раздел 'Загрузки' для доступа к нему.");
+        }
+
+        var cart = await _cartRepository.GetByUserIdAsync(userId);
+        if (cart != null && cart.Items.Any(i => i.ProductId == request.itemId))
+        {
+            _logger.LogWarning("Пользователь {UserId} пытается добавить товар {ItemId}, который уже есть в корзине", userId, request.itemId);
+            throw new InvalidOperationException("Этот товар уже добавлен в корзину.");
         }
 
         await _cartRepository.AddProductToCartAsync(userId, request.itemId);
