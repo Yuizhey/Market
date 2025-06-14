@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace Market.Application.Features.Carts.Commands.CheckoutCart;
 
-public class CheckoutCartCommandHandler : IRequestHandler<CheckoutCartCommand>
+public class CheckoutCartCommandHandler : IRequestHandler<CheckoutCartCommand, Unit>
 {
     private readonly ICartRepository _cartRepository;
     private readonly IProductSaleStatisticsRepository _productSaleStatisticsRepository;
@@ -36,7 +36,7 @@ public class CheckoutCartCommandHandler : IRequestHandler<CheckoutCartCommand>
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task Handle(CheckoutCartCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(CheckoutCartCommand request, CancellationToken cancellationToken)
     {
         var cart = await _cartRepository.GetByIdAsync(request.CartId);
         if (cart == null)
@@ -72,10 +72,6 @@ public class CheckoutCartCommandHandler : IRequestHandler<CheckoutCartCommand>
         {
             await _productSaleStatisticsRepository.UpdateProductStatisticsAsync(item.ProductId, item.Product.Price);
             
-            // Проверяем, не пытается ли автор купить свой собственный товар
-            if (item.Product.AuthorUserId == buyerId)
-                throw new InvalidOperationException("You cannot buy your own product");
-
             var purchase = new Domain.Entities.Purchase
             {
                 Id = Guid.NewGuid(),
@@ -83,20 +79,33 @@ public class CheckoutCartCommandHandler : IRequestHandler<CheckoutCartCommand>
                 Price = item.Product.Price,
                 BuyerId = buyerId,
                 SellerId = item.Product.AuthorUserId,
-                PurchaseDate = DateTime.UtcNow,
+                PurchaseDate = DateTime.UtcNow
             };
             await _purchaseRepository.AddPurchaseAsync(purchase);
         }
 
         await _cartRepository.DeleteCartAsync(cart.Id);
-        
-        var message = $"Спасибо за покупку!\n\nВаши товары:\n";
-        foreach (var item in cart.Items)
-        {
-            message += $"- {item.Product.Title}: {item.Product.Price} ₽\n";
-        }
-        message += $"\nОбщая сумма: {cart.Items.Sum(i => i.Product.Price)} ₽";
 
-        await _emailService.SendEmailAsync(request.Email, "Спасибо за покупку!", message);
+        // Отправляем чек на email с информацией о платеже
+        var maskedCardNumber = $"**** **** **** {request.CardNumber.Substring(request.CardNumber.Length - 4)}";
+        var emailBody = $@"
+            <h2>Чек о покупке</h2>
+            <p>Уважаемый(ая) {request.FirstName} {request.LastName},</p>
+            <p>Спасибо за покупку!</p>
+            <p>Детали платежа:</p>
+            <ul>
+                <li>Номер карты: {maskedCardNumber}</li>
+                <li>Держатель карты: {request.CardHolderName}</li>
+                <li>Срок действия: {request.CardExpiryMonth}/{request.CardExpiryYear}</li>
+            </ul>
+            <p>Список купленных товаров:</p>
+            <ul>
+                {string.Join("", cart.Items.Select(item => $"<li>{item.Product.Title} - ${item.Product.Price}</li>"))}
+            </ul>
+            <p>Общая сумма: ${cart.Items.Sum(item => item.Product.Price)}</p>";
+
+        await _emailService.SendEmailAsync(request.Email, "Чек о покупке", emailBody);
+        
+        return Unit.Value;
     }
 } 

@@ -56,17 +56,17 @@
                                     <input type="hidden" name="CartId" value="@Model.CartId" />
                                     <div class="row">
                                         <div class="form-group col-md-6">
-                                            <input type="text" class="form-control" placeholder="First Name" />
+                                            <input type="text" name="FirstName" class="form-control" placeholder="First Name" required />
                                             <i class="fa fa-user iconalign"></i>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <input type="text" class="form-control" placeholder="Last Name" />
+                                            <input type="text" name="LastName" class="form-control" placeholder="Last Name" required />
                                             <i class="fa fa-user iconalign"></i>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-md-6">
-                                            <input type="number" class="form-control" placeholder="Phone Number" />
+                                            <input type="tel" name="PhoneNumber" class="form-control" placeholder="Phone Number" required />
                                             <i class="fa fa-phone iconalign"></i>
                                         </div>
                                         <div class="form-group col-md-6">
@@ -89,56 +89,37 @@
                                                 <div class="tab-pane fade show active" id="visa" role="tabpanel" aria-labelledby="visa-tab">
                                                     <div id="div1" style="display: inline;">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Card Holder's Name" />
+                                                            <input type="text" name="CardHolderName" class="form-control" placeholder="Card Holder's Name" required />
                                                             <i class="fa fa-user iconalign"></i>
                                                         </div>
                                                         <div class="form-group">
-                                                            <input type="number" class="form-control" placeholder="Vaild Card Number" />
+                                                            <input type="text" name="CardNumber" class="form-control" placeholder="Valid Card Number" required 
+                                                                   pattern="[0-9]{16}" maxlength="16" />
                                                             <i class="fa fa-credit-card iconalign"></i>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-4 form-group pr-md-0">
-                                                                <select name="date" class="form-control" style="padding-left:8px !important">
+                                                                <select name="CardExpiryMonth" class="form-control" required>
                                                                     <option value="">Month</option>
-                                                                    <option>1</option>
-                                                                    <option>2</option>
-                                                                    <option>3</option>
-                                                                    <option>4</option>
-                                                                    <option>5</option>
-                                                                    <option>6</option>
-                                                                    <option>7</option>
-                                                                    <option>8</option>
-                                                                    <option>9</option>
-                                                                    <option>10</option>
-                                                                    <option>11</option>
-                                                                    <option>12</option>
+                                                                    @for (int i = 1; i <= 12; i++)
+                                                                    {
+                                                                        <option value="@i.ToString("00")">@i.ToString("00")</option>
+                                                                    }
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-4 form-group pr-md-0">
-                                                                <select name="date" class="form-control" style="padding-left:8px !important">
+                                                                <select name="CardExpiryYear" class="form-control" required>
                                                                     <option value="">Year</option>
-                                                                    <option>2018</option>
-                                                                    <option>2019</option>
-                                                                    <option>2020</option>
-                                                                    <option>2021</option>
-                                                                    <option>2022</option>
-                                                                    <option>2023</option>
-                                                                    <option>2024</option>
-                                                                    <option>2025</option>
-                                                                    <option>2026</option>
-                                                                    <option>2027</option>
-                                                                    <option>2028</option>
-                                                                    <option>2029</option>
-                                                                    <option>2030</option>
+                                                                    @for (int i = DateTime.Now.Year; i <= DateTime.Now.Year + 10; i++)
+                                                                    {
+                                                                        <option value="@i">@i</option>
+                                                                    }
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-4 form-group">
-                                                                <input type="number" class="form-control" placeholder="CVC" style="padding-left:8px !important" />
+                                                                <input type="text" name="CardCVC" class="form-control" placeholder="CVC" required 
+                                                                       pattern="[0-9]{3}" maxlength="3" />
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Full Name on Card" />
-                                                            <i class="fa fa-user iconalign"></i>
                                                         </div>
                                                     </div>
                                                 </div>

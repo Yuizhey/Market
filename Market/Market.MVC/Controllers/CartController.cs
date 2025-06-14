@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 namespace Market.MVC.Controllers;
 
@@ -55,15 +56,38 @@ public class CartController : Controller
         return Ok();
     }
 
-    [HttpPost("Cart/Checkout")]
-    public async Task<IActionResult> Checkout([FromForm]CartCheckOutVM model)
+    [HttpPost]
+    public async Task<IActionResult> Checkout(CartCheckOutVM model)
     {
-        _logger.LogInformation("Оформление заказа. Email: {Email}", model.Email);
-        
-        await _mediator.Send(new CheckoutCartCommand(Guid.Parse(model.CartId), model.Email));
-        
-        _logger.LogInformation("Заказ успешно оформлен. Email: {Email}", model.Email);
-        return RedirectToAction("Index");
+        if (!ModelState.IsValid)
+        {
+            return View("Index", await GetCartViewModel());
+        }
+
+        try
+        {
+            var command = new CheckoutCartCommand
+            {
+                CartId = Guid.Parse(model.CartId),
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.PhoneNumber,
+                CardHolderName = model.CardHolderName,
+                CardNumber = model.CardNumber,
+                CardExpiryMonth = model.CardExpiryMonth,
+                CardExpiryYear = model.CardExpiryYear,
+                CardCVC = model.CardCVC
+            };
+
+            await _mediator.Send(command);
+            return RedirectToAction("Success");
+        }
+        catch (Exception ex)
+        {
+            ModelState.AddModelError("", ex.Message);
+            return View("Index", await GetCartViewModel());
+        }
     }
 
     [HttpPost("/Cart/RemoveItem")]
@@ -78,5 +102,31 @@ public class CartController : Controller
         {
             return BadRequest(ex.Message);
         }
+    }
+
+    private async Task<CartVM> GetCartViewModel()
+    {
+        var identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(identityUserId))
+        {
+            return new CartVM { Items = new List<CartItemVM>() };
+        }
+
+        var cart = await _mediator.Send(new GetUserCartQuery());
+        if (cart == null)
+        {
+            return new CartVM { Items = new List<CartItemVM>() };
+        }
+
+        return new CartVM
+        {
+            CartId = cart.CartId,
+            Items = cart.Items.Select(item => new CartItemVM
+            {
+                ProductId = item.ProductId,
+                Title = item.Title,
+                Price = item.Price
+            }).ToList()
+        };
     }
 }
