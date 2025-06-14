@@ -6,6 +6,7 @@ public class GetByProductIdDto
     public required string Title { get; set; }
     public string? Subtitle { get; set; }
     public required string Text { get; set; }
+    public string ShortDescription { get; set; }
     public decimal Price { get; set; }
     public string ImageURL { get; set; }
     public int LikesCount { get; set; }

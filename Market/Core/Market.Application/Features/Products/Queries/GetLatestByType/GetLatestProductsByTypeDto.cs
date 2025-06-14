@@ -8,7 +8,7 @@ public class GetLatestProductsByTypeDto
     public string Title { get; set; } = string.Empty;
     public string Subtitle { get; set; } = string.Empty;
     public decimal Price { get; set; }
-    public string CoverImagePath { get; set; } = string.Empty;
+    public string CoverImagePath { get; set; } 
     public string AuthorName { get; set; } = string.Empty;
     public ProductType ProductType { get; set; }
 } 

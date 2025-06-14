@@ -107,9 +107,10 @@ public class GetByProductIdQueryHandler : IRequestHandler<GetByProductIdQuery, G
             Subtitle = product.Subtitle,
             Price = product.Price,
             Text = product.Text,
-            ImageURL = imageUrl ?? "assets/img/520x400.png",
+            ImageURL = imageUrl ?? "/assets/img/520x400.png",
             LikesCount = likesCount,
-            IsLiked = isLiked
+            IsLiked = isLiked,
+            ShortDescription = product.ShortDescription,
         };
 
         _logger.LogInformation("Информация о товаре {ProductId} успешно получена", request.id);

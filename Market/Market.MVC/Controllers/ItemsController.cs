@@ -82,6 +82,8 @@ public class ItemsController : Controller
             ImageURL = product.ImageURL,
             LikesCount = product.LikesCount,
             IsLiked = product.IsLiked,
+            ShortDescription = product.ShortDescription,
+            Subtitle = product.Subtitle,
         };
         return View("SingleItem", viewModel);
     }
