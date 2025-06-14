@@ -22,24 +22,24 @@
                                     <form role="form" class="form-width" asp-action="@(isAuthor ? "AddAuthorUserDescription" : "AddUserDescription")" method="post" asp-controller="Profile">
                                         <div class="row">
                                             <div class="form-group col-md-6">
-                                                <input type="text" class="form-control" placeholder="First Name" name="FirstName" value="@Model.FirstName">
+                                                <input type="text" class="form-control" required placeholder="First Name" name="FirstName" value="@Model.FirstName">
                                                 <i class="fa fa-user iconalign"></i>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <input type="text" class="form-control" placeholder="Last Name" name="LastName" value="@Model.LastName">
+                                                <input type="text" class="form-control" placeholder="Last Name" required name="LastName" value="@Model.LastName">
                                                 <i class="fa fa-user iconalign"></i>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-md-6">
-                                                <select name="Gender" class="form-control" style="padding-left:10px !important">
+                                                <select name="Gender" required class="form-control" style="padding-left:10px !important">
                                                     <option value="">Gender</option>
                                                     <option value="0" selected="@(Model.Gender == Market.Domain.Enums.Gender.Male)">Male</option>
                                                     <option value="1" selected="@(Model.Gender == Market.Domain.Enums.Gender.Female)">Female</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <input type="number" class="form-control" placeholder="Phone Number" name="Phone" value="@Model.Phone">
+                                                <input type="number" class="form-control" required placeholder="Phone Number" name="Phone" value="@Model.Phone">
                                                 <i class="fa fa-phone iconalign"></i>
                                             </div>
                                         </div>
@@ -47,16 +47,16 @@
                                         {
                                             <div class="row">
                                                 <div class="col-sm-6 form-group">
-                                                    <input type="text" class="form-control" placeholder="Country" name="Country" value="@Model.Country">
+                                                    <input type="text" class="form-control" required placeholder="Country" name="Country" value="@Model.Country">
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="form-group col-md-6" style="min-height:100px">
-                                                    <textarea class="form-control" style="min-height:100px; max-height:100px" placeholder="Home Address" name="HomeAddress">@Model.HomeAddress</textarea>
+                                                    <textarea class="form-control" style="min-height:100px; max-height:100px" required placeholder="Home Address" name="HomeAddress">@Model.HomeAddress</textarea>
                                                     <i class="fa fa-street-view iconalign" style="position: relative; top:-100px;"></i>
                                                 </div>
                                                 <div class="form-group col-md-6" style="min-height:100px">
-                                                    <textarea class="form-control" style="min-height:100px; max-height:100px" placeholder="Office Address" name="Address">@Model.Address</textarea>
+                                                    <textarea class="form-control" style="min-height:100px; max-height:100px" required placeholder="Office Address" name="Address">@Model.Address</textarea>
                                                     <i class="fa fa-street-view iconalign" style="position: relative; top:-100px;"></i>
                                                 </div>
                                             </div>
