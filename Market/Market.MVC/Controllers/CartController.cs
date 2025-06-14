@@ -66,7 +66,7 @@ public class CartController : Controller
         return RedirectToAction("Index");
     }
 
-    [HttpPost]
+    [HttpPost("/Cart/RemoveItem")]
     public async Task<IActionResult> RemoveItem([FromBody] RemoveItemCommand command)
     {
         try

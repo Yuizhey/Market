@@ -69,6 +69,27 @@ public class CartRepository : ICartRepository
         }
     }
 
+    public async Task RemoveProductFromCartAsync(Guid cartId, Guid productId)
+    {
+        var cart = await _dbContext.Carts
+            .Include(c => c.Items)
+            .FirstOrDefaultAsync(c => c.Id == cartId);
+
+        if (cart == null)
+        {
+            throw new Exception("Корзина не найдена");
+        }
+
+        var cartItem = cart.Items.FirstOrDefault(i => i.ProductId == productId);
+        if (cartItem == null)
+        {
+            throw new Exception("Товар не найден в корзине");
+        }
+
+        _dbContext.CartItems.Remove(cartItem);
+        await _dbContext.SaveChangesAsync();
+    }
+
     public async Task DeleteCartAsync(Guid cartId)
     {
         var cart = await _dbContext.Carts

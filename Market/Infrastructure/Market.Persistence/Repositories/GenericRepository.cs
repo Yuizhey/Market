@@ -8,31 +8,38 @@ namespace Market.Persistence.Repositories;
 public class GenericRepository<T> : IGenericRepository<T> where T : BaseAuditableEntity
 {
     private readonly ApplicationDbContext _dbContext;
+    private readonly DbSet<T> _dbSet;
  
     public GenericRepository(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
+        _dbSet = _dbContext.Set<T>();
     }
  
-    public IQueryable<T> Entities => _dbContext.Set<T>();
+    public IQueryable<T> Entities => _dbSet;
  
     public async Task<T> AddAsync(T entity)
     {
-        await _dbContext.Set<T>().AddAsync(entity);
+        await _dbSet.AddAsync(entity);
         await _dbContext.SaveChangesAsync();
         return entity;
     }
  
-    public Task UpdateAsync(T entity)
+    public async Task<T?> GetByIdAsync(Guid id)
     {
-        T exist = _dbContext.Set<T>().Find(entity.Id);
-        _dbContext.Entry(exist).CurrentValues.SetValues(entity);
-        return Task.CompletedTask;
+        return await _dbSet.FindAsync(id);
+    }
+ 
+    public async Task<T> UpdateAsync(T entity)
+    {
+        _dbContext.Entry(entity).State = EntityState.Modified;
+        await _dbContext.SaveChangesAsync();
+        return entity;
     }
  
     public async Task DeleteAsync(T entity)
     { 
-        _dbContext.Set<T>().Remove(entity);
+        _dbSet.Remove(entity);
         await _dbContext.SaveChangesAsync();
     }
  
@@ -41,10 +48,5 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseAuditabl
         return await _dbContext
             .Set<T>()
             .ToListAsync();
-    }
- 
-    public async Task<T> GetByIdAsync(int id)
-    {
-        return await _dbContext.Set<T>().FindAsync(id);
     }
 }
