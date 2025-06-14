@@ -20,8 +20,12 @@ public class Program
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-        builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+        builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+        {
+            options.User.RequireUniqueEmail = true;
+            options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+        })
+        .AddEntityFrameworkStores<ApplicationDbContext>();
         builder.Services.AddSingleton<IMinioClient>(sp =>
         {
             var configuration = sp.GetRequiredService<IConfiguration>();
