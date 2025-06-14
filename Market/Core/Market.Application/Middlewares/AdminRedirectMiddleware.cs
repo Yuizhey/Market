@@ -16,7 +16,7 @@ public class AdminRedirectMiddleware
         if (context.User.IsInRole("Admin"))
         {
             var path = context.Request.Path.Value?.ToLower();
-            if (path != null && !path.StartsWith("/admin") && !path.StartsWith("/_blazor") && !path.StartsWith("/css") && !path.StartsWith("/js") && !path.StartsWith("/lib") && !path.StartsWith("/images"))
+            if (path != null && !path.StartsWith("/admin") && !path.StartsWith("/_blazor") && !path.StartsWith("/css") && !path.StartsWith("/js") && !path.StartsWith("/lib") && !path.StartsWith("/images") && !path.StartsWith("/notificationhub"))
             {
                 context.Response.Redirect("/Admin/Admins");
                 return;
