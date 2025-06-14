@@ -81,7 +81,7 @@ public class CartController : Controller
             };
 
             await _mediator.Send(command);
-            return RedirectToAction("Success");
+            return RedirectToAction("MyDownloads", "Profile");
         }
         catch (Exception ex)
         {
