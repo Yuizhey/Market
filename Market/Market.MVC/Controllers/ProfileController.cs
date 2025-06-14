@@ -58,7 +58,7 @@ public class ProfileController : Controller
         await _mediator.Send(command);
         _logger.LogInformation("Описание пользователя успешно добавлено: {FirstName} {LastName}", 
             vm.FirstName, vm.LastName);
-        return RedirectToAction("Index");
+        return RedirectToAction("Settings");
     }
 
     [HttpPost]
@@ -88,7 +88,7 @@ public class ProfileController : Controller
         await _mediator.Send(command);
         _logger.LogInformation("Описание автора успешно добавлено: {FirstName} {LastName}", 
             vm.FirstName, vm.LastName);
-        return RedirectToAction("Index");
+        return RedirectToAction("Settings");
     }
     
     [HttpGet]
