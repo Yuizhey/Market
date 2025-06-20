@@ -1,0 +1,37 @@
+@model Market.MVC.Areas.Admin.Models.AdminSalesStatisticsVM
+
+@{
+    ViewData["Title"] = "Статистика продаж";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h2 class="mb-4">Статистика продаж</h2>
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID товара</th>
+                            <th>Название</th>
+                            <th>Кол-во продаж</th>
+                            <th>Общая выручка</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var stat in Model.Statistics)
+                        {
+                            <tr>
+                                <td>@stat.ProductId</td>
+                                <td>@stat.ProductTitle</td>
+                                <td>@stat.TotalSalesCount</td>
+                                <td>@stat.TotalRevenue.ToString("C")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div> 

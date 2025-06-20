@@ -33,4 +33,12 @@ public class PurchaseRepository : IPurchaseRepository
             .Include(p => p.Product)
             .ToListAsync();
     }
+
+    public async Task<IEnumerable<Purchase>> GetAllAsync()
+    {
+        return await _repository.Entities
+            .Include(p => p.Product)
+            .Include(p => p.Seller)
+            .ToListAsync();
+    }
 } 

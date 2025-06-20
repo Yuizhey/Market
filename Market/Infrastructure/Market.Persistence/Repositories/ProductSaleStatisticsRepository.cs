@@ -50,4 +50,11 @@ public class ProductSaleStatisticsRepository : IProductSaleStatisticsRepository
 
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task<IEnumerable<ProductSaleStatistics>> GetAllAsync()
+    {
+        return await _dbContext.ProductSaleStatistics
+            .Include(s => s.Product)
+            .ToListAsync();
+    }
 } 

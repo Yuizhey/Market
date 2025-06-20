@@ -1,0 +1,43 @@
+@model Market.MVC.Areas.Admin.Models.AdminSalesVM
+
+@{
+    ViewData["Title"] = "Продажи";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h2 class="mb-4">Продажи</h2>
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Товар</th>
+                        <th>Покупатель</th>
+                        <th>Продавец</th>
+                        <th>Цена</th>
+                        <th>Дата</th>
+                        <th>Кол-во</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var sale in Model.Sales)
+                    {
+                        <tr>
+                            <td>@sale.Id</td>
+                            <td>@sale.ProductTitle</td>
+                            <td>@sale.BuyerId</td>
+                            <td>@sale.SellerName</td>
+                            <td>@sale.Price.ToString("C")</td>
+                            <td>@sale.PurchaseDate.ToString("g")</td>
+                            <td>@sale.Quantity</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div> 
