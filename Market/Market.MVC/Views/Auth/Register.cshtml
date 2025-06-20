@@ -1,7 +1,6 @@
 @model Market.MVC.Models.Auth.RegisterViewModel
 
 <main role="main">
-
         <div class="account-pages mt-7 mb-5">
             <div class="container">
                 <div class="row d-flex justify-content-center align-items-center">
@@ -19,32 +18,37 @@
                                 <!-- end:Social logins-->
                                 <hr class="divider divider-fade">
                                 <form method="post" asp-controller="Auth" asp-action="Register">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                     <div class="form-group input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"> <i class="las la-user"></i> </span>
                                         </div>
-                                        <input name="@nameof(Model.UserName)" class="form-control" placeholder="User name" type="text">
+                                        <input asp-for="UserName" class="form-control" placeholder="User name" type="text">
+                                        <span asp-validation-for="UserName" class="text-danger"></span>
                                     </div>
                                     <div class="form-group input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"> <i class="las la-envelope"></i> </span>
                                         </div>
-                                        <input name="@nameof(Model.Email)" class="form-control" placeholder="Email address" type="email" pattern="[a-zA-Z0-9._%+-]+\@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+                                        <input asp-for="Email" class="form-control" placeholder="Email address" type="email">
+                                        <span asp-validation-for="Email" class="text-danger"></span>
                                     </div>
                                     <div class="form-group input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"> <i class="las la-key"></i> </span>
                                         </div>
-                                        <input name="@nameof(Model.Password)" class="form-control" placeholder="Create password" type="password">
+                                        <input asp-for="Password" class="form-control" placeholder="Create password" type="password">
+                                        <span asp-validation-for="Password" class="text-danger"></span>
                                     </div>
                                     <div class="form-group input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"> <i class="las la-key"></i> </span>
                                         </div>
-                                        <input name="@nameof(Model.ConfirmPassword)" class="form-control" placeholder="Repeat password" type="password">
+                                        <input asp-for="ConfirmPassword" class="form-control" placeholder="Repeat password" type="password">
+                                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary btn-block"> Create Account </button>
+                                        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
                                     </div>
                                     <p class="text-center">Have an account?
                                         <a asp-controller="Auth" asp-action="Login">Log In</a>
@@ -60,4 +64,8 @@
             <!-- end container -->
         </div>
         <!-- end page -->
-        </main>
+</main>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,17 +1,14 @@
 @model Market.MVC.Models.Auth.AuthorRegisterViewModel
-@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer Localizer
 
 <main role="main">
-
         <div class="account-pages mt-5 mb-5">
             <div class="container">
                 <div class="row d-flex justify-content-center align-items-center">
                     <div class="col-md-8 col-lg-6 col-xl-5">
                         <div class="card hover-box-shadow">
                             <div class="card-body px-auto">
-                                <h4 class="card-title mt-3 text-center">@Localizer["Create Account"]</h4>
-                                <p class="text-center">@Localizer["Get started with your free account"]</p>
+                                <h4 class="card-title mt-3 text-center">Create Account</h4>
+                                <p class="text-center">Get started with your free account</p>
                                 @* <div class="d-flex justify-content-center justify-content-between"> *@
                                 @*     <a href="" class="btn btn-twitter"> *@
                                 @*         <i class="lab la-twitter mr-2"></i>Login via Twitter</a> *@
@@ -23,20 +20,24 @@
                                 <hr class="divider divider-fade" />
 
                                 <form method="post" asp-controller="Auth" asp-action="AuthorRegister" class="pb-3">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                     <div class="form-group">
-                                        <label for="fullname">@Localizer["Create Username / Store Name"]</label>
-                                        <input class="form-control" type="text" name="@nameof(Model.AuthorUserName)" placeholder="@Localizer["shop name"]" required="" />
+                                        <label for="fullname">Store Name</label>
+                                        <input asp-for="AuthorUserName" class="form-control" placeholder="Store name" />
+                                        <span asp-validation-for="AuthorUserName" class="text-danger"></span>
                                         <p class="text-small text-muted mt-1">
-                                            @Localizer["Your username will be your store name and cannot be changed later."]
+                                            Your username will be your store name and cannot be changed later.
                                         </p>
                                     </div>
                                     <div class="form-group">
-                                        <label for="emailaddress">@Localizer["Email address"]</label>
-                                        <input class="form-control" type="email" name="@nameof(Model.Email)" required="" placeholder="@Localizer["Enter your email"]" pattern="[a-zA-Z0-9._%+-]+\@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" />
+                                        <label for="emailaddress">Email address</label>
+                                        <input asp-for="Email" class="form-control" placeholder="Enter your email" type="email" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="password">@Localizer["Password"]</label>
-                                        <input class="form-control" type="password" required="" name="@nameof(Model.Password)" placeholder="@Localizer["Enter your password"]" />
+                                        <label for="password">Password</label>
+                                        <input asp-for="Password" class="form-control" placeholder="Enter your password" type="password" />
+                                        <span asp-validation-for="Password" class="text-danger"></span>
                                     </div>
                                     @* <div class="form-row"> *@
                                     @*     <div class="form-group col-md-6"> *@
@@ -63,7 +64,7 @@
                                     @* </div> *@
                                     <div class="form-group mb-0 text-center">
                                         <button class="btn btn-primary btn-block" type="submit">
-                                            @Localizer["Sign Up"]
+                                            Sign Up
                                         </button>
                                     </div>
                                 </form>
@@ -74,8 +75,8 @@
                         <div class="row mt-3">
                             <div class="col-12 text-center">
                                 <p class="text-muted">
-                                    @Localizer["Already have account?"]
-                                    <a asp-controller="Auth" asp-action="Login" class="text-muted font-weight-medium ml-1">@Localizer["Sign In"]</a>
+                                    Already have account?
+                                    <a asp-controller="Auth" asp-action="Login" class="text-muted font-weight-medium ml-1">Sign In</a>
                                 </p>
                             </div>
                             <!-- end col -->
@@ -91,3 +92,7 @@
         <!-- end page -->
 
     </main>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
