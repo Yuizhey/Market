@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="Home Page" xml:space="preserve">
+    <value>Главная страница</value>
+  </data>
+  <data name="UI assets for startup owners &amp; busy designers" xml:space="preserve">
+    <value>UI ассеты для стартапов и занятых дизайнеров</value>
+  </data>
+  <data name="Find the perfect creative asset to" xml:space="preserve">
+    <value>Найдите идеальный креативный ассет, чтобы</value>
+  </data>
+  <data name="bring your project to life" xml:space="preserve">
+    <value>воплотить ваш проект в жизнь</value>
+  </data>
+  <data name="Latest Web Templates" xml:space="preserve">
+    <value>Последние Web шаблоны</value>
+  </data>
+  <data name="by" xml:space="preserve">
+    <value>от</value>
+  </data>
+  <data name="Latest Fonts" xml:space="preserve">
+    <value>Последние Fonts</value>
+  </data>
+  <data name="Latest Graphics" xml:space="preserve">
+    <value>Последние Graphics</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Добро пожаловать</value>
+  </data>
+  <data name="Sign-up today" xml:space="preserve">
+    <value>Зарегистрируйтесь сегодня</value>
+  </data>
+  <data name="Enter your email address and password to access admin panel." xml:space="preserve">
+    <value>Введите адрес электронной почты и пароль для доступа к админ-панели.</value>
+  </data>
+  <data name="Email address" xml:space="preserve">
+    <value>Электронная почта</value>
+  </data>
+  <data name="Enter your email" xml:space="preserve">
+    <value>Введите вашу почту</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="Enter your password" xml:space="preserve">
+    <value>Введите ваш пароль</value>
+  </data>
+  <data name="Log In" xml:space="preserve">
+    <value>Войти</value>
+  </data>
+  <data name="Sign in with" xml:space="preserve">
+    <value>Войти с помощью</value>
+  </data>
+  <data name="Forgot your password?" xml:space="preserve">
+    <value>Забыли пароль?</value>
+  </data>
+  <data name="Don't have an account?" xml:space="preserve">
+    <value>Нет аккаунта?</value>
+  </data>
+  <data name="Sign Up" xml:space="preserve">
+    <value>Зарегистрироваться</value>
+  </data>
+  <data name="Create Account" xml:space="preserve">
+    <value>Создать аккаунт</value>
+  </data>
+  <data name="Get started with your free account" xml:space="preserve">
+    <value>Начните с бесплатного аккаунта</value>
+  </data>
+  <data name="User name" xml:space="preserve">
+    <value>Имя пользователя</value>
+  </data>
+  <data name="Create password" xml:space="preserve">
+    <value>Придумайте пароль</value>
+  </data>
+  <data name="Repeat password" xml:space="preserve">
+    <value>Повторите пароль</value>
+  </data>
+  <data name="Have an account?" xml:space="preserve">
+    <value>Уже есть аккаунт?</value>
+  </data>
+  <data name="Create Username / Store Name" xml:space="preserve">
+    <value>Создайте имя пользователя / магазина</value>
+  </data>
+  <data name="shop name" xml:space="preserve">
+    <value>название магазина</value>
+  </data>
+  <data name="Your username will be your store name and cannot be changed later." xml:space="preserve">
+    <value>Ваше имя пользователя будет именем магазина и не может быть изменено позже.</value>
+  </data>
+  <data name="Already have account?" xml:space="preserve">
+    <value>Уже есть аккаунт?</value>
+  </data>
+  <data name="Sign In" xml:space="preserve">
+    <value>Войти</value>
+  </data>
+  <data name="Your cart" xml:space="preserve">
+    <value>Ваша корзина</value>
+  </data>
+  <data name="Brief description" xml:space="preserve">
+    <value>Краткое описание</value>
+  </data>
+  <data name="Billing address" xml:space="preserve">
+    <value>Платёжный адрес</value>
+  </data>
+  <data name="Payment Info" xml:space="preserve">
+    <value>Платёжная информация</value>
+  </data>
+  <data name="First Name" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="Last Name" xml:space="preserve">
+    <value>Фамилия</value>
+  </data>
+  <data name="Phone Number" xml:space="preserve">
+    <value>Телефон</value>
+  </data>
+  <data name="E-Mail" xml:space="preserve">
+    <value>Электронная почта</value>
+  </data>
+  <data name="Payment Method" xml:space="preserve">
+    <value>Способ оплаты</value>
+  </data>
+  <data name="Payment Information" xml:space="preserve">
+    <value>Платёжные данные</value>
+  </data>
+  <data name="Card Holder&apos;s Name" xml:space="preserve">
+    <value>Имя владельца карты</value>
+  </data>
+  <data name="Valid Card Number" xml:space="preserve">
+    <value>Номер карты</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Месяц</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Год</value>
+  </data>
+  <data name="CVC" xml:space="preserve">
+    <value>CVC</value>
+  </data>
+  <data name="Your Paypal Address" xml:space="preserve">
+    <value>Ваш адрес PayPal</value>
+  </data>
+  <data name="Billing Address" xml:space="preserve">
+    <value>Платёжный адрес</value>
+  </data>
+  <data name="Street Address 1" xml:space="preserve">
+    <value>Улица, дом (строка 1)</value>
+  </data>
+  <data name="Street Address 2" xml:space="preserve">
+    <value>Улица, дом (строка 2)</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Страна</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>Область/регион</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Город</value>
+  </data>
+  <data name="Postal / Zip Code" xml:space="preserve">
+    <value>Почтовый индекс</value>
+  </data>
+  <data name="Checkout" xml:space="preserve">
+    <value>Оформить заказ</value>
+  </data>
+  <data name="Contact Us" xml:space="preserve">
+    <value>Связаться с нами</value>
+  </data>
+  <data name="Use this form for contact" xml:space="preserve">
+    <value>Используйте эту форму для связи</value>
+  </data>
+  <data name="Firstname" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="Please enter your firstname *" xml:space="preserve">
+    <value>Пожалуйста, введите ваше имя *</value>
+  </data>
+  <data name="Lastname" xml:space="preserve">
+    <value>Фамилия</value>
+  </data>
+  <data name="Please enter your lastname *" xml:space="preserve">
+    <value>Пожалуйста, введите вашу фамилию *</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Электронная почта</value>
+  </data>
+  <data name="Please enter your email *" xml:space="preserve">
+    <value>Пожалуйста, введите вашу почту *</value>
+  </data>
+  <data name="Please specify your need *" xml:space="preserve">
+    <value>Пожалуйста, укажите ваш запрос *</value>
+  </data>
+  <data name="Select type..." xml:space="preserve">
+    <value>Выберите тип...</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Сообщение</value>
+  </data>
+  <data name="Message for me *" xml:space="preserve">
+    <value>Сообщение для меня *</value>
+  </data>
+  <data name="Send message" xml:space="preserve">
+    <value>Отправить сообщение</value>
+  </data>
+  <data name="These fields are required" xml:space="preserve">
+    <value>Эти поля обязательны для заполнения</value>
+  </data>
+  <data name="Likes" xml:space="preserve">
+    <value>лайков</value>
+  </data>
+  <data name="Short description" xml:space="preserve">
+    <value>Краткое описание</value>
+  </data>
+  <data name="Full description" xml:space="preserve">
+    <value>Полное описание</value>
+  </data>
+  <data name="Frequently asked questions" xml:space="preserve">
+    <value>Часто задаваемые вопросы</value>
+  </data>
+  <data name="For anything else (licensing, billing, etc), please visit our" xml:space="preserve">
+    <value>По всем другим вопросам (лицензии, оплата и т.д.) посетите наш</value>
+  </data>
+  <data name="Help Center" xml:space="preserve">
+    <value>Центр поддержки</value>
+  </data>
+  <data name="Need additional help?" xml:space="preserve">
+    <value>Нужна дополнительная помощь?</value>
+  </data>
+  <data name="Add to cart" xml:space="preserve">
+    <value>Добавить в корзину</value>
+  </data>
+  <data name="Login to buy" xml:space="preserve">
+    <value>Войдите, чтобы купить</value>
+  </data>
+  <data name="Item added to cart!" xml:space="preserve">
+    <value>Товар добавлен в корзину!</value>
+  </data>
+  <data name="An error occurred while adding the item to the cart." xml:space="preserve">
+    <value>Произошла ошибка при добавлении товара в корзину.</value>
+  </data>
+  <data name="Error:" xml:space="preserve">
+    <value>Ошибка:</value>
+  </data>
+  <data name="An error occurred." xml:space="preserve">
+    <value>Произошла ошибка.</value>
+  </data>
+</root> 

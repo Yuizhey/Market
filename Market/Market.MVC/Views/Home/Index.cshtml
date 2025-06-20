@@ -1,6 +1,8 @@
 ﻿@model HomeViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = Localizer["Home Page"];
 }
 
 <main role="main">
@@ -10,11 +12,11 @@
                 <div class="row d-flex justify-content-between align-items-center">
                     <div class="col-md-8">
                         <h1 class="intro-title">
-                            UI assets for startup owners &amp; busy designers
+                            @Localizer["UI assets for startup owners & busy designers"]
                         </h1>
                         <p class="lead">
-                            Find the perfect creative asset to <br />
-                            bring your project to life
+                            @Localizer["Find the perfect creative asset to"] <br />
+                            @Localizer["bring your project to life"]
                         </p>
                     </div>
                     <div class="col-md-4 d-none d-sm-block">
@@ -27,7 +29,7 @@
         <div class="container">
             <div class="row mb-4 mt-5 d-flex justify-content-between align-items-center">
                 <div class="col-md-8">
-                    <h5 class="mb-0">Последние Web шаблоны</h5>
+                    <h5 class="mb-0">@Localizer["Latest Web Templates"]</h5>
                 </div>
             </div>
             <div class="row">
@@ -55,7 +57,7 @@
                                     <div class="short-description mb-0">
                                         <p class="mb-0 extension-text">
                                             <a href="#">@product.ProductType</a>
-                                            <span class="ml-1">by</span>
+                                            <span class="ml-1">@Localizer["by"]</span>
                                             <a href="#">@product.AuthorName</a>
                                         </p>
                                     </div>
@@ -70,7 +72,7 @@
             
             <div class="row mb-4 mt-3 d-flex justify-content-between align-items-center">
                 <div class="col-md-8">
-                    <h5 class="mb-0">Последние Fonts</h5>
+                    <h5 class="mb-0">@Localizer["Latest Fonts"]</h5>
                 </div>
             </div>
             <div class="row">
@@ -98,7 +100,7 @@
                                     <div class="short-description mb-0">
                                         <p class="mb-0 extension-text">
                                             <a href="#">@product.ProductType</a>
-                                            <span class="ml-1">by</span>
+                                            <span class="ml-1">@Localizer["by"]</span>
                                             <a href="#">@product.AuthorName</a>
                                         </p>
                                     </div>
@@ -113,7 +115,7 @@
             
             <div class="row mb-4 mt-3 d-flex justify-content-between align-items-center">
                 <div class="col-md-8">
-                    <h5 class="mb-0">Последние Graphics</h5>
+                    <h5 class="mb-0">@Localizer["Latest Graphics"]</h5>
                 </div>
             </div>
             <div class="row">
@@ -141,7 +143,7 @@
                                     <div class="short-description mb-0">
                                         <p class="mb-0 extension-text">
                                             <a href="#">@product.ProductType</a>
-                                            <span class="ml-1">by</span>
+                                            <span class="ml-1">@Localizer["by"]</span>
                                             <a href="#">@product.AuthorName</a>
                                         </p>
                                     </div>
@@ -160,8 +162,8 @@
                     <img alt="bg image" class="bg-image" src="assets/img/bg-3.png">
                     <div class="row d-flex align-items-center justify-content-center">
                         <div class="col-lg-8 col-md-7">
-                            <h3 class="h1">Empowering creative people to make a living doing what they love!</h3>
-                            <p class="subtitle">Sign-up today </p>
+                            <h3 class="h1">@Localizer["Welcome"]</h3>
+                            <p class="subtitle">@Localizer["Sign-up today"]</p>
                         </div>
                         <div class="col-lg-3 offset-lg-1 col-md-5 align-self-center">
                             <img src="assets/img/illustrations/03.svg" alt="" class="img-fluid">

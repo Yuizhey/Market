@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="Home Page" xml:space="preserve">
+    <value>Home Page</value>
+  </data>
+  <data name="UI assets for startup owners &amp; busy designers" xml:space="preserve">
+    <value>UI assets for startup owners &amp; busy designers</value>
+  </data>
+  <data name="Find the perfect creative asset to" xml:space="preserve">
+    <value>Find the perfect creative asset to</value>
+  </data>
+  <data name="bring your project to life" xml:space="preserve">
+    <value>bring your project to life</value>
+  </data>
+  <data name="Latest Web Templates" xml:space="preserve">
+    <value>Latest Web Templates</value>
+  </data>
+  <data name="by" xml:space="preserve">
+    <value>by</value>
+  </data>
+  <data name="Latest Fonts" xml:space="preserve">
+    <value>Latest Fonts</value>
+  </data>
+  <data name="Latest Graphics" xml:space="preserve">
+    <value>Latest Graphics</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="Sign-up today" xml:space="preserve">
+    <value>Sign-up today</value>
+  </data>
+  <data name="Enter your email address and password to access admin panel." xml:space="preserve">
+    <value>Enter your email address and password to access admin panel.</value>
+  </data>
+  <data name="Email address" xml:space="preserve">
+    <value>Email address</value>
+  </data>
+  <data name="Enter your email" xml:space="preserve">
+    <value>Enter your email</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Enter your password" xml:space="preserve">
+    <value>Enter your password</value>
+  </data>
+  <data name="Log In" xml:space="preserve">
+    <value>Log In</value>
+  </data>
+  <data name="Sign in with" xml:space="preserve">
+    <value>Sign in with</value>
+  </data>
+  <data name="Forgot your password?" xml:space="preserve">
+    <value>Forgot your password?</value>
+  </data>
+  <data name="Don&apos;t have an account?" xml:space="preserve">
+    <value>Don&apos;t have an account?</value>
+  </data>
+  <data name="Sign Up" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="Create Username / Store Name" xml:space="preserve">
+    <value>Create Username / Store Name</value>
+  </data>
+  <data name="shop name" xml:space="preserve">
+    <value>shop name</value>
+  </data>
+  <data name="Your username will be your store name and cannot be changed later." xml:space="preserve">
+    <value>Your username will be your store name and cannot be changed later.</value>
+  </data>
+  <data name="Already have account?" xml:space="preserve">
+    <value>Already have account?</value>
+  </data>
+  <data name="Sign In" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="Your cart" xml:space="preserve">
+    <value>Your cart</value>
+  </data>
+  <data name="Brief description" xml:space="preserve">
+    <value>Brief description</value>
+  </data>
+  <data name="Billing address" xml:space="preserve">
+    <value>Billing address</value>
+  </data>
+  <data name="Payment Info" xml:space="preserve">
+    <value>Payment Info</value>
+  </data>
+  <data name="First Name" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="Last Name" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="Phone Number" xml:space="preserve">
+    <value>Phone Number</value>
+  </data>
+  <data name="E-Mail" xml:space="preserve">
+    <value>E-Mail</value>
+  </data>
+  <data name="Payment Method" xml:space="preserve">
+    <value>Payment Method</value>
+  </data>
+  <data name="Payment Information" xml:space="preserve">
+    <value>Payment Information</value>
+  </data>
+  <data name="Card Holder&apos;s Name" xml:space="preserve">
+    <value>Card Holder&apos;s Name</value>
+  </data>
+  <data name="Valid Card Number" xml:space="preserve">
+    <value>Valid Card Number</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="CVC" xml:space="preserve">
+    <value>CVC</value>
+  </data>
+  <data name="Your Paypal Address" xml:space="preserve">
+    <value>Your Paypal Address</value>
+  </data>
+  <data name="Billing Address" xml:space="preserve">
+    <value>Billing Address</value>
+  </data>
+  <data name="Street Address 1" xml:space="preserve">
+    <value>Street Address 1</value>
+  </data>
+  <data name="Street Address 2" xml:space="preserve">
+    <value>Street Address 2</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="Postal / Zip Code" xml:space="preserve">
+    <value>Postal / Zip Code</value>
+  </data>
+  <data name="Checkout" xml:space="preserve">
+    <value>Checkout</value>
+  </data>
+  <data name="Contact Us" xml:space="preserve">
+    <value>Contact Us</value>
+  </data>
+  <data name="Use this form for contact" xml:space="preserve">
+    <value>Use this form for contact</value>
+  </data>
+  <data name="Firstname" xml:space="preserve">
+    <value>Firstname</value>
+  </data>
+  <data name="Please enter your firstname *" xml:space="preserve">
+    <value>Please enter your firstname *</value>
+  </data>
+  <data name="Lastname" xml:space="preserve">
+    <value>Lastname</value>
+  </data>
+  <data name="Please enter your lastname *" xml:space="preserve">
+    <value>Please enter your lastname *</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Please enter your email *" xml:space="preserve">
+    <value>Please enter your email *</value>
+  </data>
+  <data name="Please specify your need *" xml:space="preserve">
+    <value>Please specify your need *</value>
+  </data>
+  <data name="Select type..." xml:space="preserve">
+    <value>Select type...</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="Message for me *" xml:space="preserve">
+    <value>Message for me *</value>
+  </data>
+  <data name="Send message" xml:space="preserve">
+    <value>Send message</value>
+  </data>
+  <data name="These fields are required" xml:space="preserve">
+    <value>These fields are required</value>
+  </data>
+  <data name="Likes" xml:space="preserve">
+    <value>Likes</value>
+  </data>
+  <data name="Short description" xml:space="preserve">
+    <value>Short description</value>
+  </data>
+  <data name="Full description" xml:space="preserve">
+    <value>Full description</value>
+  </data>
+  <data name="Frequently asked questions" xml:space="preserve">
+    <value>Frequently asked questions</value>
+  </data>
+  <data name="For anything else (licensing, billing, etc), please visit our" xml:space="preserve">
+    <value>For anything else (licensing, billing, etc), please visit our</value>
+  </data>
+  <data name="Help Center" xml:space="preserve">
+    <value>Help Center</value>
+  </data>
+  <data name="Need additional help?" xml:space="preserve">
+    <value>Need additional help?</value>
+  </data>
+  <data name="Add to cart" xml:space="preserve">
+    <value>Add to cart</value>
+  </data>
+  <data name="Login to buy" xml:space="preserve">
+    <value>Login to buy</value>
+  </data>
+  <data name="Item added to cart!" xml:space="preserve">
+    <value>Item added to cart!</value>
+  </data>
+  <data name="An error occurred while adding the item to the cart." xml:space="preserve">
+    <value>An error occurred while adding the item to the cart.</value>
+  </data>
+  <data name="Error:" xml:space="preserve">
+    <value>Error:</value>
+  </data>
+  <data name="An error occurred." xml:space="preserve">
+    <value>An error occurred.</value>
+  </data>
+</root> 

@@ -1,4 +1,6 @@
 @model Market.MVC.Models.Cart.CartVM
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 <main role="main">
         <div class="wrapper">
@@ -7,7 +9,7 @@
                 <div class="row">
                     <div class="col-md-4 order-md-2 mb-4">
                         <h4 class="d-flex justify-content-between align-items-center mb-3">
-                            <span>Your cart</span>
+                            <span>@Localizer["Your cart"]</span>
                             <span class="badge bg-primary text-white rounded-pill">@Model.Items.Count</span>
                         </h4>
                         <ul class="list-group mb-3">
@@ -16,7 +18,7 @@
                                 <li class="list-group-item d-flex justify-content-between lh-sm">
                                     <div>
                                         <h6 class="my-0">@item.Title</h6>
-                                        <small class="text-muted">Brief description</small>
+                                        <small class="text-muted">@Localizer["Brief description"]</small>
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <span class="text-muted font-weight-bold me-3">$@item.Price</span>
@@ -31,12 +33,12 @@
                         </ul>
                     </div>
                     <div class="col-md-8 order-md-1">
-                        <h4 class="mb-3">Billing address</h4>
+                        <h4 class="mb-3">@Localizer["Billing address"]</h4>
                         <div class="card mb-5">
                             <div class="card-body py-3 border-bottom">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <h4 class="card-title mb-1">Payment Info</h4>
+                                        <h4 class="card-title mb-1">@Localizer["Payment Info"]</h4>
                                     </div>
                                 </div>
                             </div>
@@ -45,32 +47,32 @@
                                     <input type="hidden" name="CartId" value="@Model.CartId" />
                                     <div class="row">
                                         <div class="form-group col-md-6">
-                                            <input type="text" name="FirstName" class="form-control" placeholder="First Name" required />
+                                            <input type="text" name="FirstName" class="form-control" placeholder="@Localizer["First Name"]" required />
                                             <i class="fa fa-user iconalign"></i>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <input type="text" name="LastName" class="form-control" placeholder="Last Name" required />
+                                            <input type="text" name="LastName" class="form-control" placeholder="@Localizer["Last Name"]" required />
                                             <i class="fa fa-user iconalign"></i>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-md-6">
-                                            <input type="tel" name="PhoneNumber" class="form-control" placeholder="Phone Number" required />
+                                            <input type="tel" name="PhoneNumber" class="form-control" placeholder="@Localizer["Phone Number"]" required />
                                             <i class="fa fa-phone iconalign"></i>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <input type="email" name="Email" class="form-control" placeholder="E-Mail" required />
+                                            <input type="email" name="Email" class="form-control" placeholder="@Localizer["E-Mail"]" required />
                                             <i class="fa fa-envelope iconalign"></i>
                                         </div>
                                     </div>
                                     <div class="form-group text-left mt-4">
-                                        <h5 class="text-dark">Payment Method</h5>
+                                        <h5 class="text-dark">@Localizer["Payment Method"]</h5>
                                         <hr />
                                     </div>
                                     <div class="row ml-0 my-3">
                                         <div class="col">
                                             <div class="form-group text-left mt-5">
-                                                <h5 class="text-dark">Payment Information</h5>
+                                                <h5 class="text-dark">@Localizer["Payment Information"]</h5>
                                                 <hr />
                                             </div>
 
@@ -78,18 +80,18 @@
                                                 <div class="tab-pane fade show active" id="visa" role="tabpanel" aria-labelledby="visa-tab">
                                                     <div id="div1" style="display: inline;">
                                                         <div class="form-group">
-                                                            <input type="text" name="CardHolderName" class="form-control" placeholder="Card Holder's Name" required />
+                                                            <input type="text" name="CardHolderName" class="form-control" placeholder="@Localizer["Card Holder's Name"]" required />
                                                             <i class="fa fa-user iconalign"></i>
                                                         </div>
                                                         <div class="form-group">
-                                                            <input type="text" name="CardNumber" class="form-control" placeholder="Valid Card Number" required 
+                                                            <input type="text" name="CardNumber" class="form-control" placeholder="@Localizer["Valid Card Number"]" required 
                                                                    pattern="[0-9]{16}" maxlength="16" />
                                                             <i class="fa fa-credit-card iconalign"></i>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-4 form-group pr-md-0">
                                                                 <select name="CardExpiryMonth" class="form-control" required>
-                                                                    <option value="">Month</option>
+                                                                    <option value="">@Localizer["Month"]</option>
                                                                     @for (int i = 1; i <= 12; i++)
                                                                     {
                                                                         <option value="@i.ToString("00")">@i.ToString("00")</option>
@@ -98,7 +100,7 @@
                                                             </div>
                                                             <div class="col-md-4 form-group pr-md-0">
                                                                 <select name="CardExpiryYear" class="form-control" required>
-                                                                    <option value="">Year</option>
+                                                                    <option value="">@Localizer["Year"]</option>
                                                                     @for (int i = DateTime.Now.Year; i <= DateTime.Now.Year + 10; i++)
                                                                     {
                                                                         <option value="@i">@i</option>
@@ -106,7 +108,7 @@
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-4 form-group">
-                                                                <input type="text" name="CardCVC" class="form-control" placeholder="CVC" required 
+                                                                <input type="text" name="CardCVC" class="form-control" placeholder="@Localizer["CVC"]" required 
                                                                        pattern="[0-9]{3}" maxlength="3" />
                                                             </div>
                                                         </div>
@@ -115,16 +117,16 @@
                                                 <div class="tab-pane fade" id="paypal" role="tabpanel" aria-labelledby="paypal-tab">
                                                     <div id="div2">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Your Paypal Address" />
+                                                            <input type="text" class="form-control" placeholder="@Localizer["Your Paypal Address"]" />
                                                             <i class="fa fa-envelope iconalign"></i>
                                                         </div>
                                                     </div>
                                                     <div class="form-group text-left">
-                                                        <h5 class="text-dark">Billing Address</h5>
+                                                        <h5 class="text-dark">@Localizer["Billing Address"]</h5>
                                                         <hr />
                                                     </div>
                                                     <div class="form-group" style="min-height:70px">
-                                                        <textarea class="form-control" style="min-height:70px; max-height:70px" placeholder="Street Address 1"></textarea>
+                                                        <textarea class="form-control" style="min-height:70px; max-height:70px" placeholder="@Localizer["Street Address 1"]"></textarea>
 
                                                         <i
                                         class="fa fa-street-view iconalign"
@@ -132,7 +134,7 @@
                                       ></i>
                                                     </div>
                                                     <div class="form-group" style="min-height:70px">
-                                                        <textarea class="form-control" style="min-height:70px; max-height:70px" placeholder="Street Address 2"></textarea>
+                                                        <textarea class="form-control" style="min-height:70px; max-height:70px" placeholder="@Localizer["Street Address 2"]"></textarea>
 
                                                         <i
                                         class="fa fa-street-view iconalign"
@@ -141,25 +143,25 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="form-group col-md-6">
-                                                            <input type="text" class="form-control" placeholder="Country" style="padding-left:8px !important" />
+                                                            <input type="text" class="form-control" placeholder="@Localizer["Country"]" style="padding-left:8px !important" />
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <input type="text" class="form-control" placeholder="State" style="padding-left:8px !important" />
+                                                            <input type="text" class="form-control" placeholder="@Localizer["State"]" style="padding-left:8px !important" />
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="form-group col-md-6">
-                                                            <input type="text" class="form-control" placeholder="City" style="padding-left:8px !important" />
+                                                            <input type="text" class="form-control" placeholder="@Localizer["City"]" style="padding-left:8px !important" />
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <input type="number" class="form-control" placeholder="Postal / Zip Code" style="padding-left:8px !important" />
+                                                            <input type="number" class="form-control" placeholder="@Localizer["Postal / Zip Code"]" style="padding-left:8px !important" />
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <button class="btn btn-primary col-md-4" type="submit">
-                                                        Checkout
+                                                        @Localizer["Checkout"]
                                                     </button>
                                                 </div>
                                             </div>

@@ -8,6 +8,7 @@ using Market.Persistence.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Minio;
+using Microsoft.Extensions.Localization;
 
 namespace Market.MVC;
 
@@ -45,7 +46,10 @@ public class Program
         builder.Services.AddInfrastructureLayer();
         builder.Services.AddPersistenceLayer(builder.Configuration);
 
-        builder.Services.AddControllersWithViews();
+        builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+        builder.Services.AddControllersWithViews()
+            .AddViewLocalization()
+            .AddDataAnnotationsLocalization();
 
         builder.Services.ConfigureApplicationCookie(options =>
         {
@@ -75,6 +79,16 @@ public class Program
         app.UseStaticFiles();
 
         app.UseRouting();
+
+        app.UseMiddleware<Market.Application.Middleware.LocalizationMiddleware>();
+
+        var supportedCultures = new[] { "en", "ru" };
+        var localizationOptions = new RequestLocalizationOptions()
+            .SetDefaultCulture("ru")
+            .AddSupportedCultures(supportedCultures)
+            .AddSupportedUICultures(supportedCultures);
+
+        app.UseRequestLocalization(localizationOptions);
 
         app.UseAuthentication();
         app.UseAuthorization();

@@ -1,4 +1,6 @@
 @model Market.MVC.Models.Items.SingleItemVM
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 <main role="main">
         <div class="wrapper">
@@ -16,14 +18,14 @@
                             {
                                 <button class="btn btn-ghost grey-dark like-button font-weight-bold" onclick="toggleLike('@Model.Id')">
                                     <i class="las la-hand-holding-heart @(Model.IsLiked ? "text-danger" : "")"></i>
-                                    <span>@Model.LikesCount Likes</span>
+                                    <span>@Model.LikesCount @Localizer["Likes"]</span>
                                 </button>
                             }
                             else
                             {
                                 <button class="btn btn-ghost grey-dark like-button font-weight-bold" disabled>
                                     <i class="las la-hand-holding-heart"></i>
-                                    <span>@Model.LikesCount Likes</span>
+                                    <span>@Model.LikesCount @Localizer["Likes"]</span>
                                 </button>
                             }
                         </div>
@@ -61,14 +63,14 @@
                                     <div class="col-sm-8">
                                         @if (!string.IsNullOrEmpty(Model.ShortDescription))
                                         {
-                                            <h6 class="mb-2">Short description</h6>
+                                            <h6 class="mb-2">@Localizer["Short description"]</h6>
                                             <p>
                                                 @Model.ShortDescription
                                             </p>
                                         }
                                         @if (!string.IsNullOrEmpty(Model.Text))
                                         {
-                                            <h6 class="mb-2">Full description</h6>
+                                            <h6 class="mb-2">@Localizer["Full description"]</h6>
                                             <p>
                                                 @Model.Text
                                             </p>
@@ -77,14 +79,14 @@
                                 </div>
                                 <div class="row mb-4 d-flex justify-content-between">
                                     <div class="col-md-8">
-                                        <h6 class="mb-2">Frequently asked questions</h6>
+                                        <h6 class="mb-2">@Localizer["Frequently asked questions"]</h6>
                                         <p>
-                                            For anything else (licensing, billing, etc), please visit our
-                                            <a asp-controller="Contact" asp-action="Index" class="btn btn-link">Help Center</a>.
+                                            @Localizer["For anything else (licensing, billing, etc), please visit our"]
+                                            <a asp-controller="Contact" asp-action="Index" class="btn btn-link">@Localizer["Help Center"]</a>.
                                         </p>
                                     </div>
                                     <div class="col-md-4">
-                                        <a asp-controller="Contact" asp-action="Index" class="btn btn-link float-right"><i class="las la-envelope mr-1"></i>Need additional help?
+                                        <a asp-controller="Contact" asp-action="Index" class="btn btn-link float-right"><i class="las la-envelope mr-1"></i>@Localizer["Need additional help?"]
                                         </a>
                                     </div>
                                 </div>
@@ -106,13 +108,13 @@
                                     @if (User.Identity.IsAuthenticated)
                                     {
                                         <button class="btn btn-primary btn-block" type="button" onclick="addToCart('@Model.Id')">
-                                            Add to cart → <span class="price"> $@Model.Price</span>
+                                            @Localizer["Add to cart"] → <span class="price"> $@Model.Price</span>
                                         </button>
                                     }
                                     else
                                     {
                                         <a asp-controller="Auth" asp-action="Login" class="btn btn-primary btn-block">
-                                            Login to buy
+                                            @Localizer["Login to buy"]
                                         </a>
                                     }
                                 </div>
@@ -135,7 +137,7 @@
                 const responseText = await response.text();
                 
                 if (response.ok) {
-                    alert("Товар добавлен в корзину!");
+                    alert("@Localizer["Item added to cart!"]");
                 } else {
                     // Извлекаем только сообщение об ошибке до первого переноса строки и убираем System.InvalidOperationException
                     const errorMessage = responseText.split('\n')[0].replace('System.InvalidOperationException: ', '');
@@ -143,7 +145,7 @@
                 }
             } catch (error) {
                 console.error("Ошибка при добавлении в корзину:", error);
-                alert("Произошла ошибка при добавлении товара в корзину.");
+                alert("@Localizer["An error occurred while adding the item to the cart."]");
             }
         }
 
@@ -158,14 +160,14 @@
                     icon.classList.toggle('text-danger');
                     const likesCount = document.querySelector('.like-button span');
                     const currentCount = parseInt(likesCount.textContent);
-                    likesCount.textContent = `${currentCount + (icon.classList.contains('text-danger') ? 1 : -1)} Likes`;
+                    likesCount.textContent = `${currentCount + (icon.classList.contains('text-danger') ? 1 : -1)} @Localizer["Likes"]`;
                 } else {
                     const err = await response.text();
-                    alert("Ошибка: " + err);
+                    alert("@Localizer["Error:"] " + err);
                 }
             } catch (error) {
                 console.error("Ошибка при лайке:", error);
-                alert("Произошла ошибка.");
+                alert("@Localizer["An error occurred."]");
             }
         }
     </script>
